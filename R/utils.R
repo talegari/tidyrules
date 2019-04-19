@@ -31,6 +31,6 @@ remove_singlequotes <- function(string){
 }
 
 # remove empty lines
-remove_empty_lines <- function(strings){
+removeEmptyLines <- function(strings){
   strings[!(strings == "")]
 }

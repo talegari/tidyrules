@@ -6,9 +6,13 @@
 #' @author Srikanth KS, \email{sri.teach@@gmail.com}
 #' @param object Fitted model object with rules
 #' @param ... Other arguments (currently unused)
+#' @param col_classes Named list or a named character vector of column classes.
+#'   Column names of the data used for modeling form the names and the
+#'   respective classes for the value. One way of obtaining this is by running
+#'   `lapply(data, class)`.
 #' @return A tibble where each row corresponds to a rule
 #' @export
-tidyRules <- function(object, ...){
+tidyRules <- function(object, col_classes = NULL, ...){
 
   UseMethod("tidyRules", object)
 

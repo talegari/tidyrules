@@ -12,6 +12,7 @@ Imports:
     dplyr,
     stringr,
     magrittr,
+    purrr,
 Suggests:
     AmesHousing,
     C50,
@@ -19,6 +20,7 @@ Suggests:
     rpart,
     pre,
     rsample,
+    testthat
 Description: Obtain rules as tidy dataframes and write more description here as the package shapes.
 License: GPL-3
 Encoding: UTF-8

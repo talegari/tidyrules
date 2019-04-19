@@ -4,10 +4,15 @@
 \alias{tidyRules.cubist}
 \title{Obtain rules as a tidy tibble from a cubist model}
 \usage{
-\method{tidyRules}{cubist}(object, ...)
+\method{tidyRules}{cubist}(object, col_classes = NULL, ...)
 }
 \arguments{
 \item{object}{Fitted model object with rules}
+
+\item{col_classes}{Named list or a named character vector of column classes.
+Column names of the data used for modeling form the names and the
+respective classes for the value. One way of obtaining this is by running
+`lapply(data, class)`.}
 
 \item{...}{Other arguments (currently unused)}
 }
@@ -19,52 +24,20 @@ A tibble where each row corresponds to a rule. The columns are:
 Each row corresponds to a rule. A rule can be copied into
   `dplyr::filter` to filter the observations corresponding to a rule
 }
+\details{
+When col_classes argument is missing, an educated guess is made
+about class by parsing the RHS of sub-rule. This might sometimes not lead to
+a parsable rule.
+}
 \examples{
-library("magrittr")
 data("attrition", package = "rsample")
 attrition <- tibble::as_tibble(attrition)
-# lets predict monthly income
-cubist_model <-
-  Cubist::cubist(
-    x   = attrition \%>\% dplyr::select(-MonthlyIncome, -Attrition)
-    , y = attrition \%>\% dplyr::select(MonthlyIncome) \%>\% unlist()
-    )
-summary(cubist_model)
-tidyRules(cubist_model)
+cols_att <- setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 
-cubist_model_commitees <-
-  Cubist::cubist(x   = attrition \%>\% dplyr::select(-MonthlyIncome, -Attrition)
-                 , y = attrition \%>\% dplyr::select(MonthlyIncome) \%>\% unlist()
-                 , committees = 7
-                 )
-summary(cubist_model_commitees)
-tidyRules(cubist_model_commitees)
-
-# column names with spaces are handled with adding '`' quotes to it in the rules
-ames <- AmesHousing::make_ames()
-
-ames2 <-
-  ames \%>\%
-  dplyr::rename(`Gr Liv Area` = Gr_Liv_Area) \%>\%
-  dplyr::rename(`Gr Liv` = Latitude) \%>\%
-  dplyr::mutate(
-    Overall_Qual = gsub("_", " ", as.character(Overall_Qual)),
-    MS_SubClass = gsub("_", " ", as.character(MS_SubClass))
-    )
-
-
-colnames(ames2)
-
-cb_mod <-
-  Cubist::cubist(
-    x = ames2 \%>\% dplyr::select(-Sale_Price),
-    y = log10(ames2$Sale_Price),
-    committees = 3
-    )
-
-tr <- tidyRules(cb_mod)
-tr
-tr$rhs[[1]]
+cb_att <-
+  Cubist::cubist(x = attrition[, cols_att],y = attrition[["MonthlyIncome"]])
+tr_att <- tidyRules(cb_att)
+tr_att
 }
 \author{
 Srikanth KS, \email{sri.teach@gmail.com}

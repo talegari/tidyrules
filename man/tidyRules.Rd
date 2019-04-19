@@ -4,10 +4,15 @@
 \alias{tidyRules}
 \title{Obtain rules as a tidy tibble}
 \usage{
-tidyRules(object, ...)
+tidyRules(object, col_classes = NULL, ...)
 }
 \arguments{
 \item{object}{Fitted model object with rules}
+
+\item{col_classes}{Named list or a named character vector of column classes.
+Column names of the data used for modeling form the names and the
+respective classes for the value. One way of obtaining this is by running
+`lapply(data, class)`.}
 
 \item{...}{Other arguments (currently unused)}
 }
