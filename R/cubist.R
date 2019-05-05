@@ -4,16 +4,12 @@
 #'   `dplyr::filter` to filter the observations corresponding to a rule
 #' @author Srikanth KS, \email{sri.teach@@gmail.com}
 #' @param object Fitted model object with rules
-#' @param col_classes Named list or a named character vector of column classes.
-#'   Column names of the data used for modeling form the names and the
-#'   respective classes for the value. One way of obtaining this is by running
-#'   `lapply(data, class)`.
 #' @param ... Other arguments (currently unused)
 #' @return A tibble where each row corresponds to a rule. The columns are:
 #'   support, mean, min, max, error, lhs, rhs and committee
 #' @details When col_classes argument is missing, an educated guess is made
-#' about class by parsing the RHS of sub-rule. This might sometimes not lead to
-#' a parsable rule.
+#'   about class by parsing the RHS of sub-rule. This might sometimes not lead
+#'   to a parsable rule.
 #' @examples
 #' data("attrition", package = "rsample")
 #' attrition <- tibble::as_tibble(attrition)
@@ -25,60 +21,45 @@
 #' tr_att
 #' @export
 
-tidyRules.cubist <- function(object, col_classes = NULL, ...){
+tidyRules.cubist <- function(object, ...){
 
-  # checks for column classes
-  if(!is.null(col_classes)){
-    stopifnot(inherits(col_classes, c("list", "character")))
-    stopifnot(!is.null(names(col_classes))) # should have names
+  # output from the model ----
+  output <- object[["output"]]
+
+  # get variable specification ----
+  var_spec           <- varSpec(object)
+  variable_names     <- var_spec[["variable"]]
+  col_classes        <- var_spec[["type"]]
+  names(col_classes) <- variable_names
+
+  # throw error if there is consecutive spaces ----
+  # output from the model squishes the spaces
+  if(any(stringr::str_count(variable_names, "  ") > 0)){
+    stop("Variable names should not two or more consecutive spaces.")
   }
 
-  # get column names
-  columnNames <- object[["names"]] %>%
-    stringr::str_split("\\n") %>%
-    magrittr::extract2(1) %>%
-    utils::tail(-5) %>% # first five rows are always headers
-    # pick to the left of ":"
-    purrr::map_chr(function(s) stringr::str_split(s, ":")[[1]][[1]]) %>%
-    stringr::str_replace_all("\\\\", "") %>%
-    removeEmptyLines()
+  variable_names_with_ <- stringr::str_replace_all(variable_names
+                                                   , "\\s"
+                                                   , "_"
+                                                   )
 
-  # handle column names with spaces
-  namesWithSpace <- columnNames[(stringr::str_detect(columnNames, "\\s"))]
-
-  # ordering is required because we do not want to replace smaller strings
-  # ex: suppose 'hello world' and 'hello world india' are two columns
-  # First replacement of 'hello world' by 'hello_world' will prevent
-  # 'hello_world_india' from replacing 'hello world india'
-  # edit: I find this unnecessary, clean it up later
-  if(length(namesWithSpace) > 0){
-    stop("At least one column name has a 'space' in it")
-  }
-
-  # split by newline and remove emptylines
+  # split by newline and remove emptylines ----
   lev_1 <- object[["output"]] %>%
-    stringr::str_split("\\n") %>%
-    magrittr::extract2(1) %>%
+    strSplitSingle("\\n") %>%
     removeEmptyLines()
 
-  # remove everything from 'Evaluation on training data' onwards
-  evalLine <- stringr::str_detect(lev_1
-                                  , "^Evaluation on training data"
-                                  ) %>%
-    which()
-  lev_2    <- lev_1[-(evalLine:length(lev_1))]
+  # remove everything from 'Evaluation on training data' onwards ----
+  evalLine <- stringr::str_which(lev_1, "^Evaluation on training data")
+  lev_2    <- lev_1[-(evalLine:length(lev_1))] %>%
+    stringr::str_subset("^(?!Model).*$")
 
-
-  # detect starts and ends of rules
-  rule_starts <- stringr::str_detect(stringr::str_trim(lev_2), "^Rule\\s") %>%
-    which()
+  # detect starts and ends of rules ----
+  rule_starts <- stringr::str_which(stringr::str_trim(lev_2), "^Rule\\s")
   # end of a rule is a line before the next rule start
   rule_ends   <- c(utils::tail(rule_starts, -1) - 1, length(lev_2))
 
-  # create a rule list for cubist
+  # create a rule list for cubist ----
   get_rules_cubist <- function(single_raw_rule){
-
-    #print(single_raw_rule)
 
     # a raw rule looks like this:
     #
@@ -110,47 +91,40 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
 
     # locate the position of square bracket and collect stats
     firstLine <- stringr::str_squish(single_raw_rule[1])
-    openingSquareBracketPosition <- stringr::str_locate(firstLine, "\\[") %>%
-      magrittr::extract(1, 1)
+    openingSquareBracketPosition <- stringr::str_locate(firstLine, "\\[")[1, 1]
 
     # All stats are at the begining of the rule
     stat <-
       # between square brackets
       stringr::str_sub(firstLine
                        , openingSquareBracketPosition + 1
-                       , stringr::str_length(firstLine) - 1
+                       , stringr::str_length(firstLine) - 1 # closing ] bracket
                       ) %>%
-      stringr::str_split("\\,") %>%
-      magrittr::extract2(1) %>%
-      stringr::str_squish()
+      strSplitSingle("\\,") %>%
+      stringr::str_trim()
 
     res[["support"]] <- stat[1] %>%
-      stringr::str_split("\\s") %>%
-      magrittr::extract2(1) %>%
+      strSplitSingle("\\s") %>%
       magrittr::extract(1) %>%
       as.integer()
 
     res[["mean"]] <- stat[2] %>%
-      stringr::str_split(" ") %>%
-      magrittr::extract2(1) %>%
+      strSplitSingle(" ") %>%
       magrittr::extract(2) %>%
       as.numeric()
 
     res[["min"]] <- stat[3] %>%
-      stringr::str_split(" ") %>%
-      magrittr::extract2(1) %>%
+      strSplitSingle(" ") %>%
       magrittr::extract(2) %>%
       as.numeric()
 
     res[["max"]] <- stat[3] %>%
-      stringr::str_split(" ") %>%
-      magrittr::extract2(1) %>%
+      strSplitSingle(" ") %>%
       magrittr::extract(4) %>%
       as.numeric()
 
     res[["error"]] <- stat[4] %>%
-      stringr::str_split(" ") %>%
-      magrittr::extract2(1) %>%
+      strSplitSingle(" ") %>%
       magrittr::extract(3) %>%
       as.numeric()
 
@@ -162,12 +136,11 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
     # unclean LHS strings, one condition per string
     lhsStrings <-  single_raw_rule[btw_if_then] %>%
       stringr::str_replace_all("\\t", "\\\\n") %>%
-      stringr::str_squish() %>%
+      stringr::str_trim() %>%
       stringr::str_c(collapse = " ") %>%
-      stringr::str_split("\\\\n") %>%
-      magrittr::extract2(1) %>%
+      strSplitSingle("\\\\n") %>%
       removeEmptyLines() %>%
-      stringr::str_squish()
+      stringr::str_trim()
 
     # function to get the one clean rule string
     getRuleString <- function(string){
@@ -179,22 +152,21 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
       if(stringr::str_detect(string, "\\sin\\s\\{")){
 
         # split with ' in {'
-        var_lvls <- stringr::str_split(string, "\\sin\\s\\{")[[1]]
+        var_lvls <- strSplitSingle(string, "\\sin\\s\\{")
 
         # get the contents inside curly braces
         lvls <- var_lvls[2] %>%
           # omit the closing curly bracket
-          stringr::str_sub(1, stringr::str_length(var_lvls[2]) - 1) %>%
-          stringr::str_split(",") %>%
-          magrittr::extract2(1) %>%
-          stringr::str_squish() %>%
+          strHead(-1) %>%
+          strSplitSingle(",") %>%
+          stringr::str_trim() %>%
           purrr::map_chr(function(x) stringr::str_c("'", x, "'")) %>%
           stringr::str_c(collapse = ", ") %>%  # note the space next to comma
           stringr::str_c("c(", ., ")")
 
         # get the variable
         var <- var_lvls[1] %>%
-          stringr::str_squish()
+          stringr::str_trim()
 
         rs <- stringr::str_c(var, " %in% ", lvls)
 
@@ -204,23 +176,11 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
         contains_equals <- stringr::str_detect(string, " = ")
         if(contains_equals){
 
-          sub_rule <- stringr::str_split(string, "=") %>%
-            magrittr::extract2(1) %>%
-            stringr::str_squish()
+          sub_rule <- strSplitSingle(string, "=") %>%
+            stringr::str_trim()
 
-          if(!is.null(col_classes)){
-            the_class <- col_classes[[ sub_rule[1] ]]
-          } else {
-            # when col_classes is not specified
-            # try coercing to numeric. When not numeric, it results in NA
-            coerced <- suppressWarnings(as.numeric(sub_rule[2]))
-            if(is.na(coerced)){
-              the_class <- "character"
-            }
-          }
-
-          if(the_class %in% c("character", "factor", "ordered")){
-              sub_rule[2] <- stringr::str_c("'", sub_rule[2], "'")
+          if(!(col_classes[sub_rule[1]] == "numeric")){
+            sub_rule[2] <- stringr::str_c("'", sub_rule[2], "'")
           }
 
         rs <- stringr::str_c(sub_rule, collapse = " == ")
@@ -239,8 +199,8 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
     }
 
     # clean up LHS as string
-    res[["lhs"]] <- purrr::map_chr(lhsStrings, getRuleString) %>%
-    stringr::str_c(collapse = " & ") # note spaces next to AND
+    res[["LHS"]] <- purrr::map_chr(lhsStrings, getRuleString) %>%
+      stringr::str_c(collapse = " & ") # note spaces next to AND
 
     # get RHS
     afterThen <- seq(which(stringr::str_trim(single_raw_rule) == "then") + 1
@@ -248,27 +208,29 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
                      )
 
     # handle brackets around signs
-    res[["rhs"]] <- single_raw_rule[afterThen] %>%
+    res[["RHS"]] <- single_raw_rule[afterThen] %>%
       stringr::str_replace_all("\\t", "") %>%
+      stringr::str_trim() %>%
       stringr::str_c(collapse = " ") %>%
       stringr::str_squish() %>%
       stringr::str_replace("outcome = ", "") %>%
       # remove spaces around +- signs
-      stringr::str_replace_all("\\s\\+\\s", "+") %>%
-      stringr::str_replace_all("\\s\\-\\s", "-") %>%
+      stringr::str_replace_all("\\s\\+\\s", "++") %>%
+      stringr::str_replace_all("\\s\\-\\s", "--") %>%
+      strReplaceReduce(variable_names, variable_names_with_) %>%
       stringr::str_replace_all("\\s", " * ") %>%
-      stringr::str_replace_all("\\+", ") + (") %>%
-      stringr::str_replace_all("\\-", ") - (")
+      stringr::str_replace_all("\\+\\+", ") + (") %>%
+      stringr::str_replace_all("\\-\\-", ") - (")
 
     # quotes aroud each addenum
-    res[["rhs"]] <- stringr::str_c("(", res[["rhs"]], ")") %>%
+    res[["RHS"]] <- stringr::str_c("(", res[["RHS"]], ")") %>%
       # honour negative intercept
       stringr::str_replace("\\(\\)\\s\\-\\s\\(", "(-")
 
     return(res)
 }
 
-  # see if rules have commitees and create commitees vector
+  # see if rules have commitees and create commitees vector ----
   rule_number_splits <-
     stringr::str_split(stringr::str_trim(lev_2)[rule_starts], ":") %>%
     purrr::map_chr(function(x) x[[1]]) %>%
@@ -287,7 +249,7 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
     committees <- rep(1L, length(rule_starts))
   }
 
-  # create parsable rules from raw rules
+  # create parsable rules from raw rules ----
   res <-
     purrr::map(1:length(rule_starts)
                , function(i) lev_2[rule_starts[i]:rule_ends[i]]
@@ -297,7 +259,27 @@ tidyRules.cubist <- function(object, col_classes = NULL, ...){
     purrr::map(unlist) %>%
     tibble::as_tibble()
 
-  res[["committee"]] <- committees
+  # replace variable names with spaces within backquotes ----
+  for(i in 1:length(variable_names)){
+    res[["LHS"]] <- stringr::str_replace_all(
+      res[["LHS"]]
+      , variable_names[i]
+      , addBackquotes(variable_names[i])
+      )
 
+    res[["RHS"]] <- stringr::str_replace_all(
+      res[["RHS"]]
+      , variable_names_with_[i]
+      , addBackquotes(variable_names[i])
+      )
+  }
+
+  res[["committee"]] <- committees
+  res <- tibble::rowid_to_column(res, "id")
+  res <- res[, c("id", "LHS", "RHS", "support"
+                 , "mean", "min", "max", "error", "committee"
+                 )
+             ]
   return(res)
+
 }

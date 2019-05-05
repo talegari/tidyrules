@@ -4,15 +4,10 @@
 \alias{tidyRules.cubist}
 \title{Obtain rules as a tidy tibble from a cubist model}
 \usage{
-\method{tidyRules}{cubist}(object, col_classes = NULL, ...)
+\method{tidyRules}{cubist}(object, ...)
 }
 \arguments{
 \item{object}{Fitted model object with rules}
-
-\item{col_classes}{Named list or a named character vector of column classes.
-Column names of the data used for modeling form the names and the
-respective classes for the value. One way of obtaining this is by running
-`lapply(data, class)`.}
 
 \item{...}{Other arguments (currently unused)}
 }
@@ -26,8 +21,8 @@ Each row corresponds to a rule. A rule can be copied into
 }
 \details{
 When col_classes argument is missing, an educated guess is made
-about class by parsing the RHS of sub-rule. This might sometimes not lead to
-a parsable rule.
+  about class by parsing the RHS of sub-rule. This might sometimes not lead
+  to a parsable rule.
 }
 \examples{
 data("attrition", package = "rsample")

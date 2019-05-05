@@ -28,19 +28,14 @@ cb_ames <- Cubist::cubist(x = ames[, setdiff(colnames(ames), c("Sale_Price"))],
                           )
 tr_ames <- tidyRules(cb_ames)
 
-# ames housing with with column classes
-cb_ames_2 <- Cubist::cubist(x = ames[, setdiff(colnames(ames), c("Sale_Price"))],
-                          y = log10(ames[["Sale_Price"]])
-                          )
 
-tr_ames_2 <- tidyRules(
-  cb_ames_2
-  , col_classes = lapply(ames[, setdiff(colnames(ames), c("Sale_Price"))], class))
-
-# get an error message when a column name has a space in it
+# column name has a space in it
 data("Boston", package = "MASS")
-names(Boston)[1] <- "cri m"
-cb_boston <- Cubist::cubist(x = Boston[, -14], y = Boston[[14]])
+boston_2 <- Boston
+names(boston_2)[6] <- "r m"
+names(boston_2)[13] <- "l stat"
+cb_boston <- Cubist::cubist(x = boston_2[, -14], y = boston_2[[14]])
+tr_boston <- tidyRules(cb_boston)
 
 # function to check whether a rule is filterable
 ruleFilterable <- function(rule, data){
@@ -50,16 +45,38 @@ ruleFilterable <- function(rule, data){
 # function to check whether all rules are filterable
 allRulesFilterable <- function(tr, data){
   parse_status <- sapply(
-    tr[["lhs"]]
+    tr[["LHS"]]
     , function(arule){
-        inherits(try(ruleFilterable(arule, data)
-                     , silent = TRUE
-                     )
-                 , "tbl_df"
-                 )
+        trydf <- try(ruleFilterable(arule, data)
+                   , silent = TRUE
+                   )
+        if(nrow(trydf) == 0){
+          print(arule)
+        }
+        inherits(trydf, "data.frame") && (nrow(trydf) > 0)
       }
     )
   return(parse_status)
+}
+
+# evaluate RHS
+evalRHS <- function(tr, data){
+
+  message(deparse(substitute(data)))
+
+  with_RHS <- sapply(tr[["RHS"]],
+    function(x){
+      try(data %>%
+            dplyr::mutate(RHS_ = eval(parse(text = x))) %>%
+            dplyr::pull(RHS_) %>%
+            is.numeric()
+        , silent = TRUE
+      )}
+    , USE.NAMES = FALSE
+    )
+
+  print(which(!with_RHS))
+  return(all(with_RHS))
 }
 
 # test output type ----
@@ -68,7 +85,7 @@ test_that("creates tibble", {
   expect_is(tr_att, "tbl_df")
   expect_is(tr_att_2, "tbl_df")
   expect_is(tr_ames, "tbl_df")
-  expect_is(tr_ames_2, "tbl_df")
+  expect_is(tr_boston, "tbl_df")
 })
 
 # test NA ----
@@ -76,7 +93,7 @@ test_that("Are NA present", {
   expect_false(anyNA(tr_att))
   expect_false(anyNA(tr_att_2))
   expect_false(anyNA(tr_ames))
-  expect_false(anyNA(tr_ames_2))
+  expect_false(anyNA(tr_boston))
 })
 
 # test parsable ----
@@ -84,10 +101,14 @@ test_that("rules are parsable", {
   expect_true(all(allRulesFilterable(tr_att, attrition)))
   expect_true(all(allRulesFilterable(tr_att_2, attrition)))
   expect_true(all(allRulesFilterable(tr_ames, ames)))
-  expect_true(all(allRulesFilterable(tr_ames_2, ames)))
+  expect_true(all(allRulesFilterable(tr_boston, boston_2)))
 })
 
-# expect error when a column has space in it ----
-test_that("error when space", {
-  expect_error(tidyRules(cb_boston))
+# rhs is computable ----
+test_that("rhs is computable", {
+  expect_true(evalRHS(tr_att, attrition))
+  expect_true(evalRHS(tr_att_2, attrition))
+  expect_true(evalRHS(tr_ames, ames))
+  expect_true(evalRHS(tr_boston, boston_2))
 })
+

@@ -4,3 +4,5 @@
 
 #' @importFrom magrittr %>%
 "_PACKAGE"
+
+is.integerish <- getFromNamespace("is.integerish", "assertthat")
