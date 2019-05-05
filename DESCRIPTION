@@ -16,7 +16,7 @@ Imports:
 Suggests:
     AmesHousing (>= 0.0.3),
     C50 (>= 0.1.2),
-    Cubist (>= 0.2.3),
+    Cubist (>= 0.2.2),
     rsample (>= 0.0.2),
     testthat (>= 2.0.1),
     dplyr (>= 0.8),
