@@ -20,6 +20,7 @@ Suggests:
     rsample (>= 0.0.2),
     testthat (>= 2.0.1),
     dplyr (>= 0.8),
+    MASS (>= 7.3.50),
 Description: Obtain rules as tidy dataframes and write more description here as the package shapes.
 License: GPL-3
 Encoding: UTF-8
