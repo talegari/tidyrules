@@ -10,23 +10,42 @@
 #' @examples
 #' data("attrition", package = "rsample")
 #' attrition <- tibble::as_tibble(attrition)
-#' rpart_model <- rpart::rpart(Attrition ~., data = attrition, rules = TRUE)
+#' rpart_model <- rpart::rpart(Attrition ~., data = attrition)
 #' summary(rpart_model)
 #' tidyRules(rpart_model)
 #' @export
 tidyRules.rpart <- function(object, ...){
 
   stopifnot(inherits(object, "rpart"))
+
+  if(is.null(object$y)){
+    stop(
+      stringr::str_c(
+        "Unable to find target variable in the model object!! "
+        , "Model should be built using argument `y = TRUE`."
+      )
+    )
+  }
+
+  # column names from the object
+  col_names <- stringr::str_remove_all(attr(object$terms,which = "term.labels")
+                                       , pattern = "`")
+
+  # throw error if there is consecutive spaces in the column names ----
+  if(any(stringr::str_count(col_names, "  ") > 0)){
+    stop("Variable names should not two or more consecutive spaces.")
+  }
+
   # convert to class "party"
   party_obj <- partykit::as.party(object)
 
   # extracting rules
   rules <- partykit:::.list.rules.party(party_obj) %>%
-    str_replace_all(pattern = "\\\"","'") %>%
-    str_remove_all(pattern = "'NA',") %>%
-    str_remove_all(pattern = ", 'NA'") %>%
-    str_remove_all(pattern = "'NA'") %>%
-    str_squish()
+    stringr::str_replace_all(pattern = "\\\"","'") %>%
+    stringr::str_remove_all(pattern = "'NA',") %>%
+    stringr::str_remove_all(pattern = ", 'NA'") %>%
+    stringr::str_remove_all(pattern = "'NA'") %>%
+    stringr::str_squish()
 
   # terminal nodes from party object
   terminal_nodes <- partykit::nodeids(party_obj, terminal = T)
@@ -66,11 +85,23 @@ tidyRules.rpart <- function(object, ...){
     dplyr::rename(RHS = response)
 
   # tidy rules
-  tidy_rules <- cbind(metrics,LHS = rules)
-  tidy_rules %>%
+  tidy_rules <- cbind(metrics,LHS = rules) %>%
     dplyr::select(support,confidence,lift,LHS,RHS) %>%
     dplyr::mutate_if(is.factor,as.character) %>%
     tibble::as_tibble()
+
+  # replace variable names with spaces within backquotes ----
+  for(i in 1:length(col_names)){
+    tidy_rules[["LHS"]] <- stringr::str_replace_all(
+      tidy_rules[["LHS"]]
+      , col_names[i]
+      , addBackquotes(col_names[i])
+    )
+  }
+
+  tibble::rowid_to_column(tidy_rules, "id")
+
+  return(tidy_rules)
 
 }
 
