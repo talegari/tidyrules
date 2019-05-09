@@ -1,7 +1,20 @@
+#' @name tidyRules.rpart
+#' @title Obtain rules as a tidy tibble from a rpart model
+#' @description Each row corresponds to a rule. A rule can be copied into
+#'   `dplyr::filter` to filter the observations corresponding to a rule
+#' @author Amith Kumar U R, \email{amith54@@gmail.com}
+#' @param object Fitted model object with rules
+#' @param ... Other arguments (currently unused)
+#' @return A tibble where each row corresponds to a rule. The columns are:
+#'   support, confidence, lift, LHS, RHS
+#' @examples
+#' data("attrition", package = "rsample")
+#' attrition <- tibble::as_tibble(attrition)
+#' rpart_model <- rpart::rpart(Attrition ~., data = attrition, rules = TRUE)
+#' summary(rpart_model)
+#' tidyRules(rpart_model)
+#' @export
 tidyRules.rpart <- function(object, ...){
-
-  # for dplyr dot
-  . <- NULL
 
   stopifnot(inherits(object, "rpart"))
   # convert to class "party"
@@ -33,14 +46,17 @@ tidyRules.rpart <- function(object, ...){
 
   extracted_data$numeric_response <- object$y
 
+  # Actual labels for RHS
+  exact_labels <- extracted_data %>%
+    dplyr::distinct(response,numeric_response)
+
+  # prevelance for lift calculation
   prevelance <- prop.table(table(extracted_data$numeric_response)) %>%
     as.data.frame() %>%
     magrittr::set_colnames(c("class","freq")) %>%
     dplyr::mutate(class = as.numeric(class))
 
-  exact_labels <- extracted_data %>%
-    dplyr::distinct(response,numeric_response)
-
+  # final metric df
   metrics <- metrics %>%
     dplyr::inner_join(exact_labels
                       , by = c("predict_class" = "numeric_response")) %>%
@@ -49,10 +65,12 @@ tidyRules.rpart <- function(object, ...){
     dplyr::select(-c(predict_class,freq)) %>%
     dplyr::rename(RHS = response)
 
+  # tidy rules
   tidy_rules <- cbind(metrics,LHS = rules)
-
   tidy_rules %>%
-    dplyr::select(support,confidence,lift,LHS,RHS)
+    dplyr::select(support,confidence,lift,LHS,RHS) %>%
+    dplyr::mutate_if(is.factor,as.character) %>%
+    tibble::as_tibble()
 
 }
 
