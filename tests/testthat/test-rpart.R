@@ -1,3 +1,5 @@
+library(testthat)
+
 context("test-rpart")
 
 # setup some models ----
@@ -5,52 +7,42 @@ context("test-rpart")
 data("attrition", package = "rsample")
 attrition <- tibble::as_tibble(attrition)
 
-rpart_att <- rpart::rpart(Attrition ~ ., data = attrition, y = T)
+rpart_att <- rpart::rpart(Attrition ~ ., data = attrition)
 tr_att <- tidyRules(rpart_att)
 
 # attrition with trials
-rpart_att_2 <- rpart::rpart(Attrition ~ ., data = attrition)
+rpart_att_2 <- rpart::rpart(Attrition ~ ., data = attrition, y = T)
 tr_att_2 <- tidyRules(rpart_att_2)
-
-# # ames housing
-# # ames has some space in Sale_Type levels
-# ames   <- AmesHousing::make_ames()
-# ames
-# cb_ames <- rpart::rpart(MS_SubClass ~ .
-#                         , data = ames
-#                         , control = rpart::rpart.control(maxdepth = 4
-#                                                          , maxsurrogate = 6
-#                                                          , usesurrogate = 3
-#                                                          , maxcompete = 5))
-# tr_ames <- tidyRules(cb_ames)
-#
-# # column name has a space in it
-# ames   <- AmesHousing::make_ames()
-# ames_2 <- ames
-# colnames(ames_2)[which(colnames(ames_2) == "Bldg_Type")] <- "Bldg Type"
-# colnames(ames_2)[which(colnames(ames_2) == "House_Style")] <- "House Style"
-# rpart_ames_2 <- rpart::rpart(MS_SubClass ~ ., data = ames_2)
-# tr_ames_2 <- tidyRules(rpart_ames_2)
 
 # BreastCancer
 data(BreastCancer, package = "mlbench")
-bc <- BreastCancer %>% dplyr::select(-Id)
+bc <- BreastCancer %>%
+  dplyr::select(-Id) %>%
+  as_tibble()
 
 bc_1m <- rpart::rpart(Class ~ .
                      , data = bc
-                     , control = rpart::rpart.control(maxdepth = 2
-                                                      , maxsurrogate = 2
-                                                      , usesurrogate = 2
-                                                      , maxcompete = 2))
+                     # , control = rpart::rpart.control(maxdepth = 2
+                     #                                  , maxsurrogate = 2
+                     #                                  , usesurrogate = 2
+                     #                                  , maxcompete = 2)
+                     )
 
 tr_bc_1 <- tidyRules(bc_1m)
 
 # variables with spaces
-colnames(bc)[which(colnames(bc) == "Cell.size")] <- "Cell size"
-colnames(bc)[which(colnames(bc) == "Cell.shape")] <- "Cell shape"
+bc2 <- bc %>%
+  # mutate(Cell.size = as.integer(Cell.size))
+  mutate_if(is.ordered
+            ,function(x) x <- factor(x,ordered = F))
+  # mutate_all(function(x) ifelse(is.ordered(x),as.integer(x),x))
+  # mutate_all(as.factor)
+
+colnames(bc2)[which(colnames(bc2) == "Cell.size")] <- "Cell size"
+colnames(bc2)[which(colnames(bc2) == "Cell.shape")] <- "Cell shape"
 
 bc_2m <- rpart::rpart(Class ~ .
-                     , data = bc
+                     , data = bc2
                      )
 
 tr_bc_2 <- tidyRules(bc_2m)
@@ -82,23 +74,23 @@ allRulesFilterable <- function(tr, data){
 test_that("creates tibble", {
   expect_is(tr_att, "tbl_df")
   expect_is(tr_att_2, "tbl_df")
-  expect_is(tr_ames, "tbl_df")
-  expect_is(tr_ames_2, "tbl_df")
+  expect_is(tr_bc_1, "tbl_df")
+  expect_is(tr_bc_2, "tbl_df")
 })
 
 # test NA ----
 test_that("Are NA present", {
   expect_false(anyNA(tr_att))
   expect_false(anyNA(tr_att_2))
-  expect_false(anyNA(tr_ames))
-  expect_false(anyNA(tr_ames_2))
+  expect_false(anyNA(tr_bc_1))
+  expect_false(anyNA(tr_bc_2))
 })
 
 # test parsable ----
 test_that("rules are parsable", {
   expect_true(all(allRulesFilterable(tr_att, attrition)))
   expect_true(all(allRulesFilterable(tr_att_2, attrition)))
-  expect_true(all(allRulesFilterable(tr_ames, ames)))
-  expect_true(all(allRulesFilterable(tr_ames_2, ames_2)))
+  expect_true(all(allRulesFilterable(tr_bc_1, bc)))
+  expect_true(all(allRulesFilterable(tr_bc_2, bc2)))
 })
 

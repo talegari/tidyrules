@@ -16,7 +16,25 @@
 #' @export
 tidyRules.rpart <- function(object, ...){
 
+  # check for rpart object
   stopifnot(inherits(object, "rpart"))
+
+  # Stop if only root node is present in the object
+  if(nrow(object$frame) == 1){
+    stop(paste0("Oops, Something is wrong!! "
+                , "Only root node is written."
+                , "rpart model failed to build decision tree"
+                )
+         )
+  }
+
+  # Stop if any ordered factor is present:
+  # partykit doesn't handle the ordered factors while processing rules.
+  if(sum(object$ordered) > 0){
+    stop(paste0("Ordered variables detected!!"
+               , "convert ordered variables"
+               , " to factor or numberic before model fit"))
+  }
 
   if(is.null(object$y)){
     stop(
@@ -33,7 +51,7 @@ tidyRules.rpart <- function(object, ...){
 
   # throw error if there is consecutive spaces in the column names ----
   if(any(stringr::str_count(col_names, "  ") > 0)){
-    stop("Variable names should not two or more consecutive spaces.")
+    stop("Variable names should not have two or more consecutive spaces.")
   }
 
   # convert to class "party"
@@ -42,8 +60,8 @@ tidyRules.rpart <- function(object, ...){
   # extracting rules
   rules <- partykit:::.list.rules.party(party_obj) %>%
     stringr::str_replace_all(pattern = "\\\"","'") %>%
-    stringr::str_remove_all(pattern = "'NA',") %>%
     stringr::str_remove_all(pattern = ", 'NA'") %>%
+    stringr::str_remove_all(pattern = "'NA',") %>%
     stringr::str_remove_all(pattern = "'NA'") %>%
     stringr::str_squish()
 
