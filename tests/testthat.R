@@ -1,4 +1,4 @@
 library(testthat)
-# library(tidyrules)
+library(tidyrules)
 
 test_check("tidyrules")

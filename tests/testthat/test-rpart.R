@@ -1,5 +1,4 @@
-library(testthat)
-library(dplyr)
+
 context("test-rpart")
 
 # setup some models ----
@@ -25,9 +24,7 @@ bc <- BreastCancer %>%
   mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
   as_tibble()
 
-bc_1m <- rpart::rpart(Class ~ .
-                     , data = bc
-                     )
+bc_1m <- rpart::rpart(Class ~ ., data = bc)
 
 tr_bc_1 <- tidyRules(bc_1m)
 
@@ -37,9 +34,7 @@ bc2 <- bc
 colnames(bc2)[which(colnames(bc2) == "Cell.size")] <- "Cell size"
 colnames(bc2)[which(colnames(bc2) == "Cell.shape")] <- "Cell shape"
 
-bc_2m <- rpart::rpart(Class ~ .
-                     , data = bc2
-                     )
+bc_2m <- rpart::rpart(Class ~ ., data = bc2)
 
 tr_bc_2 <- tidyRules(bc_2m)
 
