@@ -14,12 +14,8 @@ Imports:
     purrr (>= 0.3.2),
     dplyr (>= 0.8),
     assertthat (>= 0.2.0),
-<<<<<<< HEAD
     dplyr (>= 0.8),
-    partykit (>= 1.2.2)
-=======
     partykit (>= 1.2.2),
->>>>>>> fde346013d6911b1577221da2cb8609113bb76fb
 Suggests:
     AmesHousing (>= 0.0.3),
     C50 (>= 0.1.2),

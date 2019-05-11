@@ -1,4 +1,4 @@
-
+library("dplyr")
 context("test-rpart")
 
 # setup some models ----
