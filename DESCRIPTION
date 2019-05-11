@@ -13,13 +13,15 @@ Imports:
     magrittr (>= 1.5),
     purrr (>= 0.3.2),
     assertthat (>= 0.2.0),
+    dplyr (>= 0.8),
+    partykit (>= 1.2.2),
 Suggests:
     AmesHousing (>= 0.0.3),
     C50 (>= 0.1.2),
     Cubist (>= 0.2.2),
+    rpart (>= 1.2.2),
     rsample (>= 0.0.2),
     testthat (>= 2.0.1),
-    dplyr (>= 0.8),
     MASS (>= 7.3.50),
 Description: Obtain rules as tidy dataframes and write more description here as the package shapes.
 License: GPL-3
