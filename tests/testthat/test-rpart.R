@@ -1,23 +1,28 @@
 library(testthat)
-
+library(dplyr)
 context("test-rpart")
 
 # setup some models ----
 # attrition
 data("attrition", package = "rsample")
-attrition <- tibble::as_tibble(attrition)
+attrition <- tibble::as_tibble(attrition) %>%
+  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
+
 
 rpart_att <- rpart::rpart(Attrition ~ ., data = attrition)
 tr_att <- tidyRules(rpart_att)
 
 # attrition with trials
-rpart_att_2 <- rpart::rpart(Attrition ~ ., data = attrition, y = T)
+rpart_att_2 <- rpart::rpart(Attrition ~ .
+                            , data = attrition
+                            , control = rpart::rpart.control(maxdepth = 4))
 tr_att_2 <- tidyRules(rpart_att_2)
 
 # BreastCancer
 data(BreastCancer, package = "mlbench")
 bc <- BreastCancer %>%
   dplyr::select(-Id) %>%
+  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
   as_tibble()
 
 bc_1m <- rpart::rpart(Class ~ .
@@ -27,8 +32,7 @@ bc_1m <- rpart::rpart(Class ~ .
 tr_bc_1 <- tidyRules(bc_1m)
 
 # variables with spaces
-bc2 <- bc %>%
-  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
+bc2 <- bc
 
 colnames(bc2)[which(colnames(bc2) == "Cell.size")] <- "Cell size"
 colnames(bc2)[which(colnames(bc2) == "Cell.shape")] <- "Cell shape"
