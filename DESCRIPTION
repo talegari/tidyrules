@@ -23,6 +23,7 @@ Suggests:
     rsample (>= 0.0.2),
     testthat (>= 2.0.1),
     MASS (>= 7.3.50),
+    mlbench (>= 2.1.1),
 Description: Obtain rules as tidy dataframes and write more description here as the package shapes.
 License: GPL-3
 Encoding: UTF-8

@@ -8,13 +8,11 @@
 #' @return A tibble where each row corresponds to a rule. The columns are:
 #'   support, confidence, lift, LHS, RHS
 #' @examples
-#' data(BreastCancer, package = "mlbench")
-#' bc <- BreastCancer %>%
-#' dplyr::select(-Id) %>%
-#' dplyr::mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
-#' bc_rpart <- rpart::rpart(Class ~ ., data = bc)
-#' summary(bc_rpart)
-#' tidyRules(bc_rpart)
+#' data("attrition", package = "rsample")
+#' attrition <- tibble::as_tibble(attrition)
+#' rpart_model <- rpart::rpart(Attrition ~., data = attrition)
+#' summary(rpart_model)
+#' tidyRules(rpart_model)
 #' @export
 tidyRules.rpart <- function(object, ...){
 
