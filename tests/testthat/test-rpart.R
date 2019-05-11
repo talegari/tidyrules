@@ -22,21 +22,13 @@ bc <- BreastCancer %>%
 
 bc_1m <- rpart::rpart(Class ~ .
                      , data = bc
-                     # , control = rpart::rpart.control(maxdepth = 2
-                     #                                  , maxsurrogate = 2
-                     #                                  , usesurrogate = 2
-                     #                                  , maxcompete = 2)
                      )
 
 tr_bc_1 <- tidyRules(bc_1m)
 
 # variables with spaces
 bc2 <- bc %>%
-  # mutate(Cell.size = as.integer(Cell.size))
-  mutate_if(is.ordered
-            ,function(x) x <- factor(x,ordered = F))
-  # mutate_all(function(x) ifelse(is.ordered(x),as.integer(x),x))
-  # mutate_all(as.factor)
+  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
 
 colnames(bc2)[which(colnames(bc2) == "Cell.size")] <- "Cell size"
 colnames(bc2)[which(colnames(bc2) == "Cell.shape")] <- "Cell shape"

@@ -45,11 +45,12 @@ tidyRules.rpart <- function(object, ...){
     )
   }
 
-  # column names from the object
+  # column names from the object: This will be used at the end to handle the
+  # variables with a space.
   col_names <- stringr::str_remove_all(attr(object$terms,which = "term.labels")
                                        , pattern = "`")
 
-  # throw error if there is consecutive spaces in the column names ----
+  # throw error if there are consecutive spaces in the column names ----
   if(any(stringr::str_count(col_names, "  ") > 0)){
     stop("Variable names should not have two or more consecutive spaces.")
   }
