@@ -1,3 +1,8 @@
+################################################################################
+# This is the part of the 'tidyrules' R package hosted at
+# https://github.com/talegari/tidyrules with GPL-3 license.
+################################################################################
+
 #' @name tidyRules.rpart
 #' @title Obtain rules as a tidy tibble from a rpart model
 #' @description Each row corresponds to a rule. A rule can be copied into
