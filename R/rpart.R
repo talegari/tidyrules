@@ -5,14 +5,23 @@
 #' @author Amith Kumar U R, \email{amith54@@gmail.com}
 #' @param object Fitted model object with rules
 #' @param ... Other arguments (currently unused)
+#' @details NOTE: For rpart rules, one should build the model without
+#' \bold{ordered factor} variable. We recommend you to convert \bold{ordered
+#' factor} to \bold{factor} or \bold{integer} class.
 #' @return A tibble where each row corresponds to a rule. The columns are:
 #'   support, confidence, lift, LHS, RHS
 #' @examples
+#' iris_rpart <- rpart::rpart(Species ~ .,data = iris)
+#' tidyRules(iris_rpart)
+#'
+#' # model train without rodered class:
+#' library("dplyr")
 #' data("attrition", package = "rsample")
-#' attrition <- tibble::as_tibble(attrition)
+#' attrition <- as_tibble(attrition) %>%
+#'        mutate_if(is.ordered, function(x) x <- factor(x,ordered = FALSE))
 #' rpart_model <- rpart::rpart(Attrition ~., data = attrition)
-#' summary(rpart_model)
 #' tidyRules(rpart_model)
+
 #' @export
 tidyRules.rpart <- function(object, ...){
 
@@ -21,9 +30,7 @@ tidyRules.rpart <- function(object, ...){
 
   # Stop if only root node is present in the object
   if(nrow(object$frame) == 1){
-    stop(paste0("Oops, Something is wrong!! "
-                , "Only root node is written."
-                , "rpart model failed to build decision tree"
+    stop(paste0("Only root is present in the rpart object"
                 )
          )
   }
@@ -59,7 +66,7 @@ tidyRules.rpart <- function(object, ...){
   party_obj <- partykit::as.party(object)
 
   # extracting rules
-  rules <- partykit:::.list.rules.party(party_obj) %>%
+  rules <- list.rules.party(party_obj) %>%
     stringr::str_replace_all(pattern = "\\\"","'") %>%
     stringr::str_remove_all(pattern = ", 'NA'") %>%
     stringr::str_remove_all(pattern = "'NA',") %>%
@@ -73,42 +80,33 @@ tidyRules.rpart <- function(object, ...){
   metrics <- object$frame[terminal_nodes,c("n","dev","yval")]
   metrics$confidence <- (metrics$n + 1 - metrics$dev) / (metrics$n + 2)
 
-  metrics <- metrics %>%
-    dplyr::select(n,yval,confidence) %>%
+  metrics <- metrics[,c("n","yval","confidence")] %>%
     magrittr::set_colnames(c("support","predict_class","confidence"))
 
   # extract exact labels
-  extracted_data <- partykit::data_party(party_obj)[,c("(fitted)"
-                                                       ,"(response)")] %>%
-    magrittr::set_colnames(c("fitted","response"))
-
-  extracted_data$numeric_response <- object$y
-
-  # Actual labels for RHS
-  exact_labels <- extracted_data %>%
-    dplyr::distinct(response,numeric_response)
+  # extracted_data <- partykit::data_party(party_obj)[,c("(fitted)"
+  #                                                      ,"(response)")] %>%
+  #   magrittr::set_colnames(c("fitted","response"))
+  #
+  # extracted_data$numeric_response <- object$y
 
   # prevelance for lift calculation
-  prevelance <- prop.table(table(extracted_data$numeric_response)) %>%
-    as.data.frame() %>%
-    magrittr::set_colnames(c("class","freq")) %>%
-    dplyr::mutate(class = as.numeric(class))
+  prevelance <- object$y %>%
+    table() %>%
+    prop.table() %>%
+    as.numeric()
 
-  # final metric df
-  metrics <- metrics %>%
-    dplyr::inner_join(exact_labels
-                      , by = c("predict_class" = "numeric_response")) %>%
-    dplyr::inner_join(prevelance, by = c("predict_class" = "class")) %>%
-    dplyr::mutate(lift = confidence / freq) %>%
-    dplyr::select(-c(predict_class,freq)) %>%
-    dplyr::rename(RHS = response)
+  # Actual labels for RHS
+  metrics$RHS <- attr(object, "ylevels")[metrics$predict_class]
 
-  # tidy rules
-  tidy_rules <- cbind(metrics,LHS = rules) %>%
-    dplyr::select(support,confidence,lift,LHS,RHS) %>%
-    dplyr::mutate_if(is.factor,as.character) %>%
-    tibble::as_tibble()
+  metrics$prevelance <- prevelance[metrics$predict_class]
 
+  metrics$lift <- metrics$confidence / metrics$prevelance
+
+  metrics$LHS <- rules
+
+
+  tidy_rules <- metrics
   # replace variable names with spaces within backquotes ----
   for(i in 1:length(col_names)){
     tidy_rules[["LHS"]] <- stringr::str_replace_all(
@@ -118,7 +116,16 @@ tidyRules.rpart <- function(object, ...){
     )
   }
 
-  tibble::rowid_to_column(tidy_rules, "id")
+  # return ----
+  tidy_rules <- tibble::rowid_to_column(tidy_rules, "id")
+  tidy_rules <- tidy_rules[, c("id"
+                               , "LHS"
+                               , "RHS"
+                               , "support"
+                               , "confidence"
+                               , "lift")
+                           ] %>%
+    tibble::as_tibble()
 
   return(tidy_rules)
 

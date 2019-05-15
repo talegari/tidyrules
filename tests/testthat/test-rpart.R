@@ -1,28 +1,26 @@
-library("dplyr")
 context("test-rpart")
 
 # setup some models ----
 # attrition
 data("attrition", package = "rsample")
-attrition <- tibble::as_tibble(attrition) %>%
-  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
-
+attrition <- attrition %>%
+  dplyr::mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
+  dplyr::mutate(Attrition = factor(Attrition, levels = c("No","Yes")))
 
 rpart_att <- rpart::rpart(Attrition ~ ., data = attrition)
 tr_att <- tidyRules(rpart_att)
 
-# attrition with trials
+# attrition with maxdepth
 rpart_att_2 <- rpart::rpart(Attrition ~ .
                             , data = attrition
-                            , control = rpart::rpart.control(maxdepth = 4))
+                            , control = rpart::rpart.control(maxdepth = 3))
 tr_att_2 <- tidyRules(rpart_att_2)
 
 # BreastCancer
 data(BreastCancer, package = "mlbench")
 bc <- BreastCancer %>%
   dplyr::select(-Id) %>%
-  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
-  as_tibble()
+  dplyr::mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
 
 bc_1m <- rpart::rpart(Class ~ ., data = bc)
 

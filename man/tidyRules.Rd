@@ -24,7 +24,7 @@ Each row corresponds to a rule. A rule can be copied into
   `dplyr::filter` to filter the observations corresponding to a rule
 }
 \details{
-tidyRule supports these rule based models: C5, Cubist, rpart, pre
+tidyRule supports these rule based models: C5, Cubist and rpart.
 }
 \author{
 Srikanth KS, \email{sri.teach@gmail.com}
