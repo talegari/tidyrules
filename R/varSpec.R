@@ -1,7 +1,13 @@
+################################################################################
+# This is the part of the 'tidyrules' R package hosted at
+# https://github.com/talegari/tidyrules with GPL-3 license.
+################################################################################
+
 #' @name varSpec
 #' @title Get variable specification for a Cubist/C5 object
 #' @description Obtain variable names, type (numeric, ordered, factor) and
 #'   levels as a tibble
+#' @author Srikanth KS, \email{sri.teach@@gmail.com}
 #' @param object Cubist/C5 object
 #' @return A tibble with three columns: variable(character), type(character) and
 #'   levels(a list-column). For numeric variables, levels are set to NA.

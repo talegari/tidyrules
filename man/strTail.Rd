@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{strTail}
 \alias{strTail}
-\title{Vetorized semantic equivalent of tail for a string}
+\title{Vectorized semantic equivalent of tail for a string}
 \usage{
 strTail(string, n)
 }
@@ -21,6 +21,9 @@ Picks the substring starting from the first character
 'n' can be in the interval [-len + 1, len] (both ends inclusive)
 }
 \examples{
+\dontrun{
 strTail(c("string", "string2"), 2)
 strTail(c("string", "string2"), -1)
+}
+
 }

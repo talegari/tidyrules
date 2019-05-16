@@ -1,3 +1,8 @@
+################################################################################
+# This is the part of the 'tidyrules' R package hosted at
+# https://github.com/talegari/tidyrules with GPL-3 license.
+################################################################################
+
 context("test-rpart")
 
 # setup some models ----
@@ -14,6 +19,7 @@ tr_att <- tidyRules(rpart_att)
 rpart_att_2 <- rpart::rpart(Attrition ~ .
                             , data = attrition
                             , control = rpart::rpart.control(maxdepth = 3))
+
 tr_att_2 <- tidyRules(rpart_att_2)
 
 # BreastCancer

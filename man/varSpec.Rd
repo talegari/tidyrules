@@ -26,3 +26,6 @@ cb_att <-
   Cubist::cubist(x = attrition[, cols_att],y = attrition[["MonthlyIncome"]])
 varSpec(cb_att)
 }
+\author{
+Srikanth KS, \email{sri.teach@gmail.com}
+}

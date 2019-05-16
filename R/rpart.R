@@ -1,3 +1,8 @@
+################################################################################
+# This is the part of the 'tidyrules' R package hosted at
+# https://github.com/talegari/tidyrules with GPL-3 license.
+################################################################################
+
 #' @name tidyRules.rpart
 #' @title Obtain rules as a tidy tibble from a rpart model
 #' @description Each row corresponds to a rule. A rule can be copied into
@@ -21,7 +26,6 @@
 #'        mutate_if(is.ordered, function(x) x <- factor(x,ordered = FALSE))
 #' rpart_model <- rpart::rpart(Attrition ~., data = attrition)
 #' tidyRules(rpart_model)
-
 #' @export
 tidyRules.rpart <- function(object, ...){
 
@@ -31,6 +35,7 @@ tidyRules.rpart <- function(object, ...){
   # Stop if only root node is present in the object
   if(nrow(object$frame) == 1){
     stop(paste0("Only root is present in the rpart object"
+
                 )
          )
   }
@@ -100,6 +105,7 @@ tidyRules.rpart <- function(object, ...){
 
 
   tidy_rules <- metrics
+
   # replace variable names with spaces within backquotes ----
   for(i in 1:length(col_names)){
     tidy_rules[["LHS"]] <- stringr::str_replace_all(

@@ -3,8 +3,6 @@
 S3method(tidyRules,C5.0)
 S3method(tidyRules,cubist)
 S3method(tidyRules,rpart)
-export(strHead)
-export(strTail)
 export(tidyRules)
 export(varSpec)
 importFrom(magrittr,"%>%")
