@@ -83,13 +83,6 @@ tidyRules.rpart <- function(object, ...){
   metrics <- metrics[,c("n","yval","confidence")] %>%
     magrittr::set_colnames(c("support","predict_class","confidence"))
 
-  # extract exact labels
-  # extracted_data <- partykit::data_party(party_obj)[,c("(fitted)"
-  #                                                      ,"(response)")] %>%
-  #   magrittr::set_colnames(c("fitted","response"))
-  #
-  # extracted_data$numeric_response <- object$y
-
   # prevelance for lift calculation
   prevelance <- object$y %>%
     table() %>%
