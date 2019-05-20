@@ -19,11 +19,21 @@ A tibble where each row corresponds to a rule. The columns are:
 Each row corresponds to a rule. A rule can be copied into
   `dplyr::filter` to filter the observations corresponding to a rule
 }
+\details{
+NOTE: For rpart rules, one should build the model without
+\bold{ordered factor} variable. We recommend you to convert \bold{ordered
+factor} to \bold{factor} or \bold{integer} class.
+}
 \examples{
+iris_rpart <- rpart::rpart(Species ~ .,data = iris)
+tidyRules(iris_rpart)
+
+# model train without rodered class:
+library("dplyr")
 data("attrition", package = "rsample")
-attrition <- tibble::as_tibble(attrition)
+attrition <- as_tibble(attrition) \%>\%
+       mutate_if(is.ordered, function(x) x <- factor(x,ordered = FALSE))
 rpart_model <- rpart::rpart(Attrition ~., data = attrition)
-summary(rpart_model)
 tidyRules(rpart_model)
 }
 \author{

@@ -11,3 +11,5 @@
 "_PACKAGE"
 
 is.integerish <- getFromNamespace("is.integerish", "assertthat")
+
+list.rules.party <- getFromNamespace(".list.rules.party", "partykit")
