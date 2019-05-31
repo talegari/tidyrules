@@ -8,16 +8,22 @@ context("test-rpart")
 # setup some models ----
 # attrition
 data("attrition", package = "rsample")
-attrition <- attrition %>%
+attrition_1 <- attrition %>%
   dplyr::mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
   dplyr::mutate(Attrition = factor(Attrition, levels = c("No","Yes")))
 
-rpart_att <- rpart::rpart(Attrition ~ ., data = attrition)
+rpart_att <- rpart::rpart(Attrition ~ ., data = attrition_1)
 tr_att <- tidyRules(rpart_att)
+
+# with ordered variables
+attrition_2 <- attrition %>%
+  dplyr::mutate(Attrition = factor(Attrition, levels = c("No","Yes")))
+
+rpart_att_1 <- rpart::rpart(Attrition ~ ., data = attrition_2)
 
 # attrition with maxdepth
 rpart_att_2 <- rpart::rpart(Attrition ~ .
-                            , data = attrition
+                            , data = attrition_1
                             , control = rpart::rpart.control(maxdepth = 3))
 
 tr_att_2 <- tidyRules(rpart_att_2)
@@ -63,6 +69,10 @@ allRulesFilterable <- function(tr, data){
   )
   return(parse_status)
 }
+
+# test for error while ordered features are present ----
+test_that("check error",{
+  expect_error(tidyRules(rpart_att_1))})
 
 # test output type ----
 
