@@ -23,8 +23,7 @@ rpart_att_1 <- rpart::rpart(Attrition ~ ., data = attrition_2)
 
 # attrition with maxdepth
 rpart_att_2 <- rpart::rpart(Attrition ~ .
-                            , data = attrition_1
-                            , control = rpart::rpart.control(maxdepth = 3))
+                            , data = attrition_1)
 
 tr_att_2 <- tidyRules(rpart_att_2)
 
