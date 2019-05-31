@@ -12,24 +12,15 @@ vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-abstract: The package [`tidyRules`](https://cran.r-project.org/package=tidyrules) is meant to extract rules from model objects to a clean `tibble` format. Currently this package supports `C5.0`, `rpart` and `cubist` models. 
+abstract: The package [`tidyRules`](https://cran.r-project.org/package=tidyrules) is meant to extract rules from model objects to a `tibble/data.frame` format. Currently this package supports `C5.0`, `rpart` and `cubist` models. 
 ---
-
-## Overview
-This vignette would guide you through tidyrules usage with some toy examples. 
-
-As a matter of fact, rules from different algorithms like [C5.0](https://cran.r-project.org/web/packages/C50/index.html), [cubist](https://cran.r-project.org/web/packages/Cubist/index.html) and [rpart](https://cran.r-project.org/web/packages/rpart/index.html)
-are readable but, hard to use respective rules for further analysis. 
-[**tidyrules**](https://cran.r-project.org/package=tidyrules) extract rules from 
-the model objects to a clean and tidy `tibble`. One can 
-subject those tidy rules for furhter deep-dive using `dplyr` functions. 
-
-## Quickstart
+## Quick-start
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
 library("tidyrules")
 library("dplyr")
 library("C50")
-library("knitr")
+library("pander")
+
 # build model
 c5_model <- C5.0(Species ~ ., data = iris, rules = TRUE)
 
@@ -37,16 +28,10 @@ c5_model <- C5.0(Species ~ ., data = iris, rules = TRUE)
 tidy_rules <- tidyRules(c5_model)
 
 # View tidy_rules
-kable(tidy_rules)
+tidy_rules %>% 
+  select(-c(rule_number,trial_number)) %>% 
+  pandoc.table()
 ```
-
-__`tidyRules` important columns to notice :__
-
-  * `LHS` : Rules.
-  * `RHS` : Predicted Class. 
-  * `support` : Number of observation covered by the rule. 
-  * `confidence` : Prediction accuracy for respective class. 
-  * `lift` : The result of dividing the rule's estimated accuracy by the relative frequency of the predicted class in the training set.
 
 **Filter rules based on `RHS` or `support` or `confidence` or `lift` :**
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
@@ -72,7 +57,7 @@ iris %>%
 ## Extracting rules using [`tidyrules`](https://cran.r-project.org/package=tidyrules)
 ### Example: Classification using `C5.0`
 In this example we use `attrition` data from `rsample` package. This 
-illustration shows how to extract rules fom `C5.0` model  and applying `filter()` 
+illustration shows how to extract rules from `C5.0` model  and applying `filter()` 
 based on [**tidyrules**](https://cran.r-project.org/package=tidyrules). 
 
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
@@ -89,7 +74,7 @@ glimpse(attrition)
 ```
 
 As you could see, there are 31 variables and 1470 observations are present this 
-dataset. Here our aim is to predict Attrition using rest of the variables. Let 
+data-set. Here our aim is to predict Attrition using rest of the variables. Let 
 us build a `C5.0` model first. 
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
 # our C5 model
@@ -111,7 +96,7 @@ sub-population. If in case your model is giving too many rules then that is the
 hardest part to go through each and every rules and identifying best rules out 
 of the summary. 
 
-Whatif we have all the rules in a tidy table format so that we could easily use 
+What if we have all the rules in a tidy table format so that we could easily use 
 them on the data. Let's get it done using `tidyRules`.
 
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
@@ -120,9 +105,25 @@ tr_att <- tidyRules(c5_att)
 
 tr_att
 ```
+__`tidyRules` important columns to notice :__
+
+  * `LHS` : Rules.
+  * `RHS` : Predicted Class. 
+  * `support` : Number of observation covered by the rule. 
+  * `confidence` : Prediction accuracy for respective class. 
+  * `lift` : The result of dividing the rule's estimated accuracy by the relative frequency of the predicted class in the training set.
+
+Let's have a look at first five rules
+
+```{r}
+tr_att %>% 
+  head(5) %>% 
+  select(LHS,RHS) %>% 
+  pandoc.table(split.cells = 60)
+```
 
 Now, all the rules are in `tibble` (a _tidy_ form of `dataframe`) format. Let us
-look at rules which favours only Attrition is equal to "No" and arrange by 
+look at rules which favors only Attrition is equal to "No" and arrange by 
 support.
 
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
@@ -168,17 +169,17 @@ bc_train <- BreastCancer %>%
 rpart_bc <- rpart(Class ~ ., data = bc_train)
 ```
 
-*__NOTE__ : Do not forget to convert all `ordered` featrues to `factor` type
-before trainig the model.*
+*__NOTE__ : Do not forget to convert all `ordered` features to `factor` type
+before training the model.*
 
-One could visualise rpart descision tree using `prp` function from `rpart.plot` package. 
+One could visualize rpart decision tree using `prp` function from `rpart.plot` package. 
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
 library("rpart.plot")
 prp(rpart_bc)
 ```
 
-The above tree visual is really nice to get a hang of how desision tree is splitting at each node. But, if you want to pick a terminal node it is really boring and hard 
-since one has to enter the respective filter manually (imagine a cituation if you have hundreds of features and a huge tree!!). To get-ride of this problem
+The above tree visual is really nice to get a hang of how decision tree is splitting at each node. But, if you want to pick a terminal node it is really boring and hard 
+since one has to enter the respective filter manually (imagine a situation if you have hundreds of features and a huge tree!!). To get-ride of this problem
 one could use tidyrules to make life easier. 
 
 Let's extract rules from `rpart` object and use those rules further more to extract terminal nodes. 
