@@ -1,0 +1,227 @@
+---
+title: "Vignette_tidyrules"
+author: "Srikanth KS, Amith Kumar UR"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+abstract: The package [`tidyRules`](https://cran.r-project.org/package=tidyrules) is meant to extract rules from model objects to a `tibble/data.frame` format. Currently this package supports `C5.0`, `rpart` and `cubist` models. 
+---
+## Quick-start
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+library("tidyrules")
+library("dplyr")
+library("C50")
+library("pander")
+
+# build model
+c5_model <- C5.0(Species ~ ., data = iris, rules = TRUE)
+
+# extract rules in a tidy tibble
+tidy_rules <- tidyRules(c5_model)
+
+# View tidy_rules
+tidy_rules %>% 
+  select(-c(rule_number,trial_number)) %>% 
+  pandoc.table()
+```
+
+**Filter rules based on `RHS` or `support` or `confidence` or `lift` :**
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+# Example 1, filter rules based on support
+tidy_rules %>% 
+  filter(support >= 48) %>% 
+  select(LHS, RHS)
+
+
+# Example 2, filter rules based on RHS
+tidy_rules %>% 
+  filter(RHS == "virginica") %>% 
+  select(LHS, support, confidence, lift)
+```
+
+**Use a `tidyrule` in a `filter()` function :**
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+iris %>% 
+  filter(eval(parse(text = tidy_rules[3,"LHS"]))) %>%  # filter using a C5 rule
+  count(Species)
+```
+
+## Extracting rules using [`tidyrules`](https://cran.r-project.org/package=tidyrules)
+### Example: Classification using `C5.0`
+In this example we use `attrition` data from `rsample` package. This 
+illustration shows how to extract rules from `C5.0` model  and applying `filter()` 
+based on [**tidyrules**](https://cran.r-project.org/package=tidyrules). 
+
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+# loading packages
+library("tidyrules")
+library("C50")
+library("dplyr")
+
+# attrition data load
+data("attrition", package = "rsample")
+attrition <- as_tibble(attrition)
+
+glimpse(attrition)
+```
+
+As you could see, there are 31 variables and 1470 observations are present this 
+data-set. Here our aim is to predict Attrition using rest of the variables. Let 
+us build a `C5.0` model first. 
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+# our C5 model
+c5_att <- C5.0(Attrition ~ ., data = attrition, rules = TRUE)
+
+# sample rules from C5
+c5_att$output %>% 
+  stringr::str_sub(start = 194L
+                   , end = 578L) %>% 
+  writeLines()
+```
+
+We get nice and human readable rules. Now problem with `C5.0` summary is, you 
+can only read and get a feel of how your predictions made based on rules. But 
+here comes the hard part, imagine if you want to explore further about your data
+and you want to dig deeper, if you want to know rules which are throwing high 
+lift and confidence, or you may be interested in rules which covers major 
+sub-population. If in case your model is giving too many rules then that is the 
+hardest part to go through each and every rules and identifying best rules out 
+of the summary. 
+
+What if we have all the rules in a tidy table format so that we could easily use 
+them on the data. Let's get it done using `tidyRules`.
+
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+# Extract rules to a tidy tibble
+tr_att <- tidyRules(c5_att)
+
+tr_att
+```
+__`tidyRules` important columns to notice :__
+
+  * `LHS` : Rules.
+  * `RHS` : Predicted Class. 
+  * `support` : Number of observation covered by the rule. 
+  * `confidence` : Prediction accuracy for respective class. 
+  * `lift` : The result of dividing the rule's estimated accuracy by the relative frequency of the predicted class in the training set.
+
+Let's have a look at first five rules
+
+```{r}
+tr_att %>% 
+  head(5) %>% 
+  select(LHS,RHS) %>% 
+  pandoc.table(split.cells = 60)
+```
+
+Now, all the rules are in `tibble` (a _tidy_ form of `dataframe`) format. Let us
+look at rules which favors only Attrition is equal to "No" and arrange by 
+support.
+
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+rules_example_1 <- tr_att %>% 
+  filter(RHS == "No") %>% 
+  arrange(desc(support))
+
+rules_example_1
+```
+
+#### Use rules inside `filter()` function. 
+Let's use a rule within a `filter()`. Say, one need to pick a rule which has 
+largest `support` for predicted Attrition "Yes". 
+
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+# filter a rule with conditions
+large_support_rule <- tr_att %>% 
+  filter(RHS == "Yes") %>% 
+  top_n(1, wt = support) %>% 
+  pull(LHS)
+
+# parseable rule 
+parseable_rule <- parse(text = large_support_rule)
+
+# apply filter on data frame using parseable rule
+attrition %>% 
+  filter(eval(parseable_rule))
+```
+
+
+### Example: Classification using `rpart`
+In this example we will be using `BreastCancer` data from `mlbench` package. 
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+library("tidyrules")
+library("dplyr")
+library("rpart")
+# BreastCancer
+data(BreastCancer, package = "mlbench")
+bc_train <- BreastCancer %>%
+  select(-Id) %>%
+  mutate_if(is.ordered, function(x) x <- factor(x,ordered = F))
+
+rpart_bc <- rpart(Class ~ ., data = bc_train)
+```
+
+*__NOTE__ : Do not forget to convert all `ordered` features to `factor` type
+before training the model.*
+
+One could visualize rpart decision tree using `prp` function from `rpart.plot` package. 
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+library("rpart.plot")
+prp(rpart_bc)
+```
+
+The above tree visual is really nice to get a hang of how decision tree is splitting at each node. But, if you want to pick a terminal node it is really boring and hard 
+since one has to enter the respective filter manually (imagine a situation if you have hundreds of features and a huge tree!!). To get-ride of this problem
+one could use tidyrules to make life easier. 
+
+Let's extract rules from `rpart` object and use those rules further more to extract terminal nodes. 
+
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+# tidyrule extract
+rules_bc <- tidyRules(rpart_bc)
+
+rules_bc
+
+# filter the data using a rule 
+bc_train %>% 
+  filter(eval(parse(text = rules_bc[5,"LHS"]))) %>% 
+  as_tibble()
+```
+
+### Example: Regression using `Cubist`
+In this example, rules extraction from a regression model (a `cubist` model) has 
+been illustrated below. We will be using `AmesHousing` dataset for the example.  
+
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+library("tidyrules")
+library("dplyr")
+library("Cubist")
+# ames housing data set
+ames   <- AmesHousing::make_ames()
+cubist_ames <- cubist(x = ames[, setdiff(colnames(ames), c("Sale_Price"))],
+                          y = log10(ames[["Sale_Price"]]),
+                          committees = 3
+                          )
+
+# rule extract 
+rules_ames <- tidyRules(cubist_ames)
+
+rules_ames
+```
+
+Notice that, for `cubist` rules we have `mean`, `min`, `max` and `error` instead 
+of `confidence` and `lift`. Here `mean`, `min` and `max` are calculated based on predicted values with respect to a rule. 
+
+## Useful links and References : 
+
+* C5.0: An Informal Tutorial <https://www.rulequest.com/see5-unix.html>
+* Recursive partitioning for classification, regression and survival trees <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2927982/>
+* Data Mining with Cubist <https://www.rulequest.com/cubist-info.html>

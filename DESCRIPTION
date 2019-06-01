@@ -1,6 +1,6 @@
 Package: tidyrules
 Type: Package
-Title: Obtain rules as tidy dataframes
+Title: Obtain Rules from Rule Based Models as Tidy Dataframe
 Version: 0.1.0
 Author: c(
     person("Srikanth", "Komala Sheshachala", email = "sri.teach@gmail.com", role = c("aut", "cre")),
@@ -20,12 +20,18 @@ Suggests:
     C50 (>= 0.1.2),
     Cubist (>= 0.2.2),
     rpart (>= 1.2.2),
+    rpart.plot (>= 3.0.7),
     rsample (>= 0.0.2),
     testthat (>= 2.0.1),
     MASS (>= 7.3.50),
     mlbench (>= 2.1.1),
-Description: Obtain rules as tidy dataframes and write more description here as the package shapes.
+    knitr (>= 1.23), 
+    rmarkdown (>= 1.13),
+    pander (>= 0.6.3),
+Description: Utility to convert text based summary of rule based models to a tidy dataframe (where each row represents a rule) with related matrics such as support, confidence and lift.
+Supported models: C5.0, rpart and Cubist.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr
