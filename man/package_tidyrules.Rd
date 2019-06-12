@@ -9,3 +9,11 @@
 \description{
 Obtain rules as tidy dataframes
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/talegari/tidyrules}
+  \item Report bugs at \url{https://github.com/talegari/tidyrules/issues}
+}
+
+}

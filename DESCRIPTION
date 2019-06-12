@@ -28,8 +28,10 @@ Suggests:
     knitr (>= 1.23), 
     rmarkdown (>= 1.13),
     pander (>= 0.6.3),
-Description: Utility to convert text based summary of rule based models to a tidy dataframe (where each row represents a rule) with related matrics such as support, confidence and lift.
+Description: Utility to convert text based summary of rule based models to a tidy dataframe (where each row represents a rule) with related metrics such as support, confidence and lift.
 Supported models: C5.0, rpart and Cubist.
+URL: https://github.com/talegari/tidyrules
+BugReports: https://github.com/talegari/tidyrules/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
