@@ -17,3 +17,12 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Srikanth Komala Sheshachala \email{sri.teach@gmail.com}
+
+Authors:
+\itemize{
+  \item Amith Kumar Ullur Raghavendra \email{amith54@gmail.com}
+}
+
+}
