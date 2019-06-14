@@ -21,9 +21,9 @@ Picks the substring starting from the first character
 'n' can be in the interval [-len + 1, len] (both ends inclusive)
 }
 \examples{
-\dontrun{
-strTail(c("string", "string2"), 2)
-strTail(c("string", "string2"), -1)
+\donttest{
+tidyrules:::strTail(c("string", "string2"), 2)
+tidyrules:::strTail(c("string", "string2"), -1)
 }
 
 }

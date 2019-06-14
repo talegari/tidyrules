@@ -18,14 +18,6 @@
 #' @examples
 #' iris_rpart <- rpart::rpart(Species ~ .,data = iris)
 #' tidyRules(iris_rpart)
-#'
-#' # model train without rodered class:
-#' library("dplyr")
-#' data("attrition", package = "rsample")
-#' attrition <- as_tibble(attrition) %>%
-#'        mutate_if(is.ordered, function(x) x <- factor(x,ordered = FALSE))
-#' rpart_model <- rpart::rpart(Attrition ~., data = attrition)
-#' tidyRules(rpart_model)
 #' @export
 tidyRules.rpart <- function(object, ...){
 

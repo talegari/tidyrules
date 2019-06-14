@@ -20,8 +20,8 @@ character vector
 Sequential string replace via reduce
 }
 \examples{
-\dontrun{
-strReplaceReduce("abcd", c("ab", "dc"), c("cd", "ab"))
+\donttest{
+tidyrules:::strReplaceReduce("abcd", c("ab", "dc"), c("cd", "ab"))
 }
 
 }

@@ -17,8 +17,8 @@ A integer vector of positions
   a pair of single quotes
 }
 \examples{
-\dontrun{
-positionSpaceOutsideSinglequotes(c("hello", "hel' 'o "))
+\donttest{
+tidyrules:::positionSpaceOutsideSinglequotes(c("hello", "hel' 'o "))
 }
 
 }

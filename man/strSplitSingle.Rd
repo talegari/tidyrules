@@ -18,8 +18,8 @@ A character vector
 and return a character vector (not a list)
 }
 \examples{
-\dontrun{
-strSplitSingle("abc,d", ",")
+\donttest{
+tidyrules:::strSplitSingle("abc,d", ",")
 }
 
 }

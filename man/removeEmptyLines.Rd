@@ -16,8 +16,8 @@ A character vector
 Remove empty strings from a character vector
 }
 \examples{
-\dontrun{
-removeEmptyLines(c("abc", "", "d"))
+\donttest{
+tidyrules:::removeEmptyLines(c("abc", "", "d"))
 }
 
 }
