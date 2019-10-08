@@ -1,7 +1,7 @@
 Package: tidyrules
 Type: Package
 Title: Obtain Rules from Rule Based Models as Tidy Dataframe
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Srikanth", "Komala Sheshachala", email = "sri.teach@gmail.com", role = c("aut", "cre")),
     person("Amith Kumar", "Ullur Raghavendra", email = "amith54@gmail.com", role = c("aut"))
