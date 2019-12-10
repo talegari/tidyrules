@@ -9,7 +9,7 @@ output:
       collapsed: false
       smooth_scroll: false
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Using tidyrules}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 abstract: The package [`tidyRules`](https://cran.r-project.org/package=tidyrules) is meant to extract rules from model objects to a `tibble/data.frame` format. Currently this package supports `C5.0`, `rpart` and `cubist` models. 
@@ -110,7 +110,7 @@ __`tidyRules` important columns to notice :__
   * `LHS` : Rules.
   * `RHS` : Predicted Class. 
   * `support` : Number of observation covered by the rule. 
-  * `confidence` : Prediction accuracy for respective class. 
+  * `confidence` : Prediction accuracy for respective class. (laplace correction is implemented by default)
   * `lift` : The result of dividing the rule's estimated accuracy by the relative frequency of the predicted class in the training set.
 
 Let's have a look at first five rules

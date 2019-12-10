@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{Fitted model object with rules}
 
-\item{...}{Other arguments (currently unused)}
+\item{...}{Other arguments (See details)}
 }
 \value{
 A tibble where each row corresponds to a rule. The columns are:
@@ -18,6 +18,11 @@ A tibble where each row corresponds to a rule. The columns are:
 \description{
 Each row corresponds to a rule. A rule can be copied into
   `dplyr::filter` to filter the observations corresponding to a rule
+}
+\details{
+Optional named argument laplace(flag, default: TRUE) is supported.
+  This computes confidence with laplace correction as documented under
+  'Rulesets' here: [C5 doc](https://www.rulequest.com/see5-unix.html)
 }
 \examples{
 data("attrition", package = "rsample")

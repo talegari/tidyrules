@@ -9,9 +9,12 @@
 #'   `dplyr::filter` to filter the observations corresponding to a rule
 #' @author Srikanth KS, \email{sri.teach@@gmail.com}
 #' @param object Fitted model object with rules
-#' @param ... Other arguments (currently unused)
+#' @param ... Other arguments (See details)
 #' @return A tibble where each row corresponds to a rule. The columns are:
 #'   support, confidence, lift, lhs, rhs, n_conditions
+#' @details Optional named argument laplace(flag, default: TRUE) is supported.
+#'   This computes confidence with laplace correction as documented under
+#'   'Rulesets' here: [C5 doc](https://www.rulequest.com/see5-unix.html)
 #' @examples
 #' data("attrition", package = "rsample")
 #' attrition <- tibble::as_tibble(attrition)
@@ -21,6 +24,12 @@
 #' @export
 
 tidyRules.C5.0 <- function(object, ...){
+
+  # evaluate ...
+  arguments = list(...)
+  if(is.null(arguments[["laplace"]])){
+    arguments[["laplace"]] = TRUE
+  }
 
   # for magrittr dot ----
   . <- NULL
@@ -126,16 +135,41 @@ tidyRules.C5.0 <- function(object, ...){
     support_confidence <- strSplitSingle(stats[1], "/")
     if(length(support_confidence) > 1){
 
+      # extract support
       rule[["support"]]    <- as.integer(support_confidence[1])
-      rule[["confidence"]] <- rule[["support"]] %>%
-        magrittr::subtract(as.integer(support_confidence[2])) %>%
-        magrittr::divide_by(rule[["support"]]) %>%
-        round(4)
+
+      # compute confidence (not extract)
+      if(arguments[["laplace"]]){
+
+        # C5 doc computes confidence using laplace correction
+        # (n-m+1)/(n+2)
+        # n: number of obs in leaf
+        # m: number of musclassifications among n
+        rule[["confidence"]] <- rule[["support"]] %>%
+          magrittr::subtract(as.integer(support_confidence[2])) %>%
+          magrittr::add(1) %>%
+          magrittr::divide_by(rule[["support"]] + 2) %>%
+          round(4)
+
+      } else {
+
+        # without laplace correction
+        # simply: (n-m)/n
+        rule[["confidence"]] <- rule[["support"]] %>%
+          magrittr::subtract(as.integer(support_confidence[2])) %>%
+          magrittr::divide_by(rule[["support"]]) %>%
+          round(4)
+      }
 
     } else {
 
       rule[["support"]]    <- as.integer(support_confidence)
-      rule[["confidence"]] <- 1
+      # see comments for laplace above
+      if(arguments[["laplace"]]){
+        rule[["confidence"]] = (rule[["support"]] + 1)/(rule[["support"]] + 2)
+      } else{
+        rule[["confidence"]] = 1
+      }
     }
 
     rule[["lift"]] <- strSplitSingle(stats[2], "\\s") %>%
