@@ -27,7 +27,7 @@ summary(model_c5)
 #> C5.0.formula(formula = Species ~ ., data = iris, rules = TRUE)
 #> 
 #> 
-#> C5.0 [Release 2.07 GPL Edition]      Wed Oct  9 05:02:58 2019
+#> C5.0 [Release 2.07 GPL Edition]      Tue Dec 10 14:47:18 2019
 #> -------------------------------
 #> 
 #> Class specified by attribute `outcome'
@@ -90,15 +90,15 @@ pander::pandoc.table(tidyRules(model_c5), split.tables = 120)
 #> ----------------------------------------------------------------------------------------------------
 #>  id            LHS               RHS       support   confidence   lift   rule_number   trial_number 
 #> ---- ----------------------- ------------ --------- ------------ ------ ------------- --------------
-#>  1     Petal.Length <= 1.9      setosa       50          1        2.9         1             1       
+#>  1     Petal.Length <= 1.9      setosa       50        0.9808     2.9         1             1       
 #> 
-#>  2    Petal.Length > 1.9 &    versicolor     48        0.9792     2.9         2             1       
+#>  2    Petal.Length > 1.9 &    versicolor     48         0.96      2.9         2             1       
 #>       Petal.Length <= 4.9 &                                                                         
 #>        Petal.Width <= 1.7                                                                           
 #> 
-#>  3      Petal.Width > 1.7     virginica      46        0.9783     2.9         3             1       
+#>  3      Petal.Width > 1.7     virginica      46        0.9583     2.9         3             1       
 #> 
-#>  4     Petal.Length > 4.9     virginica      46        0.9565     2.8         4             1       
+#>  4     Petal.Length > 4.9     virginica      46        0.9375     2.8         4             1       
 #> ----------------------------------------------------------------------------------------------------
 ```
 

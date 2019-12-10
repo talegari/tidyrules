@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vignette_tidyrules • tidyrules</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Vignette_tidyrules">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyrules</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -57,11 +58,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/talegari/tidyrules">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -74,13 +78,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Vignette_tidyrules</h1>
                         <h4 class="author">Srikanth KS, Amith Kumar UR</h4>
             
-            <h4 class="date">2019-06-14</h4>
+            <h4 class="date">2019-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/talegari/tidyrules/blob/master/vignettes/tidyrules_vignette.Rmd"><code>vignettes/tidyrules_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>tidyrules_vignette.Rmd</code></div>
@@ -96,58 +101,58 @@
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-start" class="anchor"></a>Quick-start</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyrules"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"dplyr"</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"C50"</span>)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"pander"</span>)</a>
-<a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co"># build model</span></a>
-<a class="sourceLine" id="cb1-7" title="7">c5_model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/C50/topics/C5.0">C5.0</a></span>(Species <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> iris, <span class="dt">rules =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co"># extract rules in a tidy tibble</span></a>
-<a class="sourceLine" id="cb1-10" title="10">tidy_rules &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(c5_model)</a>
-<a class="sourceLine" id="cb1-11" title="11"></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co"># View tidy_rules</span></a>
-<a class="sourceLine" id="cb1-13" title="13">tidy_rules <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(rule_number,trial_number)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/pander/topics/pandoc.table.return">pandoc.table</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"C50"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"pander"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># build model</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">c5_model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/C50/man/C5.0.html">C5.0</a></span>(Species <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> iris, <span class="dt">rules =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># extract rules in a tidy tibble</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">tidy_rules &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(c5_model)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># View tidy_rules</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">tidy_rules <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(rule_number,trial_number)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/pander/man/pandoc.table.return.html">pandoc.table</a></span>()</a></code></pre></div>
 <pre><code>## 
 ## -----------------------------------------------------------------------
 ##  id            LHS               RHS       support   confidence   lift 
 ## ---- ----------------------- ------------ --------- ------------ ------
-##  1     Petal.Length &lt;= 1.9      setosa       50          1        2.9  
+##  1     Petal.Length &lt;= 1.9      setosa       50        0.9808     2.9  
 ## 
-##  2    Petal.Length &gt; 1.9 &amp;    versicolor     48        0.9792     2.9  
+##  2    Petal.Length &gt; 1.9 &amp;    versicolor     48         0.96      2.9  
 ##       Petal.Length &lt;= 4.9 &amp;                                            
 ##        Petal.Width &lt;= 1.7                                              
 ## 
-##  3      Petal.Width &gt; 1.7     virginica      46        0.9783     2.9  
+##  3      Petal.Width &gt; 1.7     virginica      46        0.9583     2.9  
 ## 
-##  4     Petal.Length &gt; 4.9     virginica      46        0.9565     2.8  
+##  4     Petal.Length &gt; 4.9     virginica      46        0.9375     2.8  
 ## -----------------------------------------------------------------------</code></pre>
 <p><strong>Filter rules based on <code>RHS</code> or <code>support</code> or <code>confidence</code> or <code>lift</code> :</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Example 1, filter rules based on support</span></a>
-<a class="sourceLine" id="cb3-2" title="2">tidy_rules <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(support <span class="op">&gt;=</span><span class="st"> </span><span class="dv">48</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(LHS, RHS)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Example 1, filter rules based on support</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">tidy_rules <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(support <span class="op">&gt;=</span><span class="st"> </span><span class="dv">48</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(LHS, RHS)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   LHS                                                           RHS       
 ##   &lt;chr&gt;                                                         &lt;chr&gt;     
 ## 1 Petal.Length &lt;= 1.9                                           setosa    
 ## 2 Petal.Length &gt; 1.9 &amp; Petal.Length &lt;= 4.9 &amp; Petal.Width &lt;= 1.7 versicolor</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Example 2, filter rules based on RHS</span></a>
-<a class="sourceLine" id="cb5-2" title="2">tidy_rules <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(RHS <span class="op">==</span><span class="st"> "virginica"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(LHS, support, confidence, lift)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Example 2, filter rules based on RHS</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">tidy_rules <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(RHS <span class="op">==</span><span class="st"> "virginica"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(LHS, support, confidence, lift)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   LHS                support confidence  lift
 ##   &lt;chr&gt;                &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;
-## 1 Petal.Width &gt; 1.7       46      0.978   2.9
-## 2 Petal.Length &gt; 4.9      46      0.956   2.8</code></pre>
+## 1 Petal.Width &gt; 1.7       46      0.958   2.9
+## 2 Petal.Length &gt; 4.9      46      0.938   2.8</code></pre>
 <p><strong>Use a <code>tidyrule</code> in a <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function :</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">iris <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/eval">eval</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/parse">parse</a></span>(<span class="dt">text =</span> tidy_rules[<span class="dv">3</span>,<span class="st">"LHS"</span>]))) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># filter using a C5 rule</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">count</a></span>(Species)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/eval.html">eval</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="dt">text =</span> tidy_rules[<span class="dv">3</span>,<span class="st">"LHS"</span>]))) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># filter using a C5 rule</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/tally.html">count</a></span>(Species)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Species        n
 ##   &lt;fct&gt;      &lt;int&gt;
@@ -163,16 +168,16 @@
 <a href="#example-classification-using-c5-0" class="anchor"></a>Example: Classification using <code>C5.0</code>
 </h3>
 <p>In this example we use <code>attrition</code> data from <code>rsample</code> package. This illustration shows how to extract rules from <code>C5.0</code> model and applying <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> based on <a href="https://cran.r-project.org/package=tidyrules"><strong>tidyrules</strong></a>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># loading packages</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyrules"</span>)</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"C50"</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"dplyr"</span>)</a>
-<a class="sourceLine" id="cb9-5" title="5"></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co"># attrition data load</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"attrition"</span>, <span class="dt">package =</span> <span class="st">"rsample"</span>)</a>
-<a class="sourceLine" id="cb9-8" title="8">attrition &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(attrition)</a>
-<a class="sourceLine" id="cb9-9" title="9"></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(attrition)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># loading packages</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"C50"</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co"># attrition data load</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"attrition"</span>, <span class="dt">package =</span> <span class="st">"rsample"</span>)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">attrition &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(attrition)</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(attrition)</a></code></pre></div>
 <pre><code>## Observations: 1,470
 ## Variables: 31
 ## $ Age                      &lt;int&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36,…
@@ -207,14 +212,14 @@
 ## $ YearsSinceLastPromotion  &lt;int&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, …
 ## $ YearsWithCurrManager     &lt;int&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, …</code></pre>
 <p>As you could see, there are 31 variables and 1470 observations are present this data-set. Here our aim is to predict Attrition using rest of the variables. Let us build a <code>C5.0</code> model first.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># our C5 model</span></a>
-<a class="sourceLine" id="cb11-2" title="2">c5_att &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/C50/topics/C5.0">C5.0</a></span>(Attrition <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> attrition, <span class="dt">rules =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb11-3" title="3"></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co"># sample rules from C5</span></a>
-<a class="sourceLine" id="cb11-5" title="5">c5_att<span class="op">$</span>output <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span>stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(<span class="dt">start =</span> 194L</a>
-<a class="sourceLine" id="cb11-7" title="7">                   , <span class="dt">end =</span> 578L) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/writeLines">writeLines</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># our C5 model</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">c5_att &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/C50/man/C5.0.html">C5.0</a></span>(Attrition <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> attrition, <span class="dt">rules =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># sample rules from C5</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">c5_att<span class="op">$</span>output <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span>stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(<span class="dt">start =</span> 194L</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">                   , <span class="dt">end =</span> 578L) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span>()</a></code></pre></div>
 <pre><code>## 
 ## Rule 1: (521/30, lift 1.1)
 ##  EnvironmentSatisfaction in [Medium-Very_High]
@@ -234,23 +239,23 @@
 ##  -&gt;  class No  [0.864]</code></pre>
 <p>We get nice and human readable rules. Now problem with <code>C5.0</code> summary is, you can only read and get a feel of how your predictions made based on rules. But here comes the hard part, imagine if you want to explore further about your data and you want to dig deeper, if you want to know rules which are throwing high lift and confidence, or you may be interested in rules which covers major sub-population. If in case your model is giving too many rules then that is the hardest part to go through each and every rules and identifying best rules out of the summary.</p>
 <p>What if we have all the rules in a tidy table format so that we could easily use them on the data. Let’s get it done using <code>tidyRules</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Extract rules to a tidy tibble</span></a>
-<a class="sourceLine" id="cb13-2" title="2">tr_att &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(c5_att)</a>
-<a class="sourceLine" id="cb13-3" title="3"></a>
-<a class="sourceLine" id="cb13-4" title="4">tr_att</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Extract rules to a tidy tibble</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">tr_att &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(c5_att)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">tr_att</a></code></pre></div>
 <pre><code>## # A tibble: 24 x 8
 ##       id LHS        RHS   support confidence  lift rule_number trial_number
 ##    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt;
-##  1     1 Environme… No        521      0.942   1.1           1            1
-##  2     2 JobRole =… No        195      0.928   1.1           2            1
+##  1     1 Environme… No        521      0.941   1.1           1            1
+##  2     2 JobRole =… No        195      0.924   1.1           2            1
 ##  3     3 TotalWork… No       1347      0.864   1             3            1
-##  4     4 JobLevel … Yes        16      1       5.9           4            1
-##  5     5 DailyRate… Yes        13      1       5.8           5            1
-##  6     6 Environme… Yes         9      1       5.6           6            1
-##  7     7 Environme… Yes         9      1       5.6           7            1
-##  8     8 JobRole =… Yes         6      1       5.4           8            1
-##  9     9 JobRole %… Yes        14      0.929   5.4           9            1
-## 10    10 Departmen… Yes        13      0.923   5.4          10            1
+##  4     4 JobLevel … Yes        16      0.944   5.9           4            1
+##  5     5 DailyRate… Yes        13      0.933   5.8           5            1
+##  6     6 Environme… Yes         9      0.909   5.6           6            1
+##  7     7 Environme… Yes         9      0.909   5.6           7            1
+##  8     8 JobRole =… Yes         6      0.875   5.4           8            1
+##  9     9 JobRole %… Yes        14      0.875   5.4           9            1
+## 10    10 Departmen… Yes        13      0.867   5.4          10            1
 ## # … with 14 more rows</code></pre>
 <p><strong><code>tidyRules</code> important columns to notice :</strong></p>
 <ul>
@@ -261,15 +266,15 @@
 <li>
 <code>support</code> : Number of observation covered by the rule.</li>
 <li>
-<code>confidence</code> : Prediction accuracy for respective class.</li>
+<code>confidence</code> : Prediction accuracy for respective class. (laplace correction is implemented by default)</li>
 <li>
 <code>lift</code> : The result of dividing the rule’s estimated accuracy by the relative frequency of the predicted class in the training set.</li>
 </ul>
 <p>Let’s have a look at first five rules</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">tr_att <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(LHS,RHS) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/pander/topics/pandoc.table.return">pandoc.table</a></span>(<span class="dt">split.cells =</span> <span class="dv">60</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">tr_att <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(LHS,RHS) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/pander/man/pandoc.table.return.html">pandoc.table</a></span>(<span class="dt">split.cells =</span> <span class="dv">60</span>)</a></code></pre></div>
 <pre><code>## 
 ## -------------------------------------------------------------------
 ##                              LHS                               RHS 
@@ -290,33 +295,33 @@
 ##           OverTime == 'Yes' &amp; TotalWorkingYears &gt; 2                
 ## -------------------------------------------------------------------</code></pre>
 <p>Now, all the rules are in <code>tibble</code> (a <em>tidy</em> form of <code>dataframe</code>) format. Let us look at rules which favors only Attrition is equal to “No” and arrange by support.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">rules_example_<span class="dv">1</span> &lt;-<span class="st"> </span>tr_att <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(RHS <span class="op">==</span><span class="st"> "No"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(support))</a>
-<a class="sourceLine" id="cb17-4" title="4"></a>
-<a class="sourceLine" id="cb17-5" title="5">rules_example_<span class="dv">1</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">rules_example_<span class="dv">1</span> &lt;-<span class="st"> </span>tr_att <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(RHS <span class="op">==</span><span class="st"> "No"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(support))</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">rules_example_<span class="dv">1</span></a></code></pre></div>
 <pre><code>## # A tibble: 3 x 8
 ##      id LHS         RHS   support confidence  lift rule_number trial_number
 ##   &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt;
 ## 1     3 TotalWorki… No       1347      0.864   1             3            1
-## 2     1 Environmen… No        521      0.942   1.1           1            1
-## 3     2 JobRole ==… No        195      0.928   1.1           2            1</code></pre>
+## 2     1 Environmen… No        521      0.941   1.1           1            1
+## 3     2 JobRole ==… No        195      0.924   1.1           2            1</code></pre>
 <div id="use-rules-inside-filter-function-" class="section level4">
 <h4 class="hasAnchor">
-<a href="#use-rules-inside-filter-function-" class="anchor"></a>Use rules inside <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function.</h4>
+<a href="#use-rules-inside-filter-function-" class="anchor"></a>Use rules inside <code>filter()</code> function.</h4>
 <p>Let’s use a rule within a <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>. Say, one need to pick a rule which has largest <code>support</code> for predicted Attrition “Yes”.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># filter a rule with conditions</span></a>
-<a class="sourceLine" id="cb19-2" title="2">large_support_rule &lt;-<span class="st"> </span>tr_att <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(RHS <span class="op">==</span><span class="st"> "Yes"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="dv">1</span>, <span class="dt">wt =</span> support) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(LHS)</a>
-<a class="sourceLine" id="cb19-6" title="6"></a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="co"># parseable rule </span></a>
-<a class="sourceLine" id="cb19-8" title="8">parseable_rule &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/parse">parse</a></span>(<span class="dt">text =</span> large_support_rule)</a>
-<a class="sourceLine" id="cb19-9" title="9"></a>
-<a class="sourceLine" id="cb19-10" title="10"><span class="co"># apply filter on data frame using parseable rule</span></a>
-<a class="sourceLine" id="cb19-11" title="11">attrition <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-12" title="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/eval">eval</a></span>(parseable_rule))</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># filter a rule with conditions</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">large_support_rule &lt;-<span class="st"> </span>tr_att <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(RHS <span class="op">==</span><span class="st"> "Yes"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="dv">1</span>, <span class="dt">wt =</span> support) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(LHS)</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co"># parseable rule </span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">parseable_rule &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="dt">text =</span> large_support_rule)</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co"># apply filter on data frame using parseable rule</span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11">attrition <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/eval.html">eval</a></span>(parseable_rule))</a></code></pre></div>
 <pre><code>## # A tibble: 57 x 31
 ##      Age Attrition BusinessTravel DailyRate Department DistanceFromHome
 ##    &lt;int&gt; &lt;fct&gt;     &lt;fct&gt;              &lt;int&gt; &lt;fct&gt;                 &lt;int&gt;
@@ -347,27 +352,27 @@
 <a href="#example-classification-using-rpart" class="anchor"></a>Example: Classification using <code>rpart</code>
 </h3>
 <p>In this example we will be using <code>BreastCancer</code> data from <code>mlbench</code> package.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyrules"</span>)</a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"dplyr"</span>)</a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"rpart"</span>)</a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="co"># BreastCancer</span></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(BreastCancer, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
-<a class="sourceLine" id="cb21-6" title="6">bc_train &lt;-<span class="st"> </span>BreastCancer <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-8" title="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span>(is.ordered, <span class="cf">function</span>(x) x &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(x,<span class="dt">ordered =</span> F))</a>
-<a class="sourceLine" id="cb21-9" title="9"></a>
-<a class="sourceLine" id="cb21-10" title="10">rpart_bc &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/rpart/topics/rpart">rpart</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> bc_train)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rpart"</span>)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co"># BreastCancer</span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(BreastCancer, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">bc_train &lt;-<span class="st"> </span>BreastCancer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span>(is.ordered, <span class="cf">function</span>(x) x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(x,<span class="dt">ordered =</span> F))</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">rpart_bc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> bc_train)</a></code></pre></div>
 <p><em><strong>NOTE</strong> : Do not forget to convert all <code>ordered</code> features to <code>factor</code> type before training the model.</em></p>
 <p>One could visualize rpart decision tree using <code>prp</code> function from <code>rpart.plot</code> package.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"rpart.plot"</span>)</a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/rpart.plot/topics/prp">prp</a></span>(rpart_bc)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rpart.plot"</span>)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/rpart.plot/man/prp.html">prp</a></span>(rpart_bc)</a></code></pre></div>
 <p><img src="tidyrules_vignette_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>The above tree visual is really nice to get a hang of how decision tree is splitting at each node. But, if you want to pick a terminal node it is really boring and hard since one has to enter the respective filter manually (imagine a situation if you have hundreds of features and a huge tree!!). To get-ride of this problem one could use tidyrules to make life easier.</p>
 <p>Let’s extract rules from <code>rpart</code> object and use those rules further more to extract terminal nodes.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># tidyrule extract</span></a>
-<a class="sourceLine" id="cb23-2" title="2">rules_bc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(rpart_bc)</a>
-<a class="sourceLine" id="cb23-3" title="3"></a>
-<a class="sourceLine" id="cb23-4" title="4">rules_bc</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># tidyrule extract</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">rules_bc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(rpart_bc)</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">rules_bc</a></code></pre></div>
 <pre><code>## # A tibble: 7 x 6
 ##      id LHS                                 RHS    support confidence  lift
 ##   &lt;int&gt; &lt;chr&gt;                               &lt;chr&gt;    &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;
@@ -378,10 +383,10 @@
 ## 5     5 Cell.size %in% c('3', '4', '5', '6… benign      15      0.647 0.988
 ## 6     6 Cell.size %in% c('3', '4', '5', '6… malig…      61      0.841 2.44 
 ## 7     7 Cell.size %in% c('3', '4', '5', '6… malig…     171      0.971 2.82</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># filter the data using a rule </span></a>
-<a class="sourceLine" id="cb25-2" title="2">bc_train <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/eval">eval</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/parse">parse</a></span>(<span class="dt">text =</span> rules_bc[<span class="dv">5</span>,<span class="st">"LHS"</span>]))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># filter the data using a rule </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">bc_train <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/eval.html">eval</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="dt">text =</span> rules_bc[<span class="dv">5</span>,<span class="st">"LHS"</span>]))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()</a></code></pre></div>
 <pre><code>## # A tibble: 15 x 10
 ##    Cl.thickness Cell.size Cell.shape Marg.adhesion Epith.c.size Bare.nuclei
 ##    &lt;fct&gt;        &lt;fct&gt;     &lt;fct&gt;      &lt;fct&gt;         &lt;fct&gt;        &lt;fct&gt;      
@@ -408,20 +413,20 @@
 <a href="#example-regression-using-cubist" class="anchor"></a>Example: Regression using <code>Cubist</code>
 </h3>
 <p>In this example, rules extraction from a regression model (a <code>cubist</code> model) has been illustrated below. We will be using <code>AmesHousing</code> dataset for the example.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"tidyrules"</span>)</a>
-<a class="sourceLine" id="cb27-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"dplyr"</span>)</a>
-<a class="sourceLine" id="cb27-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"Cubist"</span>)</a>
-<a class="sourceLine" id="cb27-4" title="4"><span class="co"># ames housing data set</span></a>
-<a class="sourceLine" id="cb27-5" title="5">ames   &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/AmesHousing/topics/make_ames">make_ames</a></span>()</a>
-<a class="sourceLine" id="cb27-6" title="6">cubist_ames &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/Cubist/topics/cubist.default">cubist</a></span>(<span class="dt">x =</span> ames[, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/setops.html">setdiff</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(ames), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Sale_Price"</span>))],</a>
-<a class="sourceLine" id="cb27-7" title="7">                          <span class="dt">y =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(ames[[<span class="st">"Sale_Price"</span>]]),</a>
-<a class="sourceLine" id="cb27-8" title="8">                          <span class="dt">committees =</span> <span class="dv">3</span></a>
-<a class="sourceLine" id="cb27-9" title="9">                          )</a>
-<a class="sourceLine" id="cb27-10" title="10"></a>
-<a class="sourceLine" id="cb27-11" title="11"><span class="co"># rule extract </span></a>
-<a class="sourceLine" id="cb27-12" title="12">rules_ames &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(cubist_ames)</a>
-<a class="sourceLine" id="cb27-13" title="13"></a>
-<a class="sourceLine" id="cb27-14" title="14">rules_ames</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"Cubist"</span>)</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co"># ames housing data set</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">ames   &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/AmesHousing/man/make_ames.html">make_ames</a></span>()</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">cubist_ames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Cubist/man/cubist.default.html">cubist</a></span>(<span class="dt">x =</span> ames[, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/setops.html">setdiff</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(ames), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sale_Price"</span>))],</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">                          <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(ames[[<span class="st">"Sale_Price"</span>]]),</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8">                          <span class="dt">committees =</span> <span class="dv">3</span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">                          )</a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co"># rule extract </span></a>
+<a class="sourceLine" id="cb27-12" data-line-number="12">rules_ames &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(cubist_ames)</a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14">rules_ames</a></code></pre></div>
 <pre><code>## # A tibble: 43 x 9
 ##       id LHS         RHS         support  mean   min   max  error committee
 ##    &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;int&gt;
@@ -468,17 +473,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Srikanth Komala Sheshachala, Amith Kumar Ullur Raghavendra.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
