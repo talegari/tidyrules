@@ -27,6 +27,15 @@ rpart_att_2 <- rpart::rpart(Attrition ~ .
 
 tr_att_2 <- tidyRules(rpart_att_2)
 
+# regression test
+attrition_reg <- attrition %>%
+  dplyr::mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
+  dplyr::select(-Attrition)
+
+rpart_att_reg <- rpart::rpart(MonthlyIncome ~ .
+                          , data = attrition_reg)
+tr_att_reg <- tidyRules(rpart_att_reg)
+
 # BreastCancer
 data(BreastCancer, package = "mlbench")
 bc <- BreastCancer %>%
@@ -80,6 +89,7 @@ test_that("creates tibble", {
   expect_is(tr_att_2, "tbl_df")
   expect_is(tr_bc_1, "tbl_df")
   expect_is(tr_bc_2, "tbl_df")
+  expect_is(tr_att_reg, "tbl_df")
 })
 
 # test NA ----
@@ -88,6 +98,7 @@ test_that("Are NA present", {
   expect_false(anyNA(tr_att_2))
   expect_false(anyNA(tr_bc_1))
   expect_false(anyNA(tr_bc_2))
+  expect_false(anyNA(tr_att_reg))
 })
 
 # test parsable ----
@@ -96,5 +107,6 @@ test_that("rules are parsable", {
   expect_true(all(allRulesFilterable(tr_att_2, attrition)))
   expect_true(all(allRulesFilterable(tr_bc_1, bc)))
   expect_true(all(allRulesFilterable(tr_bc_2, bc2)))
+  expect_true(all(allRulesFilterable(tr_att_reg,attrition)))
 })
 
