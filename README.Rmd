@@ -1,0 +1,54 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# tidyrules
+
+<!-- badges: start -->
+[![Build Status](https://travis-ci.org/talegari/tidyrules.svg?branch=master)](https://travis-ci.org/talegari/tidyrules)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tidyrules)](https://cran.r-project.org/package=tidyrules)
+<!-- badges: end -->
+
+`tidyrules` converts texual rules from models to dataframes with parseable rules. Supported models are: `C5`, `cubist` and `rpart`.
+
+## Example
+
+```{r example}
+library(tidyrules)
+```
+
+```{r basic C5 example}
+model_c5 = C50::C5.0(Species ~ ., data = iris, rules = TRUE)
+summary(model_c5)
+```
+
+Tidy the rules:
+
+```{r tidyrules}
+pander::pandoc.table(tidyRules(model_c5), split.tables = 120)
+```
+
+## Installation
+
+You can install the released version of tidyrules from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("tidyrules")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("talegari/tidyrules")
+```

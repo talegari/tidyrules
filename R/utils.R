@@ -11,8 +11,8 @@
 #' @param string A chracter vector
 #' @return A integer vector of positions
 #' @examples
-#' \dontrun{
-#' positionSpaceOutsideSinglequotes(c("hello", "hel' 'o "))
+#' \donttest{
+#' tidyrules:::positionSpaceOutsideSinglequotes(c("hello", "hel' 'o "))
 #' }
 #'
 positionSpaceOutsideSinglequotes <- Vectorize(
@@ -36,8 +36,8 @@ positionSpaceOutsideSinglequotes <- Vectorize(
 #' @param strings A character vector
 #' @return A character vector
 #' @examples
-#' \dontrun{
-#' removeEmptyLines(c("abc", "", "d"))
+#' \donttest{
+#' tidyrules:::removeEmptyLines(c("abc", "", "d"))
 #' }
 #'
 removeEmptyLines <- function(strings){
@@ -51,8 +51,8 @@ removeEmptyLines <- function(strings){
 #' @param pattern Passed as-is to 'stringr::str_split'
 #' @return A character vector
 #' @examples
-#' \dontrun{
-#' strSplitSingle("abc,d", ",")
+#' \donttest{
+#' tidyrules:::strSplitSingle("abc,d", ",")
 #' }
 #'
 strSplitSingle <- function(string, pattern){
@@ -70,9 +70,9 @@ strSplitSingle <- function(string, pattern){
 #' @details 'n' can be in the interval [-len + 1, len] (both ends inclusive)
 #' @return A string
 #' @examples
-#' \dontrun{
-#' strHead(c("string", "string2"), 2)
-#' strHead(c("string", "string2"), -1)
+#' \donttest{
+#' tidyrules:::strHead(c("string", "string2"), 2)
+#' tidyrules:::strHead(c("string", "string2"), -1)
 #' }
 #'
 strHead <- Vectorize(
@@ -103,9 +103,9 @@ strHead <- Vectorize(
 #' @details 'n' can be in the interval [-len + 1, len] (both ends inclusive)
 #' @return A string
 #' @examples
-#' \dontrun{
-#' strTail(c("string", "string2"), 2)
-#' strTail(c("string", "string2"), -1)
+#' \donttest{
+#' tidyrules:::strTail(c("string", "string2"), 2)
+#' tidyrules:::strTail(c("string", "string2"), -1)
 #' }
 #'
 strTail <- Vectorize(
@@ -131,8 +131,8 @@ strTail <- Vectorize(
 #' @param string character vector
 #' @return character vector
 #' @examples
-#' \dontrun{
-#' addBackquotes(c("ab", "a b"))
+#' \donttest{
+#' tidyrules:::addBackquotes(c("ab", "a b"))
 #' }
 #'
 addBackquotes <- Vectorize(
@@ -156,8 +156,8 @@ addBackquotes <- Vectorize(
 #' @param replacement replacement
 #' @return character vector
 #' @examples
-#' \dontrun{
-#' strReplaceReduce("abcd", c("ab", "dc"), c("cd", "ab"))
+#' \donttest{
+#' tidyrules:::strReplaceReduce("abcd", c("ab", "dc"), c("cd", "ab"))
 #' }
 #'
 strReplaceReduce <- function(string, pattern, replacement){
@@ -175,33 +175,3 @@ strReplaceReduce <- function(string, pattern, replacement){
                  , .init = string
                  )
 }
-
-
-# # split string at positions
-# # the ones at the position will not be retained
-# strPositionSplit <- Vectorize(
-#   function(string, positions){
-#
-#     assertthat::assert_that(assertthat::is.string(string))
-#     assertthat::assert_that(is.integerish(positions))
-#     assertthat::assert_that(length(positions) == length(unique(positions)))
-#     positions <- sort(positions)
-#     ell <- stringr::str_length(string)
-#     if(max(positions) > ell){
-#       stop("Positions to split should be less than the length of the string")
-#     }
-#
-#     starts <- c(1L, positions + 1L)
-#     ends   <- c(positions - 1L, ell)
-#     wrongs <- (starts > ends)
-#
-#     if(sum(wrongs) < ell){
-#       starts <- starts[!wrongs]
-#       ends   <- ends[!wrongs]
-#     } else {
-#       return(character(0))
-#     }
-#
-#     return(stringr::str_sub(string, starts, ends))
-#   }
-# )

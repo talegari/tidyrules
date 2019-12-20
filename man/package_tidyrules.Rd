@@ -9,3 +9,20 @@
 \description{
 Obtain rules as tidy dataframes
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/talegari/tidyrules}
+  \item Report bugs at \url{https://github.com/talegari/tidyrules/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Srikanth Komala Sheshachala \email{sri.teach@gmail.com}
+
+Authors:
+\itemize{
+  \item Amith Kumar Ullur Raghavendra \email{amith54@gmail.com}
+}
+
+}

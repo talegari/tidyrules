@@ -16,8 +16,8 @@ character vector
 (vectorized) Add backquotes when a string has a space in it
 }
 \examples{
-\dontrun{
-addBackquotes(c("ab", "a b"))
+\donttest{
+tidyrules:::addBackquotes(c("ab", "a b"))
 }
 
 }

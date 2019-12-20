@@ -133,84 +133,105 @@ tidyRules.cubist <- function(object, ...){
       magrittr::extract(3) %>%
       as.numeric()
 
-    # get LHS
-    btw_if_then <- seq(which(stringr::str_trim(single_raw_rule) == "if") + 1
-                       , which(stringr::str_trim(single_raw_rule) == "then") - 1
-                       )
+    # is if-then missing (only outcome is there)
+    if_exists = any(stringr::str_trim(single_raw_rule) == "if")
 
-    # unclean LHS strings, one condition per string
-    lhsStrings <-  single_raw_rule[btw_if_then] %>%
-      stringr::str_replace_all("\\t", "\\\\n") %>%
-      stringr::str_trim() %>%
-      stringr::str_c(collapse = " ") %>%
-      strSplitSingle("\\\\n") %>%
-      removeEmptyLines() %>%
-      stringr::str_trim()
+    if(if_exists){
+      # get LHS
+      btw_if_then <- seq(
+        which(stringr::str_trim(single_raw_rule) == "if") + 1
+        , which(stringr::str_trim(single_raw_rule) == "then") - 1
+        )
 
-    # function to get the one clean rule string
-    getRuleString <- function(string){
+      # unclean LHS strings, one condition per string
+      lhsStrings <-  single_raw_rule[btw_if_then] %>%
+        stringr::str_replace_all("\\t", "\\\\n") %>%
+        stringr::str_trim() %>%
+        stringr::str_c(collapse = " ") %>%
+        strSplitSingle("\\\\n") %>%
+        removeEmptyLines() %>%
+        stringr::str_trim()
 
-      # to avoid CRAN notes
-      . <- NULL
+      # function to get the one clean rule string
+      getRuleString <- function(string){
 
-      # if  there is ' in {' in the string
-      if(stringr::str_detect(string, "\\sin\\s\\{")){
+        # to avoid CRAN notes
+        . <- NULL
 
-        # split with ' in {'
-        var_lvls <- strSplitSingle(string, "\\sin\\s\\{")
+        # if  there is ' in {' in the string
+        if(stringr::str_detect(string, "\\sin\\s\\{")){
 
-        # get the contents inside curly braces
-        lvls <- var_lvls[2] %>%
-          # omit the closing curly bracket
-          strHead(-1) %>%
-          strSplitSingle(",") %>%
-          stringr::str_trim() %>%
-          purrr::map_chr(function(x) stringr::str_c("'", x, "'")) %>%
-          stringr::str_c(collapse = ", ") %>%  # note the space next to comma
-          stringr::str_c("c(", ., ")")
+          # split with ' in {'
+          var_lvls <- strSplitSingle(string, "\\sin\\s\\{")
 
-        # get the variable
-        var <- var_lvls[1] %>%
-          stringr::str_trim()
+          # get the contents inside curly braces
+          lvls <- var_lvls[2] %>%
+            # omit the closing curly bracket
+            strHead(-1) %>%
+            strSplitSingle(",") %>%
+            stringr::str_trim() %>%
+            purrr::map_chr(function(x) stringr::str_c("'", x, "'")) %>%
+            stringr::str_c(collapse = ", ") %>%  # note the space next to comma
+            stringr::str_c("c(", ., ")")
 
-        rs <- stringr::str_c(var, " %in% ", lvls)
-
-      } else {
-
-        # handle '=' case
-        contains_equals <- stringr::str_detect(string, " = ")
-        if(contains_equals){
-
-          sub_rule <- strSplitSingle(string, "=") %>%
+          # get the variable
+          var <- var_lvls[1] %>%
             stringr::str_trim()
 
-          if(!(col_classes[sub_rule[1]] == "numeric")){
-            sub_rule[2] <- stringr::str_c("'", sub_rule[2], "'")
-          }
-
-        rs <- stringr::str_c(sub_rule, collapse = " == ")
+          rs <- stringr::str_c(var, " %in% ", lvls)
 
         } else {
 
-          # nothing to do
-          rs <- string
+          # handle '=' case
+          contains_equals <- stringr::str_detect(string, " = ")
+          if(contains_equals){
 
-        }
+            sub_rule <- strSplitSingle(string, "=") %>%
+              stringr::str_trim()
 
-      } # end of handle '=' case
+            if(!(col_classes[sub_rule[1]] == "numeric")){
+              sub_rule[2] <- stringr::str_c("'", sub_rule[2], "'")
+            }
 
-      return(rs)
+          rs <- stringr::str_c(sub_rule, collapse = " == ")
+
+          } else {
+
+            # nothing to do
+            rs <- string
+
+          }
+
+        } # end of handle '=' case
+
+        return(rs)
+
+      }
+
+      # clean up LHS as string
+      res[["LHS"]] <- purrr::map_chr(lhsStrings, getRuleString) %>%
+        stringr::str_c(collapse = " & ") # note spaces next to AND
+    } else {
+
+      res[["LHS"]] = NA
 
     }
 
-    # clean up LHS as string
-    res[["LHS"]] <- purrr::map_chr(lhsStrings, getRuleString) %>%
-      stringr::str_c(collapse = " & ") # note spaces next to AND
-
     # get RHS
-    afterThen <- seq(which(stringr::str_trim(single_raw_rule) == "then") + 1
-                     , length(single_raw_rule)
-                     )
+    # then might not exist: still retaining old name 'afterThen'
+    if(if_exists){
+      afterThen <- seq(which(stringr::str_trim(single_raw_rule) == "then") + 1
+                       , length(single_raw_rule)
+                       )
+    } else {
+      afterThen <- seq(
+        which(stringr::str_detect(stringr::str_trim(single_raw_rule)
+                                  , "^outcome"
+                                  )
+              )
+        , length(single_raw_rule)
+        )
+    }
 
     # handle brackets around signs
     res[["RHS"]] <- single_raw_rule[afterThen] %>%
@@ -233,7 +254,7 @@ tidyRules.cubist <- function(object, ...){
       stringr::str_replace("\\(\\)\\s\\-\\s\\(", "(-")
 
     return(res)
-}
+  }
 
   # see if rules have commitees and create commitees vector ----
   rule_number_splits <-
@@ -279,12 +300,13 @@ tidyRules.cubist <- function(object, ...){
       )
   }
 
+  # prepare and return ----
   res[["committee"]] <- committees
   res <- tibble::rowid_to_column(res, "id")
   res <- res[, c("id", "LHS", "RHS", "support"
                  , "mean", "min", "max", "error", "committee"
                  )
              ]
-  return(res)
 
+  return(res)
 }
