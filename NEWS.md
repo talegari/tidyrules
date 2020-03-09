@@ -1,3 +1,7 @@
+# tidyrules 0.1.4
+
+- Added rules parsable in python and SQL (default: R)
+
 # tidyrules 0.1.3
 
 - Rules for rpart regression model ([issue](https://github.com/talegari/tidyrules/issues/8))

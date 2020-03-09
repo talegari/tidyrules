@@ -12,7 +12,7 @@ vignette: >
   %\VignetteIndexEntry{Using tidyrules}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-abstract: The package [`tidyRules`](https://cran.r-project.org/package=tidyrules) is meant to extract rules from model objects to a `tibble/data.frame` format. Currently this package supports `C5.0`, `rpart` and `cubist` models. 
+abstract: The package [`tidyRules`](https://cran.r-project.org/package=tidyrules) is meant to extract **parsable** rules from model objects to a `tibble/data.frame` format. Package supports the following models -  `C5.0`, `rpart` and `cubist`. The output rules are parsable by R, python (pandas query) and SQL (with WHERE clause). 
 ---
 ## Quick-start
 ```{r,warning=FALSE,echo=TRUE,message=FALSE}
@@ -153,6 +153,14 @@ attrition %>%
   filter(eval(parseable_rule))
 ```
 
+#### Rules parsable by python and SQL
+```{r,warning=FALSE,echo=TRUE,message=FALSE}
+tr_att_python <- tidyRules(c5_att, language = "python")
+tr_att_sql    <- tidyRules(c5_att, language = "sql")
+
+head(tr_att_python$LHS)
+head(tr_att_sql$LHS)
+```
 
 ### Example: Classification using `rpart`
 In this example we will be using `BreastCancer` data from `mlbench` package. 
@@ -220,7 +228,7 @@ rules_ames
 Notice that, for `cubist` rules we have `mean`, `min`, `max` and `error` instead 
 of `confidence` and `lift`. Here `mean`, `min` and `max` are calculated based on predicted values with respect to a rule. 
 
-## Useful links and References : 
+## Useful links and References 
 
 * C5.0: An Informal Tutorial <https://www.rulequest.com/see5-unix.html>
 * Recursive partitioning for classification, regression and survival trees <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2927982/>

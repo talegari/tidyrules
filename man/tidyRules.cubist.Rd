@@ -23,6 +23,15 @@ Each row corresponds to a rule. A rule can be copied into
 When col_classes argument is missing, an educated guess is made
   about class by parsing the RHS of sub-rule. This might sometimes not lead
   to a parsable rule.
+
+  Optional named arguments:
+
+  \itemize{
+
+  \item language (string, default: "r"): language where the rules are
+  parsable. The allowed options is one among: r, python, sql
+
+  }
 }
 \examples{
 data("attrition", package = "rsample")

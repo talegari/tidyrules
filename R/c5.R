@@ -12,9 +12,21 @@
 #' @param ... Other arguments (See details)
 #' @return A tibble where each row corresponds to a rule. The columns are:
 #'   support, confidence, lift, lhs, rhs, n_conditions
-#' @details Optional named argument laplace(flag, default: TRUE) is supported.
-#'   This computes confidence with laplace correction as documented under
-#'   'Rulesets' here: [C5 doc](https://www.rulequest.com/see5-unix.html)
+#' @details
+#'
+#' Optional named arguments:
+#'
+#' \itemize{
+#'
+#' \item laplace(flag, default: TRUE) is supported. This computes confidence
+#' with laplace correction as documented under 'Rulesets' here: [C5
+#' doc](https://www.rulequest.com/see5-unix.html).
+#'
+#' \item language (string, default: "r"): language where the rules are parsable.
+#' The allowed options is one among: r, python, sql
+#'
+#' }
+#'
 #' @examples
 #' data("attrition", package = "rsample")
 #' attrition <- tibble::as_tibble(attrition)
@@ -29,6 +41,22 @@ tidyRules.C5.0 <- function(object, ...){
   arguments = list(...)
   if(is.null(arguments[["laplace"]])){
     arguments[["laplace"]] = TRUE
+  }
+
+  # asserts for 'language'
+  if(is.null(arguments[["language"]])){
+
+    arguments[["language"]] = "r"
+
+  } else {
+
+    assertthat::assert_that(assertthat::is.string(arguments[["language"]]))
+    arguments[["language"]] = stringr::str_to_lower(arguments[["language"]])
+    assertthat::assert_that(arguments[["language"]] %in% c("r"
+                                                           , "python"
+                                                           , "sql"
+                                                           )
+                            )
   }
 
   # for magrittr dot ----
@@ -300,6 +328,15 @@ tidyRules.C5.0 <- function(object, ...){
       , variable_names[i]
       , addBackquotes(variable_names[i])
       )
+  }
+
+  # handle the rule parsable language
+  lang = arguments[["language"]]
+
+  if (lang == "python"){
+    res[["LHS"]] = ruleRToPython(res[["LHS"]])
+  } else if (lang == "sql"){
+    res[["LHS"]] = ruleRToSQL(res[["LHS"]])
   }
 
   # return ----

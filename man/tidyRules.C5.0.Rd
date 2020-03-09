@@ -20,9 +20,18 @@ Each row corresponds to a rule. A rule can be copied into
   `dplyr::filter` to filter the observations corresponding to a rule
 }
 \details{
-Optional named argument laplace(flag, default: TRUE) is supported.
-  This computes confidence with laplace correction as documented under
-  'Rulesets' here: [C5 doc](https://www.rulequest.com/see5-unix.html)
+Optional named arguments:
+
+\itemize{
+
+\item laplace(flag, default: TRUE) is supported. This computes confidence
+with laplace correction as documented under 'Rulesets' here: [C5
+doc](https://www.rulequest.com/see5-unix.html).
+
+\item language (string, default: "r"): language where the rules are parsable.
+The allowed options is one among: r, python, sql
+
+}
 }
 \examples{
 data("attrition", package = "rsample")

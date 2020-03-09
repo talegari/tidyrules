@@ -23,6 +23,15 @@ Each row corresponds to a rule. A rule can be copied into
 NOTE: For rpart rules, one should build the model without
 \bold{ordered factor} variable. We recommend you to convert \bold{ordered
 factor} to \bold{factor} or \bold{integer} class.
+
+Optional named arguments:
+
+\itemize{
+
+\item language (string, default: "r"): language where the rules are parsable.
+The allowed options is one among: r, python, sql
+
+}
 }
 \examples{
 iris_rpart <- rpart::rpart(Species ~ .,data = iris)

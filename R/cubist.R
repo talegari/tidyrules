@@ -15,6 +15,16 @@
 #' @details When col_classes argument is missing, an educated guess is made
 #'   about class by parsing the RHS of sub-rule. This might sometimes not lead
 #'   to a parsable rule.
+#'
+#'   Optional named arguments:
+#'
+#'   \itemize{
+#'
+#'   \item language (string, default: "r"): language where the rules are
+#'   parsable. The allowed options is one among: r, python, sql
+#'
+#'   }
+#'
 #' @examples
 #' data("attrition", package = "rsample")
 #' attrition <- tibble::as_tibble(attrition)
@@ -27,6 +37,19 @@
 #' @export
 
 tidyRules.cubist <- function(object, ...){
+
+  # asserts for 'language'
+  arguments = list(...)
+  if(is.null(arguments[["language"]])){
+
+    arguments[["language"]] = "r"
+
+  } else {
+
+    assertthat::assert_that(assertthat::is.string(arguments[["language"]]))
+    arguments[["language"]] = stringr::str_to_lower(arguments[["language"]])
+    assertthat::assert_that(arguments[["language"]] %in% c("r", "python", "sql"))
+  }
 
   # output from the model ----
   output <- object[["output"]]
@@ -298,6 +321,15 @@ tidyRules.cubist <- function(object, ...){
       , variable_names_with_[i]
       , addBackquotes(variable_names[i])
       )
+  }
+
+  # handle the rule parsable language
+  lang = arguments[["language"]]
+
+  if (lang == "python"){
+    res[["LHS"]] = ruleRToPython(res[["LHS"]])
+  } else if (lang == "sql"){
+    res[["LHS"]] = ruleRToSQL(res[["LHS"]])
   }
 
   # prepare and return ----

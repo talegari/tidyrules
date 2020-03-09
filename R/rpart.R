@@ -13,6 +13,16 @@
 #' @details NOTE: For rpart rules, one should build the model without
 #' \bold{ordered factor} variable. We recommend you to convert \bold{ordered
 #' factor} to \bold{factor} or \bold{integer} class.
+#'
+#' Optional named arguments:
+#'
+#' \itemize{
+#'
+#' \item language (string, default: "r"): language where the rules are parsable.
+#' The allowed options is one among: r, python, sql
+#'
+#' }
+#'
 #' @return A tibble where each row corresponds to a rule. The columns are:
 #'   support, confidence, lift, LHS, RHS
 #' @examples
@@ -20,6 +30,19 @@
 #' tidyRules(iris_rpart)
 #' @export
 tidyRules.rpart <- function(object, ...){
+
+  # asserts for 'language'
+  arguments = list(...)
+  if(is.null(arguments[["language"]])){
+
+    arguments[["language"]] = "r"
+
+  } else {
+
+    assertthat::assert_that(assertthat::is.string(arguments[["language"]]))
+    arguments[["language"]] = stringr::str_to_lower(arguments[["language"]])
+    assertthat::assert_that(arguments[["language"]] %in% c("r", "python", "sql"))
+  }
 
   # check for rpart object
   stopifnot(inherits(object, "rpart"))
@@ -119,9 +142,18 @@ tidyRules.rpart <- function(object, ...){
                            ] %>%
     tibble::as_tibble()
 
-  return(tidy_rules)
+  # handle the rule parsable language
+  lang = arguments[["language"]]
+
+  if (lang == "python"){
+    res[["LHS"]] = ruleRToPython(res[["LHS"]])
+  } else if (lang == "sql"){
+    res[["LHS"]] = ruleRToSQL(res[["LHS"]])
   }
-  else{
+
+  return(tidy_rules)
+
+  } else {
     # Stop if only root node is present in the object
     if(nrow(object$frame) == 1){
       stop(paste0("Only root is present in the rpart object"
@@ -191,6 +223,15 @@ tidyRules.rpart <- function(object, ...){
     )
     ] %>%
       tibble::as_tibble()
+
+    # handle the rule parsable language
+    lang = arguments[["language"]]
+
+    if (lang == "python"){
+      res[["LHS"]] = ruleRToPython(res[["LHS"]])
+    } else if (lang == "sql"){
+      res[["LHS"]] = ruleRToSQL(res[["LHS"]])
+    }
 
     return(tidy_rules)
     }

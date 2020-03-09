@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyrules</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1>Vignette_tidyrules</h1>
                         <h4 class="author">Srikanth KS, Amith Kumar UR</h4>
             
-            <h4 class="date">2019-12-10</h4>
+            <h4 class="date">2020-03-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/talegari/tidyrules/blob/master/vignettes/tidyrules_vignette.Rmd"><code>vignettes/tidyrules_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>tidyrules_vignette.Rmd</code></div>
@@ -95,7 +95,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      The package <a href="https://cran.r-project.org/package=tidyrules"><code>tidyRules</code></a> is meant to extract rules from model objects to a <code>tibble/data.frame</code> format. Currently this package supports <code>C5.0</code>, <code>rpart</code> and <code>cubist</code> models.
+      The package <a href="https://cran.r-project.org/package=tidyrules"><code>tidyRules</code></a> is meant to extract <strong>parsable</strong> rules from model objects to a <code>tibble/data.frame</code> format. Package supports the following models - <code>C5.0</code>, <code>rpart</code> and <code>cubist</code>. The output rules are parsable by R, python (pandas query) and SQL (with WHERE clause).
     </div>
     
 <div id="quick-start" class="section level2">
@@ -180,37 +180,37 @@
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(attrition)</a></code></pre></div>
 <pre><code>## Observations: 1,470
 ## Variables: 31
-## $ Age                      &lt;int&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36,…
-## $ Attrition                &lt;fct&gt; Yes, No, Yes, No, No, No, No, No, No, N…
-## $ BusinessTravel           &lt;fct&gt; Travel_Rarely, Travel_Frequently, Trave…
-## $ DailyRate                &lt;int&gt; 1102, 279, 1373, 1392, 591, 1005, 1324,…
-## $ Department               &lt;fct&gt; Sales, Research_Development, Research_D…
-## $ DistanceFromHome         &lt;int&gt; 1, 8, 2, 3, 2, 2, 3, 24, 23, 27, 16, 15…
-## $ Education                &lt;ord&gt; College, Below_College, College, Master…
-## $ EducationField           &lt;fct&gt; Life_Sciences, Life_Sciences, Other, Li…
-## $ EnvironmentSatisfaction  &lt;ord&gt; Medium, High, Very_High, Very_High, Low…
-## $ Gender                   &lt;fct&gt; Female, Male, Male, Female, Male, Male,…
-## $ HourlyRate               &lt;int&gt; 94, 61, 92, 56, 40, 79, 81, 67, 44, 94,…
-## $ JobInvolvement           &lt;ord&gt; High, Medium, Medium, High, High, High,…
-## $ JobLevel                 &lt;int&gt; 2, 2, 1, 1, 1, 1, 1, 1, 3, 2, 1, 2, 1, …
-## $ JobRole                  &lt;fct&gt; Sales_Executive, Research_Scientist, La…
-## $ JobSatisfaction          &lt;ord&gt; Very_High, Medium, High, High, Medium, …
-## $ MaritalStatus            &lt;fct&gt; Single, Married, Single, Married, Marri…
-## $ MonthlyIncome            &lt;int&gt; 5993, 5130, 2090, 2909, 3468, 3068, 267…
-## $ MonthlyRate              &lt;int&gt; 19479, 24907, 2396, 23159, 16632, 11864…
-## $ NumCompaniesWorked       &lt;int&gt; 8, 1, 6, 1, 9, 0, 4, 1, 0, 6, 0, 0, 1, …
-## $ OverTime                 &lt;fct&gt; Yes, No, Yes, Yes, No, No, Yes, No, No,…
-## $ PercentSalaryHike        &lt;int&gt; 11, 23, 15, 11, 12, 13, 20, 22, 21, 13,…
-## $ PerformanceRating        &lt;ord&gt; Excellent, Outstanding, Excellent, Exce…
-## $ RelationshipSatisfaction &lt;ord&gt; Low, Very_High, Medium, High, Very_High…
-## $ StockOptionLevel         &lt;int&gt; 0, 1, 0, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, …
-## $ TotalWorkingYears        &lt;int&gt; 8, 10, 7, 8, 6, 8, 12, 1, 10, 17, 6, 10…
-## $ TrainingTimesLastYear    &lt;int&gt; 0, 3, 3, 3, 3, 2, 3, 2, 2, 3, 5, 3, 1, …
-## $ WorkLifeBalance          &lt;ord&gt; Bad, Better, Better, Better, Better, Go…
-## $ YearsAtCompany           &lt;int&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5,…
-## $ YearsInCurrentRole       &lt;int&gt; 4, 7, 0, 7, 2, 7, 0, 0, 7, 7, 4, 5, 2, …
-## $ YearsSinceLastPromotion  &lt;int&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, …
-## $ YearsWithCurrManager     &lt;int&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, …</code></pre>
+## $ Age                      &lt;int&gt; 41, 49, 37, 33, 27, 32, 59, 30, 38, 36, 35, …
+## $ Attrition                &lt;fct&gt; Yes, No, Yes, No, No, No, No, No, No, No, No…
+## $ BusinessTravel           &lt;fct&gt; Travel_Rarely, Travel_Frequently, Travel_Rar…
+## $ DailyRate                &lt;int&gt; 1102, 279, 1373, 1392, 591, 1005, 1324, 1358…
+## $ Department               &lt;fct&gt; Sales, Research_Development, Research_Develo…
+## $ DistanceFromHome         &lt;int&gt; 1, 8, 2, 3, 2, 2, 3, 24, 23, 27, 16, 15, 26,…
+## $ Education                &lt;ord&gt; College, Below_College, College, Master, Bel…
+## $ EducationField           &lt;fct&gt; Life_Sciences, Life_Sciences, Other, Life_Sc…
+## $ EnvironmentSatisfaction  &lt;ord&gt; Medium, High, Very_High, Very_High, Low, Ver…
+## $ Gender                   &lt;fct&gt; Female, Male, Male, Female, Male, Male, Fema…
+## $ HourlyRate               &lt;int&gt; 94, 61, 92, 56, 40, 79, 81, 67, 44, 94, 84, …
+## $ JobInvolvement           &lt;ord&gt; High, Medium, Medium, High, High, High, Very…
+## $ JobLevel                 &lt;int&gt; 2, 2, 1, 1, 1, 1, 1, 1, 3, 2, 1, 2, 1, 1, 1,…
+## $ JobRole                  &lt;fct&gt; Sales_Executive, Research_Scientist, Laborat…
+## $ JobSatisfaction          &lt;ord&gt; Very_High, Medium, High, High, Medium, Very_…
+## $ MaritalStatus            &lt;fct&gt; Single, Married, Single, Married, Married, S…
+## $ MonthlyIncome            &lt;int&gt; 5993, 5130, 2090, 2909, 3468, 3068, 2670, 26…
+## $ MonthlyRate              &lt;int&gt; 19479, 24907, 2396, 23159, 16632, 11864, 996…
+## $ NumCompaniesWorked       &lt;int&gt; 8, 1, 6, 1, 9, 0, 4, 1, 0, 6, 0, 0, 1, 0, 5,…
+## $ OverTime                 &lt;fct&gt; Yes, No, Yes, Yes, No, No, Yes, No, No, No, …
+## $ PercentSalaryHike        &lt;int&gt; 11, 23, 15, 11, 12, 13, 20, 22, 21, 13, 13, …
+## $ PerformanceRating        &lt;ord&gt; Excellent, Outstanding, Excellent, Excellent…
+## $ RelationshipSatisfaction &lt;ord&gt; Low, Very_High, Medium, High, Very_High, Hig…
+## $ StockOptionLevel         &lt;int&gt; 0, 1, 0, 0, 1, 0, 3, 1, 0, 2, 1, 0, 1, 1, 0,…
+## $ TotalWorkingYears        &lt;int&gt; 8, 10, 7, 8, 6, 8, 12, 1, 10, 17, 6, 10, 5, …
+## $ TrainingTimesLastYear    &lt;int&gt; 0, 3, 3, 3, 3, 2, 3, 2, 2, 3, 5, 3, 1, 2, 4,…
+## $ WorkLifeBalance          &lt;ord&gt; Bad, Better, Better, Better, Better, Good, G…
+## $ YearsAtCompany           &lt;int&gt; 6, 10, 0, 8, 2, 7, 1, 1, 9, 7, 5, 9, 5, 2, 4…
+## $ YearsInCurrentRole       &lt;int&gt; 4, 7, 0, 7, 2, 7, 0, 0, 7, 7, 4, 5, 2, 2, 2,…
+## $ YearsSinceLastPromotion  &lt;int&gt; 0, 1, 0, 3, 2, 3, 0, 0, 1, 7, 0, 0, 4, 1, 0,…
+## $ YearsWithCurrManager     &lt;int&gt; 5, 7, 0, 0, 2, 6, 0, 0, 8, 7, 3, 8, 3, 2, 3,…</code></pre>
 <p>As you could see, there are 31 variables and 1470 observations are present this data-set. Here our aim is to predict Attrition using rest of the variables. Let us build a <code>C5.0</code> model first.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># our C5 model</span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">c5_att &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/C50/man/C5.0.html">C5.0</a></span>(Attrition <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> attrition, <span class="dt">rules =</span> <span class="ot">TRUE</span>)</a>
@@ -244,18 +244,18 @@
 <a class="sourceLine" id="cb13-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">tr_att</a></code></pre></div>
 <pre><code>## # A tibble: 24 x 8
-##       id LHS        RHS   support confidence  lift rule_number trial_number
-##    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt;
-##  1     1 Environme… No        521      0.941   1.1           1            1
-##  2     2 JobRole =… No        195      0.924   1.1           2            1
-##  3     3 TotalWork… No       1347      0.864   1             3            1
-##  4     4 JobLevel … Yes        16      0.944   5.9           4            1
-##  5     5 DailyRate… Yes        13      0.933   5.8           5            1
-##  6     6 Environme… Yes         9      0.909   5.6           6            1
-##  7     7 Environme… Yes         9      0.909   5.6           7            1
-##  8     8 JobRole =… Yes         6      0.875   5.4           8            1
-##  9     9 JobRole %… Yes        14      0.875   5.4           9            1
-## 10    10 Departmen… Yes        13      0.867   5.4          10            1
+##       id LHS             RHS   support confidence  lift rule_number trial_number
+##    &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt;
+##  1     1 EnvironmentSat… No        521      0.941   1.1           1            1
+##  2     2 JobRole == 'Re… No        195      0.924   1.1           2            1
+##  3     3 TotalWorkingYe… No       1347      0.864   1             3            1
+##  4     4 JobLevel &lt;= 1 … Yes        16      0.944   5.9           4            1
+##  5     5 DailyRate &lt;= 7… Yes        13      0.933   5.8           5            1
+##  6     6 EnvironmentSat… Yes         9      0.909   5.6           6            1
+##  7     7 EnvironmentSat… Yes         9      0.909   5.6           7            1
+##  8     8 JobRole == 'La… Yes         6      0.875   5.4           8            1
+##  9     9 JobRole %in% c… Yes        14      0.875   5.4           9            1
+## 10    10 Department == … Yes        13      0.867   5.4          10            1
 ## # … with 14 more rows</code></pre>
 <p><strong><code>tidyRules</code> important columns to notice :</strong></p>
 <ul>
@@ -301,11 +301,11 @@
 <a class="sourceLine" id="cb17-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb17-5" data-line-number="5">rules_example_<span class="dv">1</span></a></code></pre></div>
 <pre><code>## # A tibble: 3 x 8
-##      id LHS         RHS   support confidence  lift rule_number trial_number
-##   &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt;
-## 1     3 TotalWorki… No       1347      0.864   1             3            1
-## 2     1 Environmen… No        521      0.941   1.1           1            1
-## 3     2 JobRole ==… No        195      0.924   1.1           2            1</code></pre>
+##      id LHS              RHS   support confidence  lift rule_number trial_number
+##   &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;   &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;int&gt;        &lt;int&gt;
+## 1     3 TotalWorkingYea… No       1347      0.864   1             3            1
+## 2     1 EnvironmentSati… No        521      0.941   1.1           1            1
+## 3     2 JobRole == 'Res… No        195      0.924   1.1           2            1</code></pre>
 <div id="use-rules-inside-filter-function-" class="section level4">
 <h4 class="hasAnchor">
 <a href="#use-rules-inside-filter-function-" class="anchor"></a>Use rules inside <code>filter()</code> function.</h4>
@@ -346,47 +346,68 @@
 ## #   WorkLifeBalance &lt;ord&gt;, YearsAtCompany &lt;int&gt;, YearsInCurrentRole &lt;int&gt;,
 ## #   YearsSinceLastPromotion &lt;int&gt;, YearsWithCurrManager &lt;int&gt;</code></pre>
 </div>
+<div id="rules-parsable-by-python-and-sql" class="section level4">
+<h4 class="hasAnchor">
+<a href="#rules-parsable-by-python-and-sql" class="anchor"></a>Rules parsable by python and SQL</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">tr_att_python &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(c5_att, <span class="dt">language =</span> <span class="st">"python"</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">tr_att_sql    &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(c5_att, <span class="dt">language =</span> <span class="st">"sql"</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tr_att_python<span class="op">$</span>LHS)</a></code></pre></div>
+<pre><code>## [1] "EnvironmentSatisfaction in ['Medium', 'High', 'Very_High'] and JobInvolvement in ['Medium', 'High', 'Very_High'] and OverTime == 'No' and TrainingTimesLastYear &gt; 1 and WorkLifeBalance in ['Better', 'Best']"                            
+## [2] "JobRole == 'Research_Scientist' and OverTime == 'No'"                                                                                                                                                                                     
+## [3] "TotalWorkingYears &gt; 2"                                                                                                                                                                                                                    
+## [4] "JobLevel &lt;= 1 and MonthlyIncome &lt;= 2468 and OverTime == 'Yes' and TotalWorkingYears &gt; 2 and YearsAtCompany &lt;= 3"                                                                                                                          
+## [5] "DailyRate &lt;= 722 and JobLevel &lt;= 1 and MonthlyIncome &lt;= 2468 and OverTime == 'Yes' and TotalWorkingYears &gt; 2"                                                                                                                             
+## [6] "EnvironmentSatisfaction in ['Low', 'Medium'] and MaritalStatus in ['Divorced', 'Married'] and NumCompaniesWorked &gt; 4 and OverTime == 'Yes' and PerformanceRating == 'Excellent' and RelationshipSatisfaction in ['Low', 'Medium', 'High']"</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tr_att_sql<span class="op">$</span>LHS)</a></code></pre></div>
+<pre><code>## [1] "EnvironmentSatisfaction IN ('Medium', 'High', 'Very_High') AND JobInvolvement IN ('Medium', 'High', 'Very_High') AND OverTime = 'No' AND TrainingTimesLastYear &gt; 1 AND WorkLifeBalance IN ('Better', 'Best')"                           
+## [2] "JobRole = 'Research_Scientist' AND OverTime = 'No'"                                                                                                                                                                                     
+## [3] "TotalWorkingYears &gt; 2"                                                                                                                                                                                                                  
+## [4] "JobLevel &lt;= 1 AND MonthlyIncome &lt;= 2468 AND OverTime = 'Yes' AND TotalWorkingYears &gt; 2 AND YearsAtCompany &lt;= 3"                                                                                                                         
+## [5] "DailyRate &lt;= 722 AND JobLevel &lt;= 1 AND MonthlyIncome &lt;= 2468 AND OverTime = 'Yes' AND TotalWorkingYears &gt; 2"                                                                                                                            
+## [6] "EnvironmentSatisfaction IN ('Low', 'Medium') AND MaritalStatus IN ('Divorced', 'Married') AND NumCompaniesWorked &gt; 4 AND OverTime = 'Yes' AND PerformanceRating = 'Excellent' AND RelationshipSatisfaction IN ('Low', 'Medium', 'High')"</code></pre>
+</div>
 </div>
 <div id="example-classification-using-rpart" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example-classification-using-rpart" class="anchor"></a>Example: Classification using <code>rpart</code>
 </h3>
 <p>In this example we will be using <code>BreastCancer</code> data from <code>mlbench</code> package.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rpart"</span>)</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co"># BreastCancer</span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(BreastCancer, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">bc_train &lt;-<span class="st"> </span>BreastCancer <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span>(is.ordered, <span class="cf">function</span>(x) x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(x,<span class="dt">ordered =</span> F))</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb21-10" data-line-number="10">rpart_bc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> bc_train)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rpart"</span>)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co"># BreastCancer</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(BreastCancer, <span class="dt">package =</span> <span class="st">"mlbench"</span>)</a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">bc_train &lt;-<span class="st"> </span>BreastCancer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>Id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_if</a></span>(is.ordered, <span class="cf">function</span>(x) x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(x,<span class="dt">ordered =</span> F))</a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb25-10" data-line-number="10">rpart_bc &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> bc_train)</a></code></pre></div>
 <p><em><strong>NOTE</strong> : Do not forget to convert all <code>ordered</code> features to <code>factor</code> type before training the model.</em></p>
 <p>One could visualize rpart decision tree using <code>prp</code> function from <code>rpart.plot</code> package.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rpart.plot"</span>)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/rpart.plot/man/prp.html">prp</a></span>(rpart_bc)</a></code></pre></div>
-<p><img src="tidyrules_vignette_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"rpart.plot"</span>)</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/rpart.plot/man/prp.html">prp</a></span>(rpart_bc)</a></code></pre></div>
+<p><img src="tidyrules_vignette_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>The above tree visual is really nice to get a hang of how decision tree is splitting at each node. But, if you want to pick a terminal node it is really boring and hard since one has to enter the respective filter manually (imagine a situation if you have hundreds of features and a huge tree!!). To get-ride of this problem one could use tidyrules to make life easier.</p>
 <p>Let’s extract rules from <code>rpart</code> object and use those rules further more to extract terminal nodes.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># tidyrule extract</span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">rules_bc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(rpart_bc)</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">rules_bc</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># tidyrule extract</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">rules_bc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(rpart_bc)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">rules_bc</a></code></pre></div>
 <pre><code>## # A tibble: 7 x 6
-##      id LHS                                 RHS    support confidence  lift
-##   &lt;int&gt; &lt;chr&gt;                               &lt;chr&gt;    &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;
-## 1     1 Cell.size %in% c('1', '2') &amp; Norma… benign     421      0.986 1.50 
-## 2     2 Cell.size %in% c('1', '2') &amp; Norma… malig…       8      0.8   2.32 
-## 3     3 Cell.size %in% c('3', '4', '5', '6… benign      16      0.944 1.44 
-## 4     4 Cell.size %in% c('3', '4', '5', '6… malig…       7      0.667 1.93 
-## 5     5 Cell.size %in% c('3', '4', '5', '6… benign      15      0.647 0.988
-## 6     6 Cell.size %in% c('3', '4', '5', '6… malig…      61      0.841 2.44 
-## 7     7 Cell.size %in% c('3', '4', '5', '6… malig…     171      0.971 2.82</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># filter the data using a rule </span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">bc_train <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/eval.html">eval</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="dt">text =</span> rules_bc[<span class="dv">5</span>,<span class="st">"LHS"</span>]))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()</a></code></pre></div>
+##      id LHS                                      RHS    support confidence  lift
+##   &lt;int&gt; &lt;chr&gt;                                    &lt;chr&gt;    &lt;int&gt;      &lt;dbl&gt; &lt;dbl&gt;
+## 1     1 Cell.size %in% c('1', '2') &amp; Normal.nuc… benign     421      0.986 1.50 
+## 2     2 Cell.size %in% c('1', '2') &amp; Normal.nuc… malig…       8      0.8   2.32 
+## 3     3 Cell.size %in% c('3', '4', '5', '6', '7… benign      16      0.944 1.44 
+## 4     4 Cell.size %in% c('3', '4', '5', '6', '7… malig…       7      0.667 1.93 
+## 5     5 Cell.size %in% c('3', '4', '5', '6', '7… benign      15      0.647 0.988
+## 6     6 Cell.size %in% c('3', '4', '5', '6', '7… malig…      61      0.841 2.44 
+## 7     7 Cell.size %in% c('3', '4', '5', '6', '7… malig…     171      0.971 2.82</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># filter the data using a rule </span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">bc_train <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/eval.html">eval</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="dt">text =</span> rules_bc[<span class="dv">5</span>,<span class="st">"LHS"</span>]))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()</a></code></pre></div>
 <pre><code>## # A tibble: 15 x 10
 ##    Cl.thickness Cell.size Cell.shape Marg.adhesion Epith.c.size Bare.nuclei
 ##    &lt;fct&gt;        &lt;fct&gt;     &lt;fct&gt;      &lt;fct&gt;         &lt;fct&gt;        &lt;fct&gt;      
@@ -413,40 +434,40 @@
 <a href="#example-regression-using-cubist" class="anchor"></a>Example: Regression using <code>Cubist</code>
 </h3>
 <p>In this example, rules extraction from a regression model (a <code>cubist</code> model) has been illustrated below. We will be using <code>AmesHousing</code> dataset for the example.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"Cubist"</span>)</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co"># ames housing data set</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5">ames   &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/AmesHousing/man/make_ames.html">make_ames</a></span>()</a>
-<a class="sourceLine" id="cb27-6" data-line-number="6">cubist_ames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Cubist/man/cubist.default.html">cubist</a></span>(<span class="dt">x =</span> ames[, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/setops.html">setdiff</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(ames), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sale_Price"</span>))],</a>
-<a class="sourceLine" id="cb27-7" data-line-number="7">                          <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(ames[[<span class="st">"Sale_Price"</span>]]),</a>
-<a class="sourceLine" id="cb27-8" data-line-number="8">                          <span class="dt">committees =</span> <span class="dv">3</span></a>
-<a class="sourceLine" id="cb27-9" data-line-number="9">                          )</a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co"># rule extract </span></a>
-<a class="sourceLine" id="cb27-12" data-line-number="12">rules_ames &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(cubist_ames)</a>
-<a class="sourceLine" id="cb27-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb27-14" data-line-number="14">rules_ames</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"tidyrules"</span>)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"dplyr"</span>)</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"Cubist"</span>)</a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co"># ames housing data set</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">ames   &lt;-<span class="st"> </span>AmesHousing<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/AmesHousing/man/make_ames.html">make_ames</a></span>()</a>
+<a class="sourceLine" id="cb31-6" data-line-number="6">cubist_ames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Cubist/man/cubist.default.html">cubist</a></span>(<span class="dt">x =</span> ames[, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/setops.html">setdiff</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(ames), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sale_Price"</span>))],</a>
+<a class="sourceLine" id="cb31-7" data-line-number="7">                          <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(ames[[<span class="st">"Sale_Price"</span>]]),</a>
+<a class="sourceLine" id="cb31-8" data-line-number="8">                          <span class="dt">committees =</span> <span class="dv">3</span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9">                          )</a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb31-11" data-line-number="11"><span class="co"># rule extract </span></a>
+<a class="sourceLine" id="cb31-12" data-line-number="12">rules_ames &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyRules.html">tidyRules</a></span>(cubist_ames)</a>
+<a class="sourceLine" id="cb31-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb31-14" data-line-number="14">rules_ames</a></code></pre></div>
 <pre><code>## # A tibble: 43 x 9
-##       id LHS         RHS         support  mean   min   max  error committee
-##    &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;int&gt;
-##  1     1 Overall_Qu… (-202.4965…      23  4.74  4.11  4.98 0.134          1
-##  2     2 Overall_Qu… (-194.8591…     125  4.94  4.54  5.17 0.0679         1
-##  3     3 Overall_Qu… (12.372018…      99  5.04  4.75  5.29 0.0649         1
-##  4     4 Overall_Qu… (-47.97341…     672  5.14  4.82  5.59 0.0338         1
-##  5     5 MS_SubClas… (-53.11988…     358  5.17  4.79  5.38 0.0309         1
-##  6     6 MS_SubClas… (1.127729)…      85  5.17  4.80  5.54 0.0632         1
-##  7     7 MS_SubClas… (10.129513…     287  5.18  4.78  5.49 0.0388         1
-##  8     8 MS_SubClas… (5.675156)…     748  5.21  4.80  5.59 0.0315         1
-##  9     9 MS_SubClas… (1.563904)…      26  5.23  5     5.48 0.0748         1
-## 10    10 Overall_Qu… (1.075936)…      71  5.26  4.96  5.58 0.0681         1
+##       id LHS            RHS           support  mean   min   max  error committee
+##    &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;int&gt;
+##  1     1 Overall_Qual … (-202.496569…      23  4.74  4.11  4.98 0.134          1
+##  2     2 Overall_Qual … (-194.85918)…     125  4.94  4.54  5.17 0.0679         1
+##  3     3 Overall_Qual … (12.372018) …      99  5.04  4.75  5.29 0.0649         1
+##  4     4 Overall_Qual … (-47.97341) …     672  5.14  4.82  5.59 0.0338         1
+##  5     5 MS_SubClass %… (-53.11988) …     358  5.17  4.79  5.38 0.0309         1
+##  6     6 MS_SubClass %… (1.127729) +…      85  5.17  4.80  5.54 0.0632         1
+##  7     7 MS_SubClass %… (10.129513) …     287  5.18  4.78  5.49 0.0388         1
+##  8     8 MS_SubClass %… (5.675156) +…     748  5.21  4.80  5.59 0.0315         1
+##  9     9 MS_SubClass %… (1.563904) +…      26  5.23  5     5.48 0.0748         1
+## 10    10 Overall_Qual … (1.075936) +…      71  5.26  4.96  5.58 0.0681         1
 ## # … with 33 more rows</code></pre>
 <p>Notice that, for <code>cubist</code> rules we have <code>mean</code>, <code>min</code>, <code>max</code> and <code>error</code> instead of <code>confidence</code> and <code>lift</code>. Here <code>mean</code>, <code>min</code> and <code>max</code> are calculated based on predicted values with respect to a rule.</p>
 </div>
 </div>
 <div id="useful-links-and-references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#useful-links-and-references" class="anchor"></a>Useful links and References :</h2>
+<a href="#useful-links-and-references" class="anchor"></a>Useful links and References</h2>
 <ul>
 <li>C5.0: An Informal Tutorial <a href="https://www.rulequest.com/see5-unix.html" class="uri">https://www.rulequest.com/see5-unix.html</a>
 </li>
@@ -459,13 +480,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#quick-start">Quick-start</a></li>
       <li><a href="#extracting-rules-using-tidyrules">Extracting rules using <span><code>tidyrules</code></span></a></li>
-      <li><a href="#useful-links-and-references">Useful links and References :</a></li>
+      <li><a href="#useful-links-and-references">Useful links and References</a></li>
       </ul>
 </div>
       </div>

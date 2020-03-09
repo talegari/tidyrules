@@ -12,6 +12,8 @@ attrition <- tibble::as_tibble(attrition)
 
 c5_att <- C50::C5.0(Attrition ~ ., data = attrition, rules = TRUE)
 tr_att <- tidyRules(c5_att)
+tr_att_python = tidyRules(c5_att, language = "python")
+tr_att_sql = tidyRules(c5_att, language = "sql")
 
 # attrition with trials
 c5_att_2 <- C50::C5.0(Attrition ~ ., data = attrition
@@ -81,3 +83,9 @@ test_that("rules are parsable", {
   expect_true(all(allRulesFilterable(tr_ames_2, ames_2)))
 })
 
+# test language conversion is successfull ----
+# cannot test parsability
+test_that("python and SQL rule conversions work (parsability not checked)", {
+  expect_is(tr_att_python, "tbl_df")
+  expect_is(tr_att_sql, "tbl_df")
+})
