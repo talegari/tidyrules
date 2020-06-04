@@ -1,7 +1,7 @@
 Package: tidyrules
 Type: Package
 Title: Obtain Rules from Rule Based Models as Tidy Dataframe
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(
     person("Srikanth", "Komala Sheshachala", email = "sri.teach@gmail.com", role = c("aut", "cre")),
     person("Amith Kumar", "Ullur Raghavendra", email = "amith54@gmail.com", role = c("aut"))
@@ -22,7 +22,7 @@ Suggests:
     Cubist (>= 0.2.2),
     rpart (>= 1.2.2),
     rpart.plot (>= 3.0.7),
-    rsample (>= 0.0.2),
+    modeldata (>= 0.0.1),
     testthat (>= 2.0.1),
     MASS (>= 7.3.50),
     mlbench (>= 2.1.1),
@@ -35,5 +35,5 @@ BugReports: https://github.com/talegari/tidyrules/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr

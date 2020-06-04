@@ -7,7 +7,7 @@ context("test-c5")
 
 # setup some models ----
 # attrition
-data("attrition", package = "rsample")
+data("attrition", package = "modeldata")
 attrition <- tibble::as_tibble(attrition)
 
 c5_att <- C50::C5.0(Attrition ~ ., data = attrition, rules = TRUE)

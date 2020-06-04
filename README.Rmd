@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tidyrules)](https://cran.r-project.org/package=tidyrules)
 <!-- badges: end -->
 
-`tidyrules` converts texual rules from models to dataframes with parseable rules. Supported models are: `C5`, `cubist` and `rpart`.
+`tidyrules` converts textual rules from models to dataframes with parseable rules. Supported models are: `C5`, `cubist` and `rpart`.
 
 ## Example
 

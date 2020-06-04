@@ -26,7 +26,7 @@
 #'   }
 #'
 #' @examples
-#' data("attrition", package = "rsample")
+#' data("attrition", package = "modeldata")
 #' attrition <- tibble::as_tibble(attrition)
 #' cols_att <- setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 #'

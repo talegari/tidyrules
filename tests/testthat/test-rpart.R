@@ -7,7 +7,7 @@ context("test-rpart")
 
 # setup some models ----
 # attrition
-data("attrition", package = "rsample")
+data("attrition", package = "modeldata")
 attrition_1 <- attrition %>%
   dplyr::mutate_if(is.ordered, function(x) x <- factor(x,ordered = F)) %>%
   dplyr::mutate(Attrition = factor(Attrition, levels = c("No","Yes")))

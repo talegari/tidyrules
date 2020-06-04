@@ -1,3 +1,7 @@
+# tidyrules 0.1.5
+
+- Maintenance release (replace package rsample with modeldata)
+
 # tidyrules 0.1.4
 
 - Added rules parsable in python and SQL (default: R)

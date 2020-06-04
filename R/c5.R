@@ -28,7 +28,7 @@
 #' }
 #'
 #' @examples
-#' data("attrition", package = "rsample")
+#' data("attrition", package = "modeldata")
 #' attrition <- tibble::as_tibble(attrition)
 #' c5_model <- C50::C5.0(Attrition ~., data = attrition, rules = TRUE)
 #' summary(c5_model)

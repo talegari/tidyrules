@@ -67,7 +67,7 @@ library("C50")
 library("dplyr")
 
 # attrition data load
-data("attrition", package = "rsample")
+data("attrition", package = "modeldata")
 attrition <- as_tibble(attrition)
 
 glimpse(attrition)
@@ -215,9 +215,9 @@ library("Cubist")
 # ames housing data set
 ames   <- AmesHousing::make_ames()
 cubist_ames <- cubist(x = ames[, setdiff(colnames(ames), c("Sale_Price"))],
-                          y = log10(ames[["Sale_Price"]]),
-                          committees = 3
-                          )
+                      y = log10(ames[["Sale_Price"]]),
+                      committees = 3
+                      )
 
 # rule extract 
 rules_ames <- tidyRules(cubist_ames)

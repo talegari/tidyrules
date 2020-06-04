@@ -12,7 +12,7 @@
 #' @return A tibble with three columns: variable(character), type(character) and
 #'   levels(a list-column). For numeric variables, levels are set to NA.
 #' @examples
-#' data("attrition", package = "rsample")
+#' data("attrition", package = "modeldata")
 #' attrition <- tibble::as_tibble(attrition)
 #' cols_att <- setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 #'
