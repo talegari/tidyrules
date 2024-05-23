@@ -1,6 +1,6 @@
 ################################################################################
-# This is the part of the 'tidyrules' R package hosted at
-# https://github.com/talegari/tidyrules with GPL-3 license.
+# This is the part of the 'tidy' R package hosted at
+# https://github.com/talegari/tidy with GPL-3 license.
 ################################################################################
 
 context("test-cubist")
@@ -8,51 +8,50 @@ context("test-cubist")
 # setup some models ----
 # attrition
 data("attrition", package = "modeldata")
-attrition <- tibble::as_tibble(attrition)
-cols_att <- setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
+cols_att = setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 
-cb_att <-
+cb_att =
   Cubist::cubist(x = attrition[, cols_att],
                  y = attrition[["MonthlyIncome"]]
                  )
-tr_att <- tidyRules(cb_att)
+tr_att = tidy(cb_att)
 
 # attrition with commitees
-cb_att_2 <-
+cb_att_2 =
   Cubist::cubist(x = attrition[, cols_att],
                  y = attrition[["MonthlyIncome"]],
                  committees = 7
                  )
-tr_att_2 <- tidyRules(cb_att_2)
+tr_att_2 = tidy(cb_att_2)
 
 # ames housing
-ames   <- AmesHousing::make_ames()
-cb_ames <- Cubist::cubist(x = ames[, setdiff(colnames(ames), c("Sale_Price"))],
+ames   = AmesHousing::make_ames()
+cb_ames = Cubist::cubist(x = ames[, setdiff(colnames(ames), c("Sale_Price"))],
                           y = log10(ames[["Sale_Price"]]),
                           committees = 3
                           )
-tr_ames <- tidyRules(cb_ames)
+tr_ames = tidy(cb_ames)
 
 
 # column name has a space in it
 data("Boston", package = "MASS")
-boston_2 <- Boston
-names(boston_2)[6] <- "r m"
-names(boston_2)[13] <- "l stat"
-cb_boston <- Cubist::cubist(x = boston_2[, -14], y = boston_2[[14]])
-tr_boston <- tidyRules(cb_boston)
+boston_2 = Boston
+names(boston_2)[6] = "r m"
+names(boston_2)[13] = "l stat"
+cb_boston = Cubist::cubist(x = boston_2[, -14], y = boston_2[[14]])
+tr_boston = tidy(cb_boston)
 
 # function to check whether a rule is filterable
-ruleFilterable <- function(rule, data){
+ruleFilterable = function(rule, data){
   dplyr::filter(data, eval(parse(text = rule)))
 }
 
 # function to check whether all rules are filterable
-allRulesFilterable <- function(tr, data){
-  parse_status <- sapply(
+allRulesFilterable = function(tr, data){
+  parse_status = sapply(
     tr[["LHS"]]
     , function(arule){
-        trydf <- try(ruleFilterable(arule, data)
+        trydf = try(ruleFilterable(arule, data)
                    , silent = TRUE
                    )
         if(nrow(trydf) == 0){
@@ -65,11 +64,11 @@ allRulesFilterable <- function(tr, data){
 }
 
 # evaluate RHS
-evalRHS <- function(tr, data){
+evalRHS = function(tr, data){
 
   message(deparse(substitute(data)))
 
-  with_RHS <- sapply(tr[["RHS"]],
+  with_RHS = sapply(tr[["RHS"]],
     function(x){
       try(data %>%
             dplyr::mutate(RHS_ = eval(parse(text = x))) %>%
@@ -87,10 +86,10 @@ evalRHS <- function(tr, data){
 # test output type ----
 
 test_that("creates tibble", {
-  expect_is(tr_att, "tbl_df")
-  expect_is(tr_att_2, "tbl_df")
-  expect_is(tr_ames, "tbl_df")
-  expect_is(tr_boston, "tbl_df")
+  expect_is(tr_att, "ruleset")
+  expect_is(tr_att_2, "ruleset")
+  expect_is(tr_ames, "ruleset")
+  expect_is(tr_boston, "ruleset")
 })
 
 # test NA ----

@@ -4,6 +4,7 @@
 \name{package_tidyrules}
 \alias{tidyrules}
 \alias{tidyrules-package}
+\alias{package_tidyrules}
 \title{About 'tidyrules' package}
 \description{
 Obtain rules as tidy dataframes
