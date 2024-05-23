@@ -1,0 +1,17 @@
+utils::globalVariables(c(".",
+                         "LHS",
+                         "RHS",
+                         "committee",
+                         "desc",
+                         "dev",
+                         "lift",
+                         "n",
+                         "predict_class",
+                         "rule_nbr",
+                         "rule_number",
+                         "support",
+                         "trial_number",
+                         "yval",
+                         "confidence"
+                         )
+                       )

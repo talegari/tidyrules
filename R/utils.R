@@ -15,19 +15,19 @@
 #' tidyrules:::positionSpaceOutsideSinglequotes(c("hello", "hel' 'o "))
 #' }
 #'
-positionSpaceOutsideSinglequotes <- Vectorize(
+positionSpaceOutsideSinglequotes = Vectorize(
   function(string){
 
-    assertthat::assert_that(assertthat::is.string(string))
+    checkmate::assert_string(string)
 
-    fullsplit               <- strsplit(string, "")[[1]]
-    is_singlequote          <- (fullsplit == "'")
-    parity_singlequote_left <- cumsum(fullsplit == "'") %% 2
-    space_position          <- which(fullsplit == " ")
+    fullsplit               = strsplit(string, "")[[1]]
+    is_singlequote          = (fullsplit == "'")
+    parity_singlequote_left = cumsum(fullsplit == "'") %% 2
+    space_position          = which(fullsplit == " ")
 
     space_position[parity_singlequote_left[space_position] == 0]
-  }
-  , USE.NAMES = FALSE
+  },
+  USE.NAMES = FALSE
 )
 
 #' @name removeEmptyLines
@@ -40,7 +40,7 @@ positionSpaceOutsideSinglequotes <- Vectorize(
 #' tidyrules:::removeEmptyLines(c("abc", "", "d"))
 #' }
 #'
-removeEmptyLines <- function(strings){
+removeEmptyLines = function(strings){
   strings[!(strings == "")]
 }
 
@@ -55,9 +55,9 @@ removeEmptyLines <- function(strings){
 #' tidyrules:::strSplitSingle("abc,d", ",")
 #' }
 #'
-strSplitSingle <- function(string, pattern){
+strSplitSingle = function(string, pattern){
 
-  assertthat::assert_that(assertthat::is.string(string))
+  checkmate::assert_string(string)
   stringr::str_split(string, pattern)[[1]]
 
 }
@@ -75,22 +75,22 @@ strSplitSingle <- function(string, pattern){
 #' tidyrules:::strHead(c("string", "string2"), -1)
 #' }
 #'
-strHead <- Vectorize(
+strHead = Vectorize(
   function(string, n){
 
-    assertthat::assert_that(assertthat::is.string(string))
-    len <- stringr::str_length(string)
-    assertthat::assert_that(is.integerish(n) && length(n) == 1 && n != 0
-                            , msg = "'n' should be an integer"
-                            )
+    checkmate::assert_string(string)
+
+    len = stringr::str_length(string)
+    checkmate::assert_integerish(n, len = 1)
+    checkmate::assert(n != 0)
     if(n < 0){
-      n <- len + n
+      n = len + n
     }
 
     return( stringr::str_sub(string, 1, n) )
-  }
-  , vectorize.args = "string"
-  , USE.NAMES = FALSE
+  },
+  vectorize.args = "string",
+  USE.NAMES = FALSE
   )
 
 
@@ -108,22 +108,22 @@ strHead <- Vectorize(
 #' tidyrules:::strTail(c("string", "string2"), -1)
 #' }
 #'
-strTail <- Vectorize(
+strTail = Vectorize(
   function(string, n){
 
-    assertthat::assert_that(assertthat::is.string(string))
-    len <- stringr::str_length(string)
-    assertthat::assert_that(is.integerish(n) && length(n) == 1 && n != 0
-                            , msg = "'n' should be an integer"
-                            )
-    if(n < 0){
-      n <- len + n
+    checkmate::assert_string(string)
+
+    len = stringr::str_length(string)
+    checkmate::assert_integerish(n, len = 1)
+    checkmate::assert(n != 0)
+    if (n < 0){
+      n = len + n
     }
 
     return( stringr::str_sub(string, len - n + 1, len) )
-  }
-  , vectorize.args = "string"
-  , USE.NAMES = FALSE
+  },
+  vectorize.args = "string",
+  USE.NAMES = FALSE
   )
 #' @name addBackquotes
 #' @title Add backquotes
@@ -135,17 +135,19 @@ strTail <- Vectorize(
 #' tidyrules:::addBackquotes(c("ab", "a b"))
 #' }
 #'
-addBackquotes <- Vectorize(
+addBackquotes = Vectorize(
   function(string){
-    res <- string
-    if(stringr::str_count(string, "\\s") > 0){
+    checkmate::assert_string(string)
+
+    res = string
+    if (stringr::str_count(string, "\\s") > 0){
       if(strHead(string, 1) != "`" && strTail(string, 1) != "`"){
-          res <- stringr::str_c("`", string, "`")
+          res = stringr::str_c("`", string, "`")
       }
     }
     return(res)
-  }
-  , USE.NAMES = FALSE
+  },
+  USE.NAMES = FALSE
   )
 
 #' @name strReplaceReduce
@@ -160,18 +162,16 @@ addBackquotes <- Vectorize(
 #' tidyrules:::strReplaceReduce("abcd", c("ab", "dc"), c("cd", "ab"))
 #' }
 #'
-strReplaceReduce <- function(string, pattern, replacement){
+strReplaceReduce = function(string, pattern, replacement){
 
   stopifnot(length(pattern) == length(replacement))
-  io <- list(pattern, replacement) %>%
+  io =
+    list(pattern, replacement) %>%
     purrr::transpose() %>%
     purrr::map(unlist)
 
-  purrr::reduce(io
-                 , function(x, y) stringr::str_replace_all(x
-                                                           , y[[1]]
-                                                           , y[[2]]
-                                                           )
-                 , .init = string
-                 )
+  purrr::reduce(io,
+                function(x, y) stringr::str_replace_all(x, y[[1]], y[[2]]),
+                .init = string
+                )
 }

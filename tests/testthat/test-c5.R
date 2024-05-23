@@ -1,6 +1,6 @@
 ################################################################################
-# This is the part of the 'tidyrules' R package hosted at
-# https://github.com/talegari/tidyrules with GPL-3 license.
+# This is the part of the 'tidy' R package hosted at
+# https://github.com/talegari/tidy with GPL-3 license.
 ################################################################################
 
 context("test-c5")
@@ -8,45 +8,42 @@ context("test-c5")
 # setup some models ----
 # attrition
 data("attrition", package = "modeldata")
-attrition <- tibble::as_tibble(attrition)
 
-c5_att <- C50::C5.0(Attrition ~ ., data = attrition, rules = TRUE)
-tr_att <- tidyRules(c5_att)
-tr_att_python = tidyRules(c5_att, language = "python")
-tr_att_sql = tidyRules(c5_att, language = "sql")
+c5_att = C50::C5.0(Attrition ~ ., data = attrition, rules = TRUE)
+tr_att = tidy(c5_att)
 
 # attrition with trials
-c5_att_2 <- C50::C5.0(Attrition ~ ., data = attrition
+c5_att_2 = C50::C5.0(Attrition ~ ., data = attrition
                       , trials = 7, rules = TRUE)
-tr_att_2 <- tidyRules(c5_att_2)
+tr_att_2 = tidy(c5_att_2)
 
 # ames housing
 # ames has some space in Sale_Type levels
-ames   <- AmesHousing::make_ames()
+ames   = AmesHousing::make_ames()
 ames
-cb_ames <- C50::C5.0(MS_SubClass ~ ., data = ames
+cb_ames = C50::C5.0(MS_SubClass ~ ., data = ames
                      , trials = 3, rules = TRUE)
-tr_ames <- tidyRules(cb_ames)
+tr_ames = tidy(cb_ames)
 
 # column name has a space in it
-ames   <- AmesHousing::make_ames()
-ames_2 <- ames
-colnames(ames_2)[which(colnames(ames_2) == "Bldg_Type")] <- "Bldg Type"
-colnames(ames_2)[which(colnames(ames_2) == "House_Style")] <- "House Style"
-c5_ames_2 <- C50::C5.0(MS_SubClass ~ ., data = ames_2, rules = TRUE)
-tr_ames_2 <- tidyRules(c5_ames_2)
+ames   = AmesHousing::make_ames()
+ames_2 = ames
+colnames(ames_2)[which(colnames(ames_2) == "Bldg_Type")] = "Bldg Type"
+colnames(ames_2)[which(colnames(ames_2) == "House_Style")] = "House Style"
+c5_ames_2 = C50::C5.0(MS_SubClass ~ ., data = ames_2, rules = TRUE)
+tr_ames_2 = tidy(c5_ames_2)
 
 # function to check whether a rule is filterable
-ruleFilterable <- function(rule, data){
+ruleFilterable = function(rule, data){
   dplyr::filter(data, eval(parse(text = rule)))
 }
 
 # function to check whether all rules are filterable
-allRulesFilterable <- function(tr, data){
-  parse_status <- sapply(
+allRulesFilterable = function(tr, data){
+  parse_status = sapply(
     tr[["LHS"]]
     , function(arule){
-        trydf <- try(ruleFilterable(arule, data)
+        trydf = try(ruleFilterable(arule, data)
                    , silent = TRUE
                    )
         if(nrow(trydf) == 0){
@@ -61,10 +58,10 @@ allRulesFilterable <- function(tr, data){
 # test output type ----
 
 test_that("creates tibble", {
-  expect_is(tr_att, "tbl_df")
-  expect_is(tr_att_2, "tbl_df")
-  expect_is(tr_ames, "tbl_df")
-  expect_is(tr_ames_2, "tbl_df")
+  expect_is(tr_att, "rulelist")
+  expect_is(tr_att_2, "rulelist")
+  expect_is(tr_ames, "rulelist")
+  expect_is(tr_ames_2, "rulelist")
 })
 
 # test NA ----
@@ -81,11 +78,4 @@ test_that("rules are parsable", {
   expect_true(all(allRulesFilterable(tr_att_2, attrition)))
   expect_true(all(allRulesFilterable(tr_ames, ames)))
   expect_true(all(allRulesFilterable(tr_ames_2, ames_2)))
-})
-
-# test language conversion is successfull ----
-# cannot test parsability
-test_that("python and SQL rule conversions work (parsability not checked)", {
-  expect_is(tr_att_python, "tbl_df")
-  expect_is(tr_att_sql, "tbl_df")
 })

@@ -10,22 +10,19 @@ varSpec(object)
 \item{object}{Cubist/C5 object}
 }
 \value{
-A tibble with three columns: variable(character), type(character) and
-  levels(a list-column). For numeric variables, levels are set to NA.
+A tidytable with three columns: variable(character), type(character)
+  and levels(a list-column). For numeric variables, levels are set to NA.
 }
 \description{
 Obtain variable names, type (numeric, ordered, factor) and
-  levels as a tibble
+  levels as a tidytable
 }
 \examples{
 data("attrition", package = "modeldata")
-attrition <- tibble::as_tibble(attrition)
-cols_att <- setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
+cols_att = setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 
-cb_att <-
-  Cubist::cubist(x = attrition[, cols_att],y = attrition[["MonthlyIncome"]])
+cb_att = Cubist::cubist(x = attrition[, cols_att],
+                        y = attrition[["MonthlyIncome"]]
+                        )
 varSpec(cb_att)
-}
-\author{
-Srikanth KS, \email{sri.teach@gmail.com}
 }
