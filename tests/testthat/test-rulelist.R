@@ -1,6 +1,6 @@
 ################################################################################
-# This is the part of the 'tidy' R package hosted at
-# https://github.com/talegari/tidy with GPL-3 license.
+# This is the part of the 'tidyrules' R package hosted at
+# https://github.com/talegari/tidyrules with GPL-3 license.
 ################################################################################
 
 context("test-rulelist")
