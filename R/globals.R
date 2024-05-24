@@ -12,6 +12,10 @@ utils::globalVariables(c(".",
                          "support",
                          "trial_number",
                          "yval",
-                         "confidence"
+                         "confidence",
+                         "rn__",
+                         "row_nbr",
+                         "pref__",
+                         "data"
                          )
                        )
