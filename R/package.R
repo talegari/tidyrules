@@ -9,6 +9,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang %||%
 #' @importFrom data.table :=
+#' @importFrom utils data
 "_PACKAGE"
 
 list.rules.party = getFromNamespace(".list.rules.party", "partykit")

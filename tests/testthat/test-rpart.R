@@ -11,7 +11,9 @@ data("attrition", package = "modeldata")
 # classification test
 attrition_class =
   attrition %>%
-  tidytable::mutate(tidytable::across(is.ordered, ~ factor(.x, ordered = F))) %>%
+  tidytable::mutate(
+    tidytable::across(tidytable::where(is.ordered), ~ factor(.x, ordered = F))
+    ) %>%
   tidytable::mutate(Attrition = factor(Attrition, levels = c("No", "Yes")))
 
 rpart_att    = rpart::rpart(Attrition ~ ., data = attrition_class)
@@ -20,7 +22,9 @@ tr_att_class = tidy(rpart_att)
 # regression test
 attrition_reg =
   attrition %>%
-  tidytable::mutate(tidytable::across(is.ordered, ~ factor(.x, ordered = F))) %>%
+  tidytable::mutate(
+    tidytable::across(tidytable::where(is.ordered), ~ factor(.x, ordered = F))
+    ) %>%
   tidytable::select(-Attrition)
 
 rpart_att_reg = rpart::rpart(MonthlyIncome ~ ., data = attrition_reg)

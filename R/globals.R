@@ -1,3 +1,8 @@
+################################################################################
+# This is the part of the 'tidyrules' R package hosted at
+# https://github.com/talegari/tidyrules with GPL-3 license.
+################################################################################
+
 utils::globalVariables(c(".",
                          "LHS",
                          "RHS",
@@ -12,6 +17,10 @@ utils::globalVariables(c(".",
                          "support",
                          "trial_number",
                          "yval",
-                         "confidence"
+                         "confidence",
+                         "rn__",
+                         "row_nbr",
+                         "pref__",
+                         "data"
                          )
                        )
