@@ -15,19 +15,34 @@ convert_rule_flavor = function(rule, flavor){
   if (flavor == "python"){
     res =
       rule %>%
+      stringr::str_replace_all("\\( ", "") %>%
+      stringr::str_replace_all(" \\)", "") %>%
+
       stringr::str_replace_all("%in%", "in") %>%
       stringr::str_replace_all("c\\(", "[") %>%
       stringr::str_replace_all("\\)", "]") %>%
-      stringr::str_replace_all("&", "and")
+
+      stringr::str_replace_all("&", " ) and (") %>%
+
+      stringr::str_c("( ", ., " )") %>%
+      stringr::str_squish()
 
   } else if (flavor == "sql"){
     res =
       rule %>%
-      stringr::str_replace_all("==", "=") %>%
+      stringr::str_replace_all("\\( ", "") %>%
+      stringr::str_replace_all(" \\)", "") %>%
+
       stringr::str_replace_all("%in%", "IN") %>%
-      stringr::str_replace_all("c\\(", "(") %>%
-      stringr::str_replace_all("&", "AND")
+      stringr::str_replace_all("c\\(", "[") %>%
+      stringr::str_replace_all("\\)", "]") %>%
+
+      stringr::str_replace_all("&", " ) AND (") %>%
+
+      stringr::str_c("( ", ., " )") %>%
+      stringr::str_squish()
   }
 
+  attr(res, "flavor") = flavor
   return(res)
 }
