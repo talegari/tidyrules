@@ -21,6 +21,14 @@ utils::globalVariables(c(".",
                          "rn__",
                          "row_nbr",
                          "pref__",
-                         "data"
+                         "data",
+                         "weight",
+                         "response",
+                         "terminal_node_id",
+                         "sum_weight",
+                         "prevalence",
+                         "winning_response",
+                         "average",
+                         "RMSE"
                          )
                        )

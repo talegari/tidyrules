@@ -10,6 +10,8 @@
 #' @importFrom rlang %||%
 #' @importFrom data.table :=
 #' @importFrom utils data
+#' @importFrom stats IQR
+#' @importFrom stats weighted.mean
 "_PACKAGE"
 
 list.rules.party = getFromNamespace(".list.rules.party", "partykit")
