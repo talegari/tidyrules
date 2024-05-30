@@ -11,6 +11,7 @@
 #' @return A tidytable with three columns: variable(character), type(character)
 #'   and levels(a list-column). For numeric variables, levels are set to NA.
 #' @examples
+#' \dontrun{
 #' data("attrition", package = "modeldata")
 #' cols_att = setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 #'
@@ -18,7 +19,7 @@
 #'                         y = attrition[["MonthlyIncome"]]
 #'                         )
 #' varSpec(cb_att)
-#' @export
+#' }
 varSpec = function(object){
 
   # 1. split ny newline

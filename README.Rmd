@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Build Status](https://travis-ci.org/talegari/tidyrules.svg?branch=master)](https://travis-ci.org/talegari/tidyrules)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tidyrules)](https://cran.r-project.org/package=tidyrules)
+[![R-CMD-check](https://github.com/talegari/tidyrules/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/talegari/tidyrules/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `tidyrules` converts textual rules from models to dataframes with parseable rules. Supported models are: `C5`, `cubist` and `rpart`.

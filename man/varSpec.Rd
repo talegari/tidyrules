@@ -18,6 +18,7 @@ Obtain variable names, type (numeric, ordered, factor) and
   levels as a tidytable
 }
 \examples{
+\dontrun{
 data("attrition", package = "modeldata")
 cols_att = setdiff(colnames(attrition), c("MonthlyIncome", "Attrition"))
 
@@ -25,4 +26,5 @@ cb_att = Cubist::cubist(x = attrition[, cols_att],
                         y = attrition[["MonthlyIncome"]]
                         )
 varSpec(cb_att)
+}
 }
