@@ -55,7 +55,7 @@ allRulesFilterable = function(tr, data){
                    , silent = TRUE
                    )
         if(nrow(trydf) == 0){
-          print(arule)
+          #print(arule)
         }
         inherits(trydf, "data.frame") && (nrow(trydf) > 0)
       }
@@ -79,17 +79,17 @@ evalRHS = function(tr, data){
     , USE.NAMES = FALSE
     )
 
-  print(which(!with_RHS))
+  # print(which(!with_RHS))
   return(all(with_RHS))
 }
 
 # test output type ----
 
 test_that("creates tibble", {
-  expect_is(tr_att, "ruleset")
-  expect_is(tr_att_2, "ruleset")
-  expect_is(tr_ames, "ruleset")
-  expect_is(tr_boston, "ruleset")
+  expect_is(tr_att, "rulelist")
+  expect_is(tr_att_2, "rulelist")
+  expect_is(tr_ames, "rulelist")
+  expect_is(tr_boston, "rulelist")
 })
 
 # test NA ----

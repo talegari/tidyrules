@@ -74,11 +74,11 @@ test_that("check error",{
 
 # test output type ----
 
-test_that("creates ruleset", {
-  expect_is(tr_att_class, "ruleset")
-  expect_is(tr_bc_1, "ruleset")
-  expect_is(tr_bc_2, "ruleset")
-  expect_is(tr_att_reg, "ruleset")
+test_that("creates rulelist", {
+  expect_is(tr_att_class, "rulelist")
+  expect_is(tr_bc_1, "rulelist")
+  expect_is(tr_bc_2, "rulelist")
+  expect_is(tr_att_reg, "rulelist")
 })
 
 # test NA ----

@@ -27,3 +27,4 @@ tidyrules:::strHead(c("string", "string2"), -1)
 }
 
 }
+\keyword{internal}

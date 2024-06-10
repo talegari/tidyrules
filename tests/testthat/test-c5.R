@@ -47,7 +47,7 @@ allRulesFilterable = function(tr, data){
                    , silent = TRUE
                    )
         if(nrow(trydf) == 0){
-          print(arule)
+          # print(arule)
         }
         inherits(trydf, "data.frame")
       }

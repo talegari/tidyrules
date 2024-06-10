@@ -14,7 +14,7 @@ A integer vector of positions
 }
 \description{
 (vectorised) Detect the position of space in a string not within
-  a pair of single quotes
+a pair of single quotes
 }
 \examples{
 \donttest{
@@ -22,3 +22,4 @@ tidyrules:::positionSpaceOutsideSinglequotes(c("hello", "hel' 'o "))
 }
 
 }
+\keyword{internal}

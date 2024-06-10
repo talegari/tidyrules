@@ -21,3 +21,4 @@ tidyrules:::removeEmptyLines(c("abc", "", "d"))
 }
 
 }
+\keyword{internal}
