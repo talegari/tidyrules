@@ -38,9 +38,9 @@ allRulesFilterable = function(tr, data){
 
 # test output type ----
 
-test_that("creates ruleset", {
-  expect_is(tidy(model_party_cl), "ruleset")
-  expect_is(tidy(model_party_re), "ruleset")
+test_that("creates rulelist", {
+  expect_is(tidy(model_party_cl), "rulelist")
+  expect_is(tidy(model_party_re), "rulelist")
 })
 
 # test parsable ----

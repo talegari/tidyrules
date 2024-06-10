@@ -5,17 +5,19 @@
 \alias{tidyrules}
 \alias{tidyrules-package}
 \alias{package_tidyrules}
-\title{About 'tidyrules' package}
+\title{\code{tidyrules}}
 \description{
-Obtain rules as tidy dataframes
+\code{tidyrules} package provides a framework to work with decision
+rules stored as a \link{rulelist} backed by a tidy dataframe. Rules can be
+extracted from supported models using \link{tidy}, augmented using validation data
+by \link[=augment.rulelist]{augment}, manipulated using standard dataframe
+operations, (modified) rulelists can be used to \link[=predict.rulelist]{predict}
+on unseen (test) data. Utilities include: Create a rulelist
+manually (\link[=as_rulelist.data.frame]{as_rulelist}), Export a rulelist to SQL
+(\link{to_sql_case}) and so on.
 }
 \seealso{
-Useful links:
-\itemize{
-  \item \url{https://github.com/talegari/tidyrules}
-  \item Report bugs at \url{https://github.com/talegari/tidyrules/issues}
-}
-
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment}, \link[=predict.rulelist]{predict}
 }
 \author{
 \strong{Maintainer}: Srikanth Komala Sheshachala \email{sri.teach@gmail.com}

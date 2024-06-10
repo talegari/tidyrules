@@ -25,3 +25,4 @@ tidyrules:::strReplaceReduce("abcd", c("ab", "dc"), c("cd", "ab"))
 }
 
 }
+\keyword{internal}
