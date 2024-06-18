@@ -8,13 +8,17 @@
 #'   [tidyrules][package_tidyrules] package
 #' @description `tidy` applied on a supported model fit creates a [rulelist].
 #'   **See Also** section links to documentation of specific methods.
+#'
 #' @param x A supported model object
 #' @param ... For model specific implementations to use
-#' @seealso [tidy], [tidy.C5.0], [tidy.rpart], [tidy.constparty], [tidy.cubist],
-#'   [rulelist], [augment][augment.rulelist], [predict][predict.rulelist]
+#'
+#' @seealso [rulelist], [tidy], [augment][augment.rulelist],
+#'   [predict][predict.rulelist], [calculate][calculate.rulelist],
+#'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @importFrom generics tidy
 #' @family Core Tidy Utility
 #' @export
+#'
 generics::tidy
 
 #' @name tidy.C5.0
@@ -38,11 +42,12 @@ generics::tidy
 #' model_c5 = C50::C5.0(Attrition ~., data = modeldata::attrition, rules = TRUE)
 #' tidy(model_c5)
 #'
-#' @seealso [tidy], [tidy.C5.0], [tidy.rpart], [tidy.constparty], [tidy.cubist],
-#'   [rulelist], [augment.rulelist], [predict.rulelist]
+#' @seealso [rulelist], [tidy], [augment][augment.rulelist],
+#'   [predict][predict.rulelist], [calculate][calculate.rulelist],
+#'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @family Core Tidy Utility
 #' @export
-
+#'
 tidy.C5.0 = function(x, ...){
 
   #### checks #################################################################
@@ -371,11 +376,13 @@ tidy.C5.0 = function(x, ...){
 #'
 #' model_regr_rpart = rpart::rpart(Sepal.Length ~ ., data = iris)
 #' tidy(model_regr_rpart)
-#' @seealso [tidy], [tidy.C5.0], [tidy.rpart], [tidy.constparty], [tidy.cubist],
-#'   [rulelist], [augment.rulelist], [predict.rulelist]
+#'
+#' @seealso [rulelist], [tidy], [augment][augment.rulelist],
+#'   [predict][predict.rulelist], [calculate][calculate.rulelist],
+#'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @family Core Tidy Utility
 #' @export
-
+#'
 tidy.rpart = function(x, ...){
 
   ##### assertions and prep ####################################################
@@ -514,11 +521,12 @@ tidy.rpart = function(x, ...){
 
 #' model_regr_party = partykit::ctree(bill_length_mm ~ ., data = pen)
 #' tidy(model_regr_party)
-#' @seealso [tidy], [tidy.C5.0], [tidy.rpart], [tidy.constparty], [tidy.cubist],
-#'   [rulelist], [augment.rulelist], [predict.rulelist]
-#' @family Core Tidy Utility
+#'
+#' @seealso [rulelist], [tidy], [augment][augment.rulelist],
+#'   [predict][predict.rulelist], [calculate][calculate.rulelist],
+#'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @export
-
+#'
 tidy.constparty = function(x, ...){
 
   ##### assertions and prep ####################################################
@@ -687,11 +695,13 @@ tidy.constparty = function(x, ...){
 #'                               y = att[["MonthlyIncome"]]
 #'                               )
 #' tidy(model_cubist)
-#' @seealso [tidy], [tidy.C5.0], [tidy.rpart], [tidy.constparty], [tidy.cubist],
-#'   [rulelist], [augment.rulelist], [predict.rulelist]
+#'
+#' @seealso [rulelist], [tidy], [augment][augment.rulelist],
+#'   [predict][predict.rulelist], [calculate][calculate.rulelist],
+#'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @family Core Tidy Utility
 #' @export
-
+#'
 tidy.cubist = function(x, ...){
 
   #### core rule extraction ####################################################

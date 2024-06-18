@@ -36,6 +36,21 @@
 #' @importFrom tidytable row_number
 #' @importFrom tidytable drop_na
 #' @importFrom tidytable relocate
+#' @importFrom tidytable bind_rows
+#' @importFrom tidytable pull
+#' @importFrom tidytable slice
+#' @importFrom tidytable pivot_wider
+#' @importFrom tidytable pivot_longer
+#' @importFrom tidytable bind_cols
+#' @importFrom tidytable across
+#' @importFrom graphics abline
+#' @importFrom graphics axis
+#' @importFrom graphics legend
+#' @importFrom graphics lines
+#' @importFrom stats runif
+#' @importFrom utils head
+#' @importFrom utils tail
+#'
 "_PACKAGE"
 
 list.rules.party = getFromNamespace(".list.rules.party", "partykit")
@@ -72,7 +87,12 @@ utils::globalVariables(c(".",
                          ".data",
                          "rn_df",
                          "trial_nbr",
-                         "error"
+                         "error",
+                         "data__",
+                         "rn_df__",
+                         "hit",
+                         "priority",
+                         "value"
                          )
                        )
 

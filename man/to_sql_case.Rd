@@ -4,10 +4,10 @@
 \alias{to_sql_case}
 \title{Extract SQL case statement from a \link{rulelist}}
 \usage{
-to_sql_case(x, rhs_column_name = "RHS", output_colname = "output")
+to_sql_case(rulelist, rhs_column_name = "RHS", output_colname = "output")
 }
 \arguments{
-\item{x}{A \link{rulelist} object}
+\item{rulelist}{A \link{rulelist} object}
 
 \item{rhs_column_name}{(string, default: "RHS") Name of the column in the
 rulelist to be used as RHS (WHEN \if{html}{\out{<some rule>}} THEN {rhs}) in the sql case

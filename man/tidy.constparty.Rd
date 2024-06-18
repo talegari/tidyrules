@@ -40,15 +40,10 @@ model_class_party = partykit::ctree(species ~ ., data = pen)
 tidy(model_class_party)
 model_regr_party = partykit::ctree(bill_length_mm ~ ., data = pen)
 tidy(model_regr_party)
+
 }
 \seealso{
-\link{tidy}, \link{tidy.C5.0}, \link{tidy.rpart}, \link{tidy.constparty}, \link{tidy.cubist},
-\link{rulelist}, \link{augment.rulelist}, \link{predict.rulelist}
-
-Other Core Tidy Utility: 
-\code{\link{tidy}()},
-\code{\link{tidy.C5.0}()},
-\code{\link{tidy.cubist}()},
-\code{\link{tidy.rpart}()}
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 }
-\concept{Core Tidy Utility}

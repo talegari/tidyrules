@@ -18,12 +18,7 @@ A \link{rulelist}
 as_rulelist generic
 }
 \seealso{
-\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment}, \link[=predict.rulelist]{predict}
-
-Other Core Rulelist Utility: 
-\code{\link{as_rulelist.data.frame}()},
-\code{\link{predict.rulelist}()},
-\code{\link{print.rulelist}()},
-\code{\link{set_keys}()}
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 }
-\concept{Core Rulelist Utility}
