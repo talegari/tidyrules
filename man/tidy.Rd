@@ -17,12 +17,12 @@ tidy(x, ...)
 \strong{See Also} section links to documentation of specific methods.
 }
 \seealso{
-\link{tidy}, \link{tidy.C5.0}, \link{tidy.rpart}, \link{tidy.constparty}, \link{tidy.cubist},
-\link{rulelist}, \link[=augment.rulelist]{augment}, \link[=predict.rulelist]{predict}
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 
 Other Core Tidy Utility: 
 \code{\link{tidy.C5.0}()},
-\code{\link{tidy.constparty}()},
 \code{\link{tidy.cubist}()},
 \code{\link{tidy.rpart}()}
 }

@@ -38,12 +38,12 @@ tidy(model_c5)
 
 }
 \seealso{
-\link{tidy}, \link{tidy.C5.0}, \link{tidy.rpart}, \link{tidy.constparty}, \link{tidy.cubist},
-\link{rulelist}, \link{augment.rulelist}, \link{predict.rulelist}
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 
 Other Core Tidy Utility: 
 \code{\link{tidy}()},
-\code{\link{tidy.constparty}()},
 \code{\link{tidy.cubist}()},
 \code{\link{tidy.rpart}()}
 }

@@ -332,7 +332,7 @@ convert_rule_flavor = function(rule, flavor){
 #' @name to_sql_case
 #' @title Extract SQL case statement from a [rulelist]
 #' @description Extract SQL case statement from a [rulelist]
-#' @param x A [rulelist] object
+#' @param rulelist A [rulelist] object
 #' @param rhs_column_name (string, default: "RHS") Name of the column in the
 #'   rulelist to be used as RHS (WHEN <some rule> THEN {rhs}) in the sql case
 #'   statement
@@ -348,22 +348,22 @@ convert_rule_flavor = function(rule, flavor){
 #' @seealso [rulelist], [tidy], [augment][augment.rulelist], [predict][predict.rulelist], [convert_rule_flavor]
 #' @family Auxiliary Rulelist Utility
 #' @export
-to_sql_case = function(x,
+to_sql_case = function(rulelist,
                        rhs_column_name = "RHS",
                        output_colname = "output"
                        ){
 
-  checkmate::assert_class(x, "rulelist")
-  rhs_is_string = inherits(x[[rhs_column_name]], c("character", "factor"))
-  lhs_sql = convert_rule_flavor(x$LHS, flavor = "sql")
+  checkmate::assert_class(rulelist, "rulelist")
+  rhs_is_string = inherits(rulelist[[rhs_column_name]], c("character", "factor"))
+  lhs_sql = convert_rule_flavor(rulelist$LHS, flavor = "sql")
   out = "CASE"
 
-  for (rn in seq_len(nrow(x))) {
+  for (rn in seq_len(nrow(rulelist))) {
 
     if (rhs_is_string) {
-      lhs = glue::glue("WHEN {lhs_sql[rn]} THEN '{x[[rhs_column_name]][rn]}'")
+      lhs = glue::glue("WHEN {lhs_sql[rn]} THEN '{rulelist[[rhs_column_name]][rn]}'")
     } else {
-      lhs = glue::glue("WHEN {lhs_sql[rn]} THEN {x[[rhs_column_name]][rn]}")
+      lhs = glue::glue("WHEN {lhs_sql[rn]} THEN {rulelist[[rhs_column_name]][rn]}")
     }
     out = paste(out, lhs, sep = "\n")
   }

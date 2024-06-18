@@ -17,7 +17,7 @@ applicable for a row. If FALSE, the first satisfying rule is provided.}
 \item{...}{unused}
 }
 \value{
-dataframe. See \strong{Details}.
+A  dataframe. See \strong{Details}.
 }
 \description{
 Predicts \code{rule_nbr} applicable (as per the order in rulelist)
@@ -53,14 +53,15 @@ output_1 # different rules per 'keys' (`trial_nbr` here)
 
 output_2 = predict(tidy_c5, palmerpenguins::penguins, multiple = TRUE)
 output_2 # `rule_nbr` is a list-column of integer vectors
+
 }
 \seealso{
-\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment}, \link[=predict.rulelist]{predict}
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 
 Other Core Rulelist Utility: 
-\code{\link{as_rulelist}()},
-\code{\link{as_rulelist.data.frame}()},
-\code{\link{print.rulelist}()},
-\code{\link{set_keys}()}
+\code{\link{set_keys}()},
+\code{\link{set_validation_data}()}
 }
 \concept{Core Rulelist Utility}

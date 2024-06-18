@@ -37,12 +37,7 @@ rules_df = tidytable::tidytable(rule_nbr = 1:2,
 as_rulelist(rules_df, estimation_type = "regression")
 }
 \seealso{
-\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment}, \link[=predict.rulelist]{predict}
-
-Other Core Rulelist Utility: 
-\code{\link{as_rulelist}()},
-\code{\link{predict.rulelist}()},
-\code{\link{print.rulelist}()},
-\code{\link{set_keys}()}
+\link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 }
-\concept{Core Rulelist Utility}

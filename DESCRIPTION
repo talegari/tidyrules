@@ -1,7 +1,7 @@
 Package: tidyrules
 Type: Package
-Title: Obtain Rules from Rule Based Models as Tidy Dataframe
-Version: 0.2.4
+Title: Utilities to Retrieve Rulelists from Model Fits, Filter, Prune, Reorder and Predict on unseen data
+Version: 0.2.5
 Authors@R: c(
     person("Srikanth", "Komala Sheshachala", email = "sri.teach@gmail.com", role = c("aut", "cre")),
     person("Amith Kumar", "Ullur Raghavendra", email = "amith54@gmail.com", role = c("aut"))
@@ -22,6 +22,8 @@ Imports:
     MetricsWeighted (>= 1.0.3),
     cli (>= 3.6.2),
     glue (>= 1.7.0),
+    pheatmap (>= 1.0.12),
+    proxy (>= 0.4.27),
 Suggests:
     AmesHousing (>= 0.0.3),
     dplyr (>= 0.8),
@@ -36,7 +38,7 @@ Suggests:
     knitr (>= 1.23), 
     rmarkdown (>= 1.13),
     palmerpenguins (>= 0.1.1),
-Description: Utility to convert text based summary of rule based models to a rulelist or ruleset dataframe (where each row represents a rule) with related metrics such as support, confidence and lift. Rule based models from these packages are supported: 'C5.0', 'rpart' and 'Cubist'.
+Description: Extract rules as a rulelist (a class based on dataframe) along with metrics per rule such as support, confidence, lift, RMSE, IQR. Rulelists can be augmented using validation data, manipulated using standard dataframe operations, rulelists can be used to predict on unseen data, prune them based on some metrics and reoder them to optimize them for a metric. Utilities include manually creating rulesets, exporting a rulelist to SQL syntax and so on.
 URL: https://github.com/talegari/tidyrules
 BugReports: https://github.com/talegari/tidyrules/issues
 License: GPL-3

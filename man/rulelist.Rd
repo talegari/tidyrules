@@ -52,6 +52,12 @@ A rulelist has these optional attributes:
 \item \code{keys}: (character vector)Names of the column that forms a key.
 \item \code{model_type}: (string) Name of the model
 }
+
+\subsection{Set Validation data}{
+
+This helps a few methods like \link{augment}, \link{calculate}, \link{prune}, \link{reorder}
+require few additional attributes which can be set using
+\link{set_validation_data}.
 }
 
 \subsection{Methods for rulelist}{
@@ -60,9 +66,16 @@ A rulelist has these optional attributes:
 dependent variable column aka 'test data'), predicts the first rule (as
 ordered in the rulelist) per 'keys' that is applicable for each row. When
 \code{multiple = TRUE}, returns all rules applicable for a row (per key).
-\item \link[=augment.rulelist]{Augment}: Given a dataframe (with dependent variable
-column, aka validation data), creates summary statistics per rule and
-returns a rulelist with a new dataframe-column.
+\item \link[=augment.rulelist]{Augment}: Outputs summary statistics per rule over
+validation data and returns a rulelist with a new dataframe-column.
+\item \link[=calculate.rulelist]{Calculate}: Computes metrics for a rulelist in a
+cumulative manner such as \code{cumulative_coverage}, \code{cumulative_overlap},
+\code{cumulative_accuracy}.
+\item \link[=prune.rulelist]{Prune}: Suggests pruning a rulelist such that some
+expectation are met (based on metrics). Example: cumulative_coverage of 80\%
+can be met with a first few rules.
+\item \link[=reorder.rulelist]{Reorder}: Reorders a rulelist in order to maximize a
+metric.
 }
 }
 
@@ -77,14 +90,17 @@ dataframe worlds.
 \subsection{Utilities for a rulelist}{
 \enumerate{
 \item \link[=as_rulelist.data.frame]{as_rulelist}: Create a \code{rulelist} from a
-dataframe with some mandatory columns. 2. \link{set_keys}: Set or Unset 'keys'
-of a \code{rulelist}. 3. \link{to_sql_case}: Outputs a SQL case statement for a
-\code{rulelist}. 4. \link{convert_rule_flavor}: Converts \code{R}-parsable rule strings to
-python/SQL parsable rule strings.
+dataframe with some mandatory columns.
+\item \link{set_keys}: Set or Unset 'keys' of a \code{rulelist}.
+\item \link{to_sql_case}: Outputs a SQL case statement for a \code{rulelist}.
+\item \link{convert_rule_flavor}: Converts \code{R}-parsable rule strings to python/SQL
+parsable rule strings.
+}
 }
 }
 }
 \seealso{
 \link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
-\link[=predict.rulelist]{predict}
+\link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
+\link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 }
