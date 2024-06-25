@@ -1,7 +1,7 @@
-################################################################################
+#*******************************************************************************
 # This is the part of the 'tidyrules' R package hosted at
 # https://github.com/talegari/tidyrules with GPL-3 license.
-################################################################################
+#*******************************************************************************
 
 #' @keywords internal
 #' @name positionSpaceOutsideSinglequotes
@@ -334,10 +334,10 @@ convert_rule_flavor = function(rule, flavor){
 #' @description Extract SQL case statement from a [rulelist]
 #' @param rulelist A [rulelist] object
 #' @param rhs_column_name (string, default: "RHS") Name of the column in the
-#'   rulelist to be used as RHS (WHEN <some rule> THEN {rhs}) in the sql case
+#'   rulelist to be used as RHS (WHEN some_rule THEN rhs) in the sql case
 #'   statement
 #' @param output_colname (string, default: "output") Name of the output column
-#'   created by the SQL statement (used in case ... AS {output_column})
+#'   created by the SQL statement (used in case ... AS output_column)
 #' @return (string invisibly) SQL case statement
 #' @details As a side-effect, the SQL statement is cat to stdout. The output
 #' contains newline character.

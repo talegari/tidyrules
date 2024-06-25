@@ -359,23 +359,27 @@ set_validation_data = function(x, validation_data, y_name, weight = 1){
 #' @title Print method for [rulelist] class
 #' @description Prints [rulelist] attributes and first few rows.
 #' @param x A [rulelist] object
+#' @param banner (flag, default: `TRUE`) Should the banner be displayed
 #' @param ... Passed to `tidytable::print`
 #' @return input [rulelist] (invisibly)
 #' @seealso [rulelist], [tidy], [augment][augment.rulelist],
 #'   [predict][predict.rulelist], [calculate][calculate.rulelist],
 #'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @export
-print.rulelist = function(x, ...){
+print.rulelist = function(x, banner = TRUE, ...){
 
   validate_rulelist(x)
+  rulelist = rlang::duplicate(x)
 
-  keys            = attr(x, "keys")
-  estimation_type = attr(x, "estimation_type")
-  model_type      = attr(x, "model_type")
-  validation_data = attr(x, "validation_data")
+  keys            = attr(rulelist, "keys")
+  estimation_type = attr(rulelist, "estimation_type")
+  model_type      = attr(rulelist, "model_type")
+  validation_data = attr(rulelist, "validation_data")
 
-  cli::cli_rule(left = "Rulelist")
-  cli::cli_text("")
+  if (banner) {
+    cli::cli_rule(left = "Rulelist")
+    cli::cli_text("")
+  }
 
   if (is.null(keys)) {
     cli::cli_alert_info("{.emph Keys}: {.strong NULL}")
@@ -407,10 +411,13 @@ print.rulelist = function(x, ...){
 
   cli::cli_text("")
 
-  class(x) = setdiff(class(x), "rulelist")
-  print(x, ...)
-  cli::cli_rule()
-  class(x) = c("rulelist", class(x))
+  class(rulelist) = setdiff(class(rulelist), "rulelist")
+  # now 'rulelist' is a dataframe and not a 'rulelist'
+  print(rulelist, ...)
+
+  if (banner) {
+    cli::cli_rule()
+  }
 
   return(invisible(x))
 }
@@ -706,20 +713,21 @@ predict_rulelist = function(rulelist, new_data){
 #' @returns A  dataframe. See **Details**.
 #'
 #' @details If a `row_nbr` is covered more than one `rule_nbr` per 'keys', then
-#' `rule_nbr` appearing earlier (as in row order of the [rulelist]) takes
-#' precedence.
+#'   `rule_nbr` appearing earlier (as in row order of the [rulelist]) takes
+#'   precedence.
 #'
 #' ## Output Format
 #'
 #' - When multiple is `FALSE`(default), output is a dataframe with three
-#' or more columns: `row_number` (int), columns corresponding to 'keys',
-#' `rule_nbr` (int).
+#'   or more columns: `row_number` (int), columns corresponding to 'keys',
+#'   `rule_nbr` (int).
 #'
-#' - When multiple is `TRUE`(default), output is a tidytable/dataframe with three
-#' or more columns: `row_number` (int), columns corresponding to 'keys',
-#' `rule_nbr` (list column of integers).
+#' - When multiple is `TRUE`, output is a dataframe with three
+#'   or more columns: `row_number` (int), columns corresponding to 'keys',
+#'   `rule_nbr` (list column of integers).
 #'
-#' - If a row number and 'keys' combination is not covered by any rule, then `rule_nbr` column has missing value.
+#' - If a row number and 'keys' combination is not covered by any rule, then
+#'   `rule_nbr` column has missing value.
 #'
 #' @examples
 #' model_c5 = C50::C5.0(species ~.,
@@ -740,7 +748,6 @@ predict_rulelist = function(rulelist, new_data){
 #'   [predict][predict.rulelist], [calculate][calculate.rulelist],
 #'   [prune][prune.rulelist], [reorder][reorder.rulelist]
 #' @importFrom stats predict
-#' @family Core Rulelist Utility
 #' @export
 #'
 predict.rulelist = function(object, new_data, multiple = FALSE, ...){
@@ -790,22 +797,23 @@ augment_class_no_keys = function(x, new_data, y_name, weight, ...){
     mutate(prevalence = prevalence_0 / sum(prevalence_0)) %>%
     select(all_of(c(eval(y_name), "prevalence")))
 
+  na_to_false = function(x) ifelse(is.na(x), FALSE, x)
+
   aggregatees_df =
     new_data_with_rule_nbr %>%
     # bring 'prevalence' column
     left_join(prevalence_df,by = eval(y_name)) %>%
     summarise(
       support = sum(weight__, na.rm = TRUE),
-      confidence = weighted.mean(ifelse(is.na(eval(y_name) == RHS), FALSE, TRUE),
-                                 weight__,
-                                 na.rm = TRUE
-                                 ),
-      lift = weighted.mean(ifelse(is.na(eval(y_name) == RHS), FALSE, TRUE),
-                           weight__,
-                           na.rm = TRUE
-                           ) / prevalence[1],
+      confidence =
+        ( as.character(.data[[y_name]]) == as.character(RHS) ) %>%
+        na_to_false() %>%
+        weighted.mean(weight__, na.rm = TRUE),
+      prevalence = prevalence[1],
       .by = rule_nbr
       ) %>%
+    mutate(lift = confidence / prevalence) %>%
+    select(-prevalence) %>%
     nest(.by = rule_nbr, .key = "augmented_stats")
 
   # output has all columns of 'tidy' along with 'augment_stats'
@@ -858,23 +866,24 @@ augment_class_keys = function(x, new_data, y_name, weight, ...){
                       ) %>%
     select(all_of(c(keys, eval(y_name), "prevalence")))
 
+  na_to_false = function(x) ifelse(is.na(x), FALSE, x)
+
   # add aggregates at rule_nbr and 'keys' level
   aggregatees_df =
     new_data_with_rule_nbr %>%
     left_join(prevalence_df, by = c(keys, eval(y_name))) %>%
     summarise(
       support    = sum(weight__, na.rm = TRUE),
-      confidence = weighted.mean(ifelse(is.na(eval(y_name) == RHS), FALSE, TRUE),
-                                   weight__,
-                                   na.rm = TRUE
-                                   ),
-      lift = weighted.mean(ifelse(is.na(eval(y_name) == RHS), FALSE, TRUE),
-                           weight__,
-                           na.rm = TRUE
-                           ) / prevalence[1],
+      confidence =
+        ( as.character(.data[[y_name]]) == as.character(RHS) ) %>%
+        na_to_false() %>%
+        weighted.mean(weight__, na.rm = TRUE),
+      prevalence = prevalence[1],
       ...,
       .by = c(keys, "rule_nbr")
       ) %>%
+    mutate(lift = confidence / prevalence) %>%
+    select(-prevalence) %>%
     nest(.by = c("rule_nbr", keys), .key = "augmented_stats")
 
   # output has all columns of 'tidy' along with 'augment_stats'

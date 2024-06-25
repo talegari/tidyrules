@@ -6,14 +6,15 @@
 #' @name package_tidyrules
 #' @title `tidyrules`
 #' @description `tidyrules` package provides a framework to work with decision
-#' rules stored as a [rulelist] backed by a tidy dataframe. Rules can be
-#' extracted from supported models using [tidy], augmented using validation data
-#' by [augment][augment.rulelist], manipulated using standard dataframe
-#' operations, (modified) rulelists can be used to [predict][predict.rulelist]
-#' on unseen (test) data. Utilities include: Create a rulelist
-#' manually ([as_rulelist][as_rulelist.data.frame]), Export a rulelist to SQL
-#' ([to_sql_case]) and so on.
-#' @seealso [rulelist], [tidy], [augment][augment.rulelist], [predict][predict.rulelist]
+#'   rules. Rules can be extracted from supported models using [tidy], augmented
+#'   using validation data by [augment][augment.rulelist], manipulated using
+#'   standard dataframe operations, (modified) rulelists can be used to
+#'   [predict][predict.rulelist] on unseen (test) data. Utilities include:
+#'   Create a rulelist manually ([as_rulelist][as_rulelist.data.frame]), Export
+#'   a rulelist to SQL ([to_sql_case]) and so on. The package offers two
+#'   classes; [rulelist] and [ruleset] based on dataframe.
+#' @seealso [rulelist], [tidy], [augment][augment.rulelist],
+#'   [predict][predict.rulelist]
 #' @importFrom magrittr %>%
 #' @importFrom rlang %||%
 #' @importFrom data.table :=

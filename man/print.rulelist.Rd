@@ -4,10 +4,12 @@
 \alias{print.rulelist}
 \title{Print method for \link{rulelist} class}
 \usage{
-\method{print}{rulelist}(x, ...)
+\method{print}{rulelist}(x, banner = TRUE, ...)
 }
 \arguments{
 \item{x}{A \link{rulelist} object}
+
+\item{banner}{(flag, default: \code{TRUE}) Should the banner be displayed}
 
 \item{...}{Passed to \code{tidytable::print}}
 }
