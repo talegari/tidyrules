@@ -52,7 +52,6 @@ tidy_c5 # not altered
 \link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 
 Other Core Rulelist Utility: 
-\code{\link{predict.rulelist}()},
 \code{\link{set_keys}()}
 }
 \concept{Core Rulelist Utility}

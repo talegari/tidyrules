@@ -49,7 +49,6 @@ new_tidy_c5
 \link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
 
 Other Core Rulelist Utility: 
-\code{\link{predict.rulelist}()},
 \code{\link{set_validation_data}()}
 }
 \concept{Core Rulelist Utility}

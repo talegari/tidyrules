@@ -10,11 +10,11 @@ to_sql_case(rulelist, rhs_column_name = "RHS", output_colname = "output")
 \item{rulelist}{A \link{rulelist} object}
 
 \item{rhs_column_name}{(string, default: "RHS") Name of the column in the
-rulelist to be used as RHS (WHEN \if{html}{\out{<some rule>}} THEN {rhs}) in the sql case
+rulelist to be used as RHS (WHEN some_rule THEN rhs) in the sql case
 statement}
 
 \item{output_colname}{(string, default: "output") Name of the output column
-created by the SQL statement (used in case ... AS {output_column})}
+created by the SQL statement (used in case ... AS output_column)}
 }
 \value{
 (string invisibly) SQL case statement

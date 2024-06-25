@@ -32,10 +32,11 @@ precedence.
 \item When multiple is \code{FALSE}(default), output is a dataframe with three
 or more columns: \code{row_number} (int), columns corresponding to 'keys',
 \code{rule_nbr} (int).
-\item When multiple is \code{TRUE}(default), output is a tidytable/dataframe with three
+\item When multiple is \code{TRUE}, output is a dataframe with three
 or more columns: \code{row_number} (int), columns corresponding to 'keys',
 \code{rule_nbr} (list column of integers).
-\item If a row number and 'keys' combination is not covered by any rule, then \code{rule_nbr} column has missing value.
+\item If a row number and 'keys' combination is not covered by any rule, then
+\code{rule_nbr} column has missing value.
 }
 }
 }
@@ -59,9 +60,4 @@ output_2 # `rule_nbr` is a list-column of integer vectors
 \link{rulelist}, \link{tidy}, \link[=augment.rulelist]{augment},
 \link[=predict.rulelist]{predict}, \link[=calculate.rulelist]{calculate},
 \link[=prune.rulelist]{prune}, \link[=reorder.rulelist]{reorder}
-
-Other Core Rulelist Utility: 
-\code{\link{set_keys}()},
-\code{\link{set_validation_data}()}
 }
-\concept{Core Rulelist Utility}
