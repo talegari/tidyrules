@@ -53,18 +53,22 @@ print.ruleset = function(x, banner = TRUE, ...){
 
   ruleset = rlang::duplicate(x)
 
+  text = character(0)
   if (banner) {
-    cli::cli_rule(left = "Ruleset")
-    cli::cli_text("")
+    text = c(text, "---- Ruleset -------------------------------")
   }
 
   class(ruleset) = setdiff(class(ruleset), "ruleset")
-  # now 'ruleset' is a rulelist
-  print(ruleset, banner = FALSE, ...)
+  text = c(text,
+           capture.output(print(ruleset, banner = FALSE, ...),
+                          file = NULL
+                          )
+           )
 
   if (banner) {
-    cli::cli_rule()
+    text = c(text, "--------------------------------------------")
   }
+  cat(paste(text, collapse = "\n"))
 
   return(invisible(x))
 }

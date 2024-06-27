@@ -1,7 +1,7 @@
 Package: tidyrules
 Type: Package
 Title: Utilities to Retrieve Rulelists from Model Fits, Filter, Prune, Reorder and Predict on unseen data
-Version: 0.2.6
+Version: 0.2.7
 Authors@R: c(
     person("Srikanth", "Komala Sheshachala", email = "sri.teach@gmail.com", role = c("aut", "cre")),
     person("Amith Kumar", "Ullur Raghavendra", email = "amith54@gmail.com", role = c("aut"))
@@ -24,6 +24,7 @@ Imports:
     glue (>= 1.7.0),
     pheatmap (>= 1.0.12),
     proxy (>= 0.4.27),
+    tibble (>= 3.2.1),
 Suggests:
     AmesHousing (>= 0.0.3),
     dplyr (>= 0.8),
@@ -35,16 +36,14 @@ Suggests:
     testthat (>= 2.0.1),
     MASS (>= 7.3.50),
     mlbench (>= 2.1.1),
-    knitr (>= 1.23), 
     rmarkdown (>= 1.13),
     palmerpenguins (>= 0.1.1),
 Description: Provides a framework to work with decision rules. Rules can be extracted from supported models, augmented with (custom) metrics using validation data, manipulated using standard dataframe operations, reordered and pruned based on a metric, predict on unseen (test) data. Utilities include; Creating a rulelist manually, Exporting a rulelist as a SQL case statement and so on. The package offers two classes; rulelist and rulelset based on dataframe.
-URL: https://github.com/talegari/tidyrules
+URL: https://github.com/talegari/tidyrules, https://talegari.github.io/tidyrules/
 BugReports: https://github.com/talegari/tidyrules/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
-VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 

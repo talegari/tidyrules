@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+devtools::load_all() #todo
 ```
 # tidyrules
 
@@ -20,9 +21,13 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/talegari/tidyrules/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/talegari/tidyrules/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`tidyrules` converts textual rules from models to dataframes with parseable rules. Supported models are: `C5`, `cubist` and `rpart`.
+> [tidyrules](https://cran.r-project.org/package=tidyrules) [R](https://www.r-project.org/) [package](https://cran.r-project.org/) provides a framework to work with decision rules. Rules can be extracted from supported models, augmented with (custom) metrics using validation data, manipulated using standard dataframe operations, reordered and pruned based on a metric, predict on unseen (test) data. Utilities include; Creating a rulelist manually, Exporting a rulelist as a SQL case statement and so on. The package offers two classes; rulelist and rulelset based on dataframe.
+
+![](man/figures/tidyrules_schematic.png)
 
 ## Example
+<details>
+<summary>expand/collapse</summary>
 
 ```{r example}
 library(tidyrules)
@@ -30,26 +35,25 @@ library(tidyrules)
 
 ```{r basic C5 example}
 model_c5 = C50::C5.0(Species ~ ., data = iris, rules = TRUE)
-summary(model_c5)
+pander::pandoc.table(tidy(model_c5), split.tables = 120)
 ```
-
-Tidy the rules:
-
-```{r tidyrules}
-pander::pandoc.table(tidyRules(model_c5), split.tables = 120)
-```
+</details>
 
 ## Installation
+<details>
+<summary>expand/collapse</summary>
 
 You can install the released version of tidyrules from [CRAN](https://CRAN.R-project.org) with:
 
-``` r
+```{r, eval = FALSE}
 install.packages("tidyrules")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("talegari/tidyrules")
 ```
+</details>
+
