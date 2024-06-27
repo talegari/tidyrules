@@ -312,12 +312,14 @@ convert_rule_flavor = function(rule, flavor){
   } else if (flavor == "sql"){
     res =
       rule %>%
+      stringr::str_replace_all("==", "=") %>%
+
       stringr::str_replace_all("\\( ", "") %>%
       stringr::str_replace_all(" \\)", "") %>%
 
       stringr::str_replace_all("%in%", "IN") %>%
-      stringr::str_replace_all("c\\(", "[") %>%
-      stringr::str_replace_all("\\)", "]") %>%
+      stringr::str_replace_all("c\\(", "(") %>%
+      stringr::str_replace_all("\\)", ")") %>%
 
       stringr::str_replace_all("&", " ) AND (") %>%
 

@@ -1,3 +1,10 @@
+# tidyrules 0.2.7
+
+- Major rewrite of tidyrules
+  - rulelist class introduced with many methods, mainly `predict`
+  - breaking change: `tidyRules` function no longer exists!
+  - Support added to `party` models
+
 # tidyrules 0.1.5
 
 - Maintenance release (replace package rsample with modeldata)

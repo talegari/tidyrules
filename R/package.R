@@ -51,6 +51,7 @@
 #' @importFrom stats runif
 #' @importFrom utils head
 #' @importFrom utils tail
+#' @importFrom utils capture.output
 #'
 "_PACKAGE"
 

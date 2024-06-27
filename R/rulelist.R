@@ -343,8 +343,12 @@ set_validation_data = function(x, validation_data, y_name, weight = 1){
 
     res = rlang::duplicate(x)
 
-    checkmate::assert_data_frame(validation_data)
-    attr(res, "validation_data") = data.table::as.data.table(validation_data)
+    checkmate::assert_data_frame(validation_data, null.ok = TRUE)
+    if (!is.null(validation_data)) {
+      attr(res, "validation_data") =
+        data.table::as.data.table(validation_data)
+    }
+
     attr(res, "y_name") = y_name
     attr(res, "weight") = weight
 
@@ -376,48 +380,86 @@ print.rulelist = function(x, banner = TRUE, ...){
   model_type      = attr(rulelist, "model_type")
   validation_data = attr(rulelist, "validation_data")
 
+  text = character(0)
   if (banner) {
-    cli::cli_rule(left = "Rulelist")
-    cli::cli_text("")
+    text = c(text, "---- Rulelist --------------------------------")
   }
 
   if (is.null(keys)) {
-    cli::cli_alert_info("{.emph Keys}: {.strong NULL}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   "Keys: NULL"
+                   )
+             )
   } else {
-    cli::cli_alert_info("{.emph keys}: {.val {keys}}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Keys: {keys}")
+                   )
+             )
     n_combo = nrow(distinct(select(x, all_of(keys))))
-    cli::cli_alert_info("{.emph Number of distinct keys}: {.val {n_combo}}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Number of distinct keys: {n_combo}")
+                   )
+             )
   }
 
-  cli::cli_alert_info("{.emph Number of rules}: {.val {nrow(x)}}")
+  text = c(text,
+           paste(cli::symbol$play,
+                 stringr::str_glue("Number of rules: {nrow(x)}")
+                 )
+           )
 
   if (is.null(model_type)){
-    cli::cli_alert_info("{.emph Model type}: {.strong NULL}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Model Type: NULL")
+                   )
+             )
   } else {
-    cli::cli_alert_info("{.emph Model type}: {.val {model_type}}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Model type: {model_type}")
+                   )
+             )
   }
 
-  if (is.null(estimation_type)){
-    cli::cli_alert_info("{.emph Estimation type}: {.strong NULL}")
+  if (is.null(estimation_type)) {
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Estimation type: NULL")
+                   )
+             )
   } else {
-    cli::cli_alert_info("{.emph Estimation type}: {.val {estimation_type}}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Estimation type: {estimation_type}")
+                   )
+             )
   }
 
-  if (is.null(validation_data)){
-    cli::cli_alert_warning("{.emph Is validation data set}: {.strong FALSE}")
+  if (is.null(validation_data)) {
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Is validation data set: FALSE")
+                   )
+             )
   } else {
-    cli::cli_alert_success("{.emph Is validation data set}: {.strong TRUE}")
+    text = c(text,
+             paste(cli::symbol$play,
+                   stringr::str_glue("Is validation data set: TRUE")
+                   )
+             )
   }
 
-  cli::cli_text("")
-
-  class(rulelist) = setdiff(class(rulelist), "rulelist")
-  # now 'rulelist' is a dataframe and not a 'rulelist'
-  print(rulelist, ...)
+  print_output = capture.output(print(tibble::as_tibble(x), ...), file = NULL)
+  text = c(text, "\n", utils::tail(print_output, -1))
 
   if (banner) {
-    cli::cli_rule()
+    text = c(text, "----------------------------------------------")
   }
+  cat(paste(text, collapse = "\n"))
 
   return(invisible(x))
 }
@@ -592,7 +634,7 @@ predict_all_rulelist = function(rulelist, new_data){
     res =
       rulelist %>%
       as.data.frame() %>%
-      nest(data__ = tidytable::everything(), .by = keys) %>%
+      nest(data__ = tidytable::everything(), .by = all_of(keys)) %>%
       mutate(rn_df__ =
                purrr::map(data__,
                           ~ predict_all_nokeys_rulelist(.x, new_data)
@@ -603,7 +645,7 @@ predict_all_rulelist = function(rulelist, new_data){
       drop_na(row_nbr) %>%
       select(all_of(c("row_nbr", keys, "rule_nbr"))) %>%
       arrange(!!!rlang::syms(c("row_nbr", keys, "rule_nbr"))) %>%
-      nest(.by = c("row_nbr", keys), .key = "rule_nbr") %>%
+      nest(.by = all_of(c("row_nbr", keys)), .key = "rule_nbr") %>%
       mutate(rule_nbr = purrr::map(rule_nbr, ~ .x[[1]]))
   }
 
@@ -685,7 +727,7 @@ predict_rulelist = function(rulelist, new_data){
     res =
       rulelist %>%
       as.data.frame() %>%
-      nest(data__ = tidytable::everything(), .by = keys) %>%
+      nest(data__ = tidytable::everything(), .by = all_of(keys)) %>%
       mutate(rn_df__ =
                purrr::map(data__, ~ predict_nokeys_rulelist(.x, new_data))
              ) %>%
@@ -1759,10 +1801,9 @@ plot.prune_rulelist = function(x, ...) {
 #' @seealso [rulelist], [tidy], [augment][augment.rulelist],
 #'   [predict][predict.rulelist], [calculate][calculate.rulelist],
 #'   [prune][prune.rulelist], [reorder][reorder.rulelist]
+#' @importFrom stats reorder
 #' @export
-reorder = function(x, ...){
-  UseMethod("reorder", x)
-}
+stats::reorder
 
 #' @name reorder.rulelist
 #' @title Reorder the rules/rows of a [rulelist]
@@ -1891,7 +1932,7 @@ reorder.rulelist = function(x,
     rule_metrics           = purrr::map_dfr(splitted, wrapper_metric_fun)
     ord                    = do.call(base::order,
                                      c(rule_metrics,
-                                       list(decreasing = minimize)
+                                       list(decreasing = !minimize)
                                        )
                                      )
     pos                    = which(ord == 1)
