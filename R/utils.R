@@ -8,7 +8,7 @@
 #' @title Position of space outside single quotes
 #' @description (vectorised) Detect the position of space in a string not within
 #'   a pair of single quotes
-#' @param string A chracter vector
+#' @param string A character vector
 #' @return A integer vector of positions
 #' @examples
 #' \donttest{

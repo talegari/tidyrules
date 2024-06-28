@@ -1,6 +1,6 @@
 Package: tidyrules
 Type: Package
-Title: Utilities to Retrieve Rulelists from Model Fits, Filter, Prune, Reorder and Predict on unseen data
+Title: Utilities to Retrieve Rulelists from Model Fits, Filter, Prune, Reorder and Predict on Unseen Data
 Version: 0.2.7
 Authors@R: c(
     person("Srikanth", "Komala Sheshachala", email = "sri.teach@gmail.com", role = c("aut", "cre")),
@@ -38,7 +38,7 @@ Suggests:
     mlbench (>= 2.1.1),
     rmarkdown (>= 1.13),
     palmerpenguins (>= 0.1.1),
-Description: Provides a framework to work with decision rules. Rules can be extracted from supported models, augmented with (custom) metrics using validation data, manipulated using standard dataframe operations, reordered and pruned based on a metric, predict on unseen (test) data. Utilities include; Creating a rulelist manually, Exporting a rulelist as a SQL case statement and so on. The package offers two classes; rulelist and rulelset based on dataframe.
+Description: Provides a framework to work with decision rules. Rules can be extracted from supported models, augmented with (custom) metrics using validation data, manipulated using standard dataframe operations, reordered and pruned based on a metric, predict on unseen (test) data. Utilities include; Creating a rulelist manually, Exporting a rulelist as a SQL case statement and so on. The package offers two classes; rulelist and ruleset based on dataframe.
 URL: https://github.com/talegari/tidyrules, https://talegari.github.io/tidyrules/
 BugReports: https://github.com/talegari/tidyrules/issues
 License: GPL-3

@@ -11,7 +11,7 @@ set_keys(x, keys, reset = FALSE)
 
 \item{keys}{(character vector or NULL)}
 
-\item{reset}{(flag) Whether to reset the keys to sequential numbers startign
+\item{reset}{(flag) Whether to reset the keys to sequential numbers starting
 with 1 when \code{keys} is set to NULL}
 }
 \value{

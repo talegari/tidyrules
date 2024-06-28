@@ -126,7 +126,7 @@ tidy_c5 =
 tidy_c5
 ```
 
-> `r paste0(rep(cli::symbol$smiley, 3), collapse = "")` Setting weight argument (other than 1 which means equal weigth) leads to calculating weighted metrics.
+> `r paste0(rep(cli::symbol$smiley, 3), collapse = "")` Setting weight argument (other than 1 which means equal weight) leads to calculating weighted metrics.
 
 ## Augment
 
@@ -176,7 +176,7 @@ tibble::as_tibble(calculate(tidy_c5))
 
 ## Reorder
 
-`reorder` intends to reorder the order of rules. At the moment, the greedy implementation adds one rule at a time to a new rulelist (from the input rulelist) such that a metric (see `calculate`) is maximixed/minimized.
+`reorder` intends to reorder the order of rules. At the moment, the greedy implementation adds one rule at a time to a new rulelist (from the input rulelist) such that a metric (see `calculate`) is maximized/minimized.
 
 Suppose, you wanted to find a smaller ruleset with least overlap that would still cover 80% of the validation_data. Then,
 
@@ -203,7 +203,7 @@ we infer that first 9 rules (~ 20% overlap) in the reordered rulelist would do s
 
 > `r paste0(rep(cli::symbol$smiley, 3), collapse = "")` In the above code, 2nd metric onwards are used to break ties! (similar to `base::order`)
 
-> `r paste0(rep(cli::symbol$smiley, 3), collapse = "")` Reordering changes the decision bourdaries of your fit! It is a post-hoc method to overlap the *learnt* rules to optimize for the metric you need! But remember, greedy optimization method does guarantee the global minima (maxima)!
+> `r paste0(rep(cli::symbol$smiley, 3), collapse = "")` Reordering changes the decision boundaries of your fit! It is a post-hoc method to overlap the *learnt* rules to optimize for the metric you need! But remember, greedy optimization method does guarantee the global minima (maxima)!
 
 > `r paste0(rep(cli::symbol$smiley, 3), collapse = "")` `reorder` comes with a `init = k` argument which leaves a predecided top k rules in their order and reorders only bottom ones. This might be required when policy layer needs to be incorporated into the rule engine!
 
@@ -266,7 +266,7 @@ END AS output
 ## More
 
 - We will add `tidy` support to more models. Your contributions are welcome!
-- Ideas for methods are welcome!
+- Ideas for new methods are welcome!
 
 `r cli::symbol$tick` `For dev and issues, reach us at http://github.com/talegari/tidyrules
 

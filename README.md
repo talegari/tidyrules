@@ -5,10 +5,7 @@
 
 <!-- badges: start -->
 
-[![Build
-Status](https://travis-ci.org/talegari/tidyrules.svg?branch=master)](https://travis-ci.org/talegari/tidyrules)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tidyrules)](https://cran.r-project.org/package=tidyrules)
-[![R-CMD-check](https://github.com/talegari/tidyrules/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/talegari/tidyrules/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 > [tidyrules](https://cran.r-project.org/package=tidyrules)
@@ -19,7 +16,7 @@ Status](https://travis-ci.org/talegari/tidyrules.svg?branch=master)](https://tra
 > reordered and pruned based on a metric, predict on unseen (test) data.
 > Utilities include; Creating a rulelist manually, Exporting a rulelist
 > as a SQL case statement and so on. The package offers two classes;
-> rulelist and rulelset based on dataframe.
+> rulelist and ruleset based on dataframe.
 
 ![](man/figures/tidyrules_schematic.png)
 

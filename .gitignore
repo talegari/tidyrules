@@ -5,3 +5,4 @@
 .Rprofile
 renv*
 *.Rproj
+.DS_Store

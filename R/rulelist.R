@@ -251,7 +251,7 @@ as_rulelist.data.frame = function(x,
 #'
 #' @param x A [rulelist]
 #' @param keys (character vector or NULL)
-#' @param reset (flag) Whether to reset the keys to sequential numbers startign
+#' @param reset (flag) Whether to reset the keys to sequential numbers starting
 #'   with 1 when `keys` is set to NULL
 #'
 #' @returns A [rulelist] object
@@ -1621,7 +1621,7 @@ generics::prune
 #'   metrics.
 #' @param stop_expr_string (string default: "relative__cumulative_coverage >=
 #'   0.9") Parsable condition
-#' @param min_n_rules (positive integer) Minumum number of rules to keep
+#' @param min_n_rules (positive integer) Minimum number of rules to keep
 #' @param ... Named list of custom metrics passed to
 #'   [calculate][calculate.rulelist]
 #'

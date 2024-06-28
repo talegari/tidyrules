@@ -7,7 +7,7 @@
 positionSpaceOutsideSinglequotes(string)
 }
 \arguments{
-\item{string}{A chracter vector}
+\item{string}{A character vector}
 }
 \value{
 A integer vector of positions

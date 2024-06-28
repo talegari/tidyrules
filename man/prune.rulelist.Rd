@@ -22,7 +22,7 @@ metrics.}
 \item{stop_expr_string}{(string default: "relative__cumulative_coverage >=
 0.9") Parsable condition}
 
-\item{min_n_rules}{(positive integer) Minumum number of rules to keep}
+\item{min_n_rules}{(positive integer) Minimum number of rules to keep}
 
 \item{...}{Named list of custom metrics passed to
 \link[=calculate.rulelist]{calculate}}
