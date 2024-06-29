@@ -18,6 +18,8 @@
 > as a SQL case statement and so on. The package offers two classes;
 > rulelist and ruleset based on dataframe.
 
+**website**: <https://talegari.github.io/tidyrules/>
+
 ![](man/figures/tidyrules_schematic.png)
 
 ## Example

@@ -6,3 +6,4 @@
 renv*
 *.Rproj
 .DS_Store
+using_tidyrules_cache

@@ -82,7 +82,7 @@
                         <h4 data-toc-skip class="author">Srikanth KS,
 Amith Kumar UR</h4>
             
-            <h4 data-toc-skip class="date">2024-06-28</h4>
+            <h4 data-toc-skip class="date">2024-06-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/talegari/tidyrules/blob/HEAD/vignettes/articles/using_tidyrules.Rmd" class="external-link"><code>vignettes/articles/using_tidyrules.Rmd</code></a></small>
       <div class="hidden name"><code>using_tidyrules.Rmd</code></div>
@@ -105,6 +105,7 @@ manually, Exporting a rulelist as a SQL case statement and so on. The
 package offers two classes; rulelist and rulelset based on
 dataframe.</p>
 </blockquote>
+<p>website: <a href="https://talegari.github.io/tidyrules/" class="external-link uri">https://talegari.github.io/tidyrules/</a></p>
 </div>
 <div class="section level2">
 <h2 id="schematic">Schematic<a class="anchor" aria-label="anchor" href="#schematic"></a>
@@ -361,7 +362,7 @@ validation data adds a validation data to a rulelist which gets used for
 <span><span class="co">## <span style="color: #BCBCBC;">19</span>       19         1 ( EnvironmentSatisfaction … Yes        28      0.633   3.7</span></span>
 <span><span class="co">## ----------------------------------------------</span></span></code></pre>
 <blockquote>
-<p>☺☺☺ Setting weight argument (other than 1 which means equal weigth)
+<p>☺☺☺ Setting weight argument (other than 1 which means equal weight)
 leads to calculating weighted metrics.</p>
 </blockquote>
 </div>
@@ -465,7 +466,7 @@ applied in the row order) depending on attribute
 <p><code>reorder</code> intends to reorder the order of rules. At the
 moment, the greedy implementation adds one rule at a time to a new
 rulelist (from the input rulelist) such that a metric (see
-<code>calculate</code>) is maximixed/minimized.</p>
+<code>calculate</code>) is maximized/minimized.</p>
 <p>Suppose, you wanted to find a smaller ruleset with least overlap that
 would still cover 80% of the validation_data. Then,</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -485,13 +486,17 @@ would still cover 80% of the validation_data. Then,</p>
 <span>         <span class="va">rel_cum_overlap</span>, <span class="va">rel_cum_coverage</span>,</span>
 <span>         <span class="va">cumulative_accuracy</span></span>
 <span>         <span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ⠙ Reordering ... 4 done (1.4/s) | 2.8s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠹ Reordering ... 5 done (1.3/s) | 3.7s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠸ Reordering ... 8 done (1.1/s) | 7s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠼ Reordering ... 11 done (1.1/s) | 10.4s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠴ Reordering ... 14 done (1/s) | 13.4s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠦ Reordering ... 18 done (1.1/s) | 15.9s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠦ Reordering ... 19 done (1.2/s) | 16.1s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠙ Reordering ... 2 done (0.99/s) | 2s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠹ Reordering ... 3 done (0.91/s) | 3.3s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠸ Reordering ... 5 done (0.77/s) | 6.5s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠼ Reordering ... 7 done (0.69/s) | 10.1s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠴ Reordering ... 8 done (0.67/s) | 12s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠦ Reordering ... 10 done (0.64/s) | 15.5s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠧ Reordering ... 12 done (0.63/s) | 19.1s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠇ Reordering ... 13 done (0.63/s) | 20.7s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠏ Reordering ... 15 done (0.63/s) | 23.8s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠋ Reordering ... 19 done (0.7/s) | 27s</span></span>
+<span><span class="co">## ⠋ Reordering ... 19 done (0.7/s) | 27s</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span></code></pre>
 <pre><code><span><span class="co">## ---- Rulelist --------------------------------</span></span>
 <span><span class="co">## ▶ Keys: NULL</span></span>
@@ -530,7 +535,7 @@ would do still ensuring an accuracy of 85% !</p>
 (similar to <code><a href="https://rdrr.io/r/base/order.html" class="external-link">base::order</a></code>)</p>
 </blockquote>
 <blockquote>
-<p>☺☺☺ Reordering changes the decision bourdaries of your fit! It is a
+<p>☺☺☺ Reordering changes the decision boundaries of your fit! It is a
 post-hoc method to overlap the <em>learnt</em> rules to optimize for the
 metric you need! But remember, greedy optimization method does guarantee
 the global minima (maxima)!</p>
@@ -550,18 +555,22 @@ stopping criteria.</p>
 <p>Suppose, we seek to find a smaller rulelist with maximum possible
 accuracy with a minimum (relative) coverage of 70% and (relative)
 overlap not more than half the number of rows. Then,</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prune_suggestion</span> <span class="op">=</span> </span>
 <span>  <span class="fu"><a href="../reference/reorder.html">reorder</a></span><span class="op">(</span><span class="va">tidy_c5</span>, <span class="st">"cumulative_accuracy"</span>, minimize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/prune.html">prune</a></span><span class="op">(</span>stop_expr_string <span class="op">=</span> <span class="st">"relative__cumulative_coverage &gt;= 0.7 &amp; cumulative_overlap &lt;= 728/2"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ⠙ Reordering ... 4 done (1.5/s) | 2.6s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠹ Reordering ... 7 done (1.2/s) | 5.8s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠸ Reordering ... 10 done (1.1/s) | 9.2s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠼ Reordering ... 13 done (1/s) | 12.4s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠴ Reordering ... 16 done (1.1/s) | 15s</span></span></code></pre>
-<pre><code><span><span class="co">## ⠴ Reordering ... 19 done (1.2/s) | 16.1s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠙ Reordering ... 3 done (1/s) | 3s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠹ Reordering ... 5 done (0.83/s) | 6s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠸ Reordering ... 7 done (0.73/s) | 9.6s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠼ Reordering ... 8 done (0.69/s) | 11.5s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠴ Reordering ... 10 done (0.66/s) | 15.1s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠦ Reordering ... 12 done (0.64/s) | 18.9s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠧ Reordering ... 13 done (0.63/s) | 20.6s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠇ Reordering ... 15 done (0.63/s) | 23.7s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠏ Reordering ... 18 done (0.67/s) | 26.9s</span></span></code></pre>
+<pre><code><span><span class="co">## ⠏ Reordering ... 19 done (0.7/s) | 27.2s</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span></code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prune_suggestion</span></span></code></pre></div>
 <pre><code><span><span class="co">## ── Prune Suggestion ────────────────────────────────────────────────────────────</span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #00BB00;">✔</span> Keep first 4 out of 19</span></span></code></pre>
@@ -570,10 +579,10 @@ overlap not more than half the number of rows. Then,</p>
 <pre><code><span><span class="co">## </span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Run `plot(x)` for details; `x$pruned` to get pruned rulelist</span></span></code></pre>
 <pre><code><span><span class="co">## ────────────────────────────────────────────────────────────────────────────────</span></span></code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">prune_suggestion</span><span class="op">)</span></span></code></pre></div>
 <p><img src="using_tidyrules_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prune_suggestion</span><span class="op">$</span><span class="va">pruned</span></span></code></pre></div>
 <pre><code><span><span class="co">## ---- Rulelist --------------------------------</span></span>
 <span><span class="co">## ▶ Keys: NULL</span></span>
@@ -602,7 +611,7 @@ rulelists, very good for explainability!</p>
 </h2>
 <p>Use <code>to_sql_case</code> to get SQL case when code chunk from a
 rulelist.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/to_sql_case.html">to_sql_case</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_c5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>CASE
 WHEN (Age &gt; 26)
@@ -638,7 +647,7 @@ END AS output</code></pre>
 <ul>
 <li>We will add <code>tidy</code> support to more models. Your
 contributions are welcome!</li>
-<li>Ideas for methods are welcome!</li>
+<li>Ideas for new methods are welcome!</li>
 </ul>
 <p>✔ `For dev and issues, reach us at <a href="http://github.com/talegari/tidyrules" class="external-link uri">http://github.com/talegari/tidyrules</a></p>
 <p>✔ ‘master’ branch always holds the ‘tested’ dev code!</p>
