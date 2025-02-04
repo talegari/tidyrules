@@ -4,7 +4,7 @@ maximizes/minimizes a metric."><!-- mathjax --><script src="https://cdnjs.cloudf
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@ maximizes/minimizes a metric."><!-- mathjax --><script src="https://cdnjs.cloudf
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -42,14 +42,14 @@ maximizes/minimizes a metric."><!-- mathjax --><script src="https://cdnjs.cloudf
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/talegari/tidyrules/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -65,34 +65,36 @@ maximizes/minimizes a metric.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rulelist</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'rulelist'</span></span>
 <span><span class="fu"><a href="reorder.html">reorder</a></span><span class="op">(</span><span class="va">x</span>, metric <span class="op">=</span> <span class="st">"cumulative_coverage"</span>, minimize <span class="op">=</span> <span class="cn">FALSE</span>, init <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>A <a href="rulelist.html">rulelist</a></p></dd>
 
 
-<dt>metric</dt>
+<dt id="arg-metric">metric<a class="anchor" aria-label="anchor" href="#arg-metric"></a></dt>
 <dd><p>(character vector or named list) Name of metrics or a custom
 function(s). See <a href="calculate.rulelist.html">calculate</a>. The 'n+1'th metric is
 used when there is a match at 'nth' level, similar to <a href="https://rdrr.io/r/base/order.html" class="external-link">base::order</a>. If
 there is a match at final level, row order of the rulelist comes into play.</p></dd>
 
 
-<dt>minimize</dt>
+<dt id="arg-minimize">minimize<a class="anchor" aria-label="anchor" href="#arg-minimize"></a></dt>
 <dd><p>(logical vector) Whether to minimize. Either TRUE/FALSE or a
 logical vector of same length as metric</p></dd>
 
 
-<dt>init</dt>
+<dt id="arg-init">init<a class="anchor" aria-label="anchor" href="#arg-init"></a></dt>
 <dd><p>(positive integer) Initial number of rows after which reordering
 should begin</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>passed to <a href="calculate.rulelist.html">calculate</a></p></dd>
 
 </dl></div>
@@ -186,15 +188,15 @@ should begin</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

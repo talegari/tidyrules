@@ -35,7 +35,7 @@ library(tidyrules)
 
 ```{r basic C5 example}
 model_c5 = C50::C5.0(Species ~ ., data = iris, rules = TRUE)
-pander::pandoc.table(tidy(model_c5), split.tables = 120)
+tidy(model_c5)
 ```
 </details>
 

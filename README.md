@@ -35,21 +35,23 @@ library(tidyrules)
 
 ``` r
 model_c5 = C50::C5.0(Species ~ ., data = iris, rules = TRUE)
-pander::pandoc.table(tidy(model_c5), split.tables = 120)
+tidy(model_c5)
+#> ---- Rulelist --------------------------------
+#> ▶ Keys: trial_nbr
+#> ▶ Number of distinct keys: 1
+#> ▶ Number of rules: 4
+#> ▶ Model type: C5
+#> ▶ Estimation type: classification
+#> ▶ Is validation data set: FALSE
 #> 
-#> ----------------------------------------------------------------------------------------------
-#>  rule_nbr   trial_nbr              LHS                  RHS       support   confidence   lift 
-#> ---------- ----------- ---------------------------- ------------ --------- ------------ ------
-#>     1           1        ( Petal.Length <= 1.9 )       setosa       50        0.9808     2.9  
 #> 
-#>     2           1       ( Petal.Length > 1.9 ) & (   versicolor     48         0.96      2.9  
-#>                         Petal.Length <= 4.9 ) & (                                             
-#>                            Petal.Width <= 1.7 )                                               
-#> 
-#>     3           1         ( Petal.Width > 1.7 )      virginica      46        0.9583     2.9  
-#> 
-#>     4           1         ( Petal.Length > 4.9 )     virginica      46        0.9375     2.8  
-#> ----------------------------------------------------------------------------------------------
+#>   rule_nbr trial_nbr LHS                          RHS   support confidence  lift
+#>      <int>     <int> <chr>                        <fct>   <int>      <dbl> <dbl>
+#> 1        1         1 ( Petal.Length <= 1.9 )      seto…      50      0.981   2.9
+#> 2        2         1 ( Petal.Length > 1.9 ) & ( … vers…      48      0.96    2.9
+#> 3        3         1 ( Petal.Width > 1.7 )        virg…      46      0.958   2.9
+#> 4        4         1 ( Petal.Length > 4.9 )       virg…      46      0.938   2.8
+#> ----------------------------------------------
 ```
 
 </details>
